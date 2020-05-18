@@ -1,0 +1,19 @@
+{
+  "name": "education-portal",
+  "version": "1.0.0",
+  "description": "Redesign for the mijnhva education portal",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WesselSmit/education-portal.git"
+  },
+  "author": "Wessel Smit & Sjors Eveleens",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WesselSmit/education-portal/issues"
+  },
+  "homepage": "https://github.com/WesselSmit/education-portal#readme"
+}
