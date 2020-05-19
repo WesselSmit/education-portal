@@ -1,1 +1,0 @@
-export const test = 'Javascript is working - modules/module.js'
