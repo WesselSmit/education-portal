@@ -9,7 +9,7 @@ const router = {}
 
 app
     .set('view engine', 'ejs')
-    .set("views", __dirname + "/views")
+    .set('views', __dirname + '/views')
     .set('layout', 'layouts/base')
     .use(expressLayouts)
     .use(express.static('public'))

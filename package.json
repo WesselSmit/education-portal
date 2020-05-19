@@ -4,7 +4,7 @@
     "description": "Redesign for the mijnhva education portal",
     "main": "server.js",
     "scripts": {
-        "prestart": "npm run build",
+        "prestart": "link-module-alias && npm run build",
         "start": "node server.js",
         "prebuild": "rimraf public/css/* && rimraf public/js/*",
         "build": "gulp",
@@ -26,9 +26,13 @@
         "dotenv": "^8.2.0",
         "ejs": "^3.0.1",
         "express": "^4.17.1",
-        "express-ejs-layouts": "^2.5.0"
-    },
-    "devDependencies": {
+        "express-ejs-layouts": "^2.5.0",
+        "link-module-alias": "^1.2.0",
+        "npm": "^6.14.4",
+        "require-dir": "^1.2.0",
+        "rimraf": "^3.0.2",
+        "vinyl-buffer": "^1.0.1",
+        "vinyl-source-stream": "^2.0.0",
         "@babel/core": "^7.9.0",
         "@babel/preset-env": "^7.9.0",
         "babelify": "^10.0.0",
@@ -38,12 +42,16 @@
         "gulp-concat": "^2.6.1",
         "gulp-sass": "^4.0.2",
         "gulp-sass-glob": "^1.1.0",
-        "gulp-sourcemaps": "^2.6.5",
-        "nodemon": "^2.0.2",
-        "npm": "^6.14.4",
-        "require-dir": "^1.2.0",
-        "rimraf": "^3.0.2",
-        "vinyl-buffer": "^1.0.1",
-        "vinyl-source-stream": "^2.0.0"
+        "gulp-sourcemaps": "^2.6.5"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.2"
+    },
+    "_moduleAliases": {
+        "#builds": "build-scripts",
+        "#src": "src",
+        "#public": "public",
+        "#routes": "routes",
+        "#views": "views"
     }
 }
