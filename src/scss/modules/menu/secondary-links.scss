@@ -1,0 +1,51 @@
+@import "../../global/fonts/mixins";
+
+@mixin secondary-links {
+    padding-bottom: 20px;
+
+
+    &::before {
+        @include font-Bold;
+        content: "Resources";
+        text-transform: uppercase;
+        color: $main-white;
+        padding-left: 20px;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    a {
+        color: $main-white;
+        text-decoration: none;
+        display: block;
+        padding: 5px 20px 5px 30px;
+
+
+        &:hover {
+            background-color: $light-purple;
+
+
+            p:last-of-type {
+                opacity: 0.75;
+            }
+        }
+
+
+        p {
+            display: inline-block;
+        }
+
+
+        p:first-of-type {
+            font-size: 16px;
+            text-transform: uppercase;
+            padding-right: 10px;
+        }
+
+
+        p:last-of-type {
+            font-size: 12px;
+            opacity: 0;
+        }
+    }
+}

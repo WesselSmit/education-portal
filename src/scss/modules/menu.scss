@@ -1,0 +1,30 @@
+@import "../global/fonts/mixins";
+@import "menu/search";
+@import "menu/primary-links";
+@import "menu/secondary-links";
+
+#menu {
+    @include font-Regular;
+    color: $main-white;
+    box-sizing: border-box;
+    background-color: $main-purple;
+    position: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+
+    #search-container {
+        @include search;
+    }
+
+
+    #menu-primary-links {
+        @include primary-links
+    }
+
+
+    #menu-secondary-links {
+        @include secondary-links
+    }
+}
