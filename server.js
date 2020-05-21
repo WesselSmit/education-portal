@@ -5,7 +5,9 @@ const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 const app = express()
 
-const router = {}
+const router = {
+    dashboard: require("#routes/dashboard")
+}
 
 app
     .set('view engine', 'ejs')
@@ -14,6 +16,6 @@ app
     .use(expressLayouts)
     .use(express.static('public'))
 
-app.use('/', router.index)
+app.use('/', router.dashboard)
 
 app.listen(port, () => console.log(`App now listening on port ${port}`))

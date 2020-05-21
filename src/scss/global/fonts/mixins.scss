@@ -1,0 +1,23 @@
+@mixin Regular {
+    font-family: "OpenSans-Regular", $backup-fonts;
+}
+
+@mixin Italic {
+    font-family: "OpenSans-Italic", $backup-fonts;
+}
+
+@mixin bold {
+    font-family: "OpenSans-Bold", $backup-fonts;
+}
+
+@mixin ExtraBold {
+    font-family: "OpenSans-ExtraBold", $backup-fonts;
+}
+
+@mixin boldItalic {
+    font-family: "OpenSans-Bold", $backup-fonts;
+}
+
+@mixin ExtraBoldItalic {
+    font-family: "OpenSans-ExtraBoldItalic", $backup-fonts;
+}
