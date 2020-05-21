@@ -1,5 +1,72 @@
+@import "../../global/fonts/mixins";
+@import "../../global/mixins.scss";
+
 @mixin search {
-    width: fit-content;
     //used calc() to include padding of account for first list item padding (7.5px)
     padding: 20px 20px calc(20px - 7.5px) 20px;
+
+
+    fieldset {
+        background-color: $dark-purple;
+        width: 100%;
+        border: 1px solid $dark-purple;
+        border-radius: 999px;
+        background-image: url(../media/icons/search.svg);
+        background-repeat: no-repeat;
+        background-position: 8px center;
+        background-size: 15px 15px;
+        position: relative;
+
+
+        input[type=submit] {
+            //only used for noscript support and as addEventListener target for search icon (background-image of containing fieldset element)
+            border: none;
+            background-color: transparent;
+            height: 24px;
+            width: 30px;
+            position: relative;
+            top: 2px;
+            cursor: pointer;
+        }
+
+
+        input[type=search] {
+            @include font-Regular;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            font-size: 14px;
+            color: $main-white;
+            position: relative;
+            top: -4px;
+            left: 5px;
+            width: 100%;
+            max-width: 200px;
+
+
+            &::placeholder {
+                color: $light-white;
+            }
+
+
+            &::-webkit-search-cancel-button {
+                @include hide;
+            }
+        }
+
+
+
+        #search-reset {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            padding: 9px;
+            cursor: pointer;
+
+
+            &.hide {
+                @include hide;
+            }
+        }
+    }
 }
