@@ -10,7 +10,7 @@
         text-transform: uppercase;
         color: $main-white;
         padding-left: 20px;
-        margin-bottom: 5px;
+        margin: 20px 0 5px 0;
         display: block;
     }
 
@@ -46,6 +46,11 @@
         p:last-of-type {
             font-size: 12px;
             opacity: 0;
+
+
+            @media only screen and (max-width: $max-mobile-width) {
+                display: none;
+            }
         }
     }
 }

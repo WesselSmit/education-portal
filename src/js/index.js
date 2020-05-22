@@ -2,6 +2,22 @@ import * as utils from './modules/utils.mjs'
 import * as search from './modules/search.mjs'
 
 
+//menu 
+const menuIcon = document.getElementById('menu-icon')
+
+if (utils.exists([menuIcon])) {
+
+    //toggle menu (on mobile)
+    menuIcon.addEventListener('click', () => {
+        const menu = document.getElementById('menu')
+        menu.classList.toggle('hide')
+    })
+}
+
+
+
+
+//search 
 const searchBar = document.getElementById('search-bar')
 const searchResetIcon = document.getElementById('search-reset')
 
