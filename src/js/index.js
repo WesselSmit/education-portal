@@ -1,6 +1,5 @@
 import * as search from './modules/search.mjs'
 
-
 const searchBar = document.getElementById('search-bar')
 
 //control search-reset icon 
