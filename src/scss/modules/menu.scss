@@ -3,6 +3,7 @@
 @import "menu/primary-links";
 @import "menu/secondary-links";
 
+
 #menu {
     @include font-Regular;
     color: $main-white;
@@ -12,7 +13,72 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    width: 325px;
+    width: $menu-width;
+
+
+    @media only screen and (max-width: $max-mobile-width) {
+        width: 100vw;
+    }
+
+
+    &.hide {
+        @include hide;
+
+
+        @media only screen and (max-width: $max-mobile-width) {
+            #home-icon {
+                background-image: url(../media/icons/hva-logo-purple.svg);
+                position: fixed;
+                left: unset;
+                right: 20px;
+            }
+
+
+            #menu-icon {
+                top: 20px;
+                left: 20px;
+                background-image: url(../media/icons/hamburger-purple.svg);
+            }
+        }
+    }
+
+
+    #home-icon {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 15px;
+        z-index: 2;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px;
+        background-image: url(../media/icons/hva-logo-white.svg);
+
+
+        @media only screen and (max-width: $max-mobile-width) {
+            @include hide;
+        }
+    }
+
+
+    #menu-icon {
+        @include hide;
+
+
+        @media only screen and (max-width: $max-mobile-width) {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 15px;
+            z-index: 2;
+            cursor: pointer;
+            background-image: url(../media/icons/hamburger-white.svg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 20px;
+        }
+    }
 
 
     #search-container {
