@@ -1,0 +1,39 @@
+#resource {
+    margin-left: 325px;
+    padding: 10vh 10vw;
+
+    * {
+        @include text;
+    }
+
+    h2 {
+        @include h2;
+    }
+
+    h3 {
+        @include h3;
+    }
+
+    article {
+        margin-top: 25px;
+    }
+
+    a {
+        display: block;
+        color: black;
+    }
+
+    a:first-of-type {
+        margin-top: 15px;
+    }
+
+    a:last-of-type {
+        width: fit-content;
+        margin-top: 30px;
+        text-transform: uppercase;
+        text-decoration: none;
+        background-color: $main-purple;
+        color: $main-white;
+        padding: 10px 20px;
+    }
+}

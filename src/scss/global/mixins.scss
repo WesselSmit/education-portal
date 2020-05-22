@@ -1,4 +1,29 @@
+@import "./variables.scss";
+
 @mixin hide {
     position: absolute;
     left: -9999px;
+}
+
+@mixin h2 {
+    @include font-Regular;
+    font-size: 24px;
+    color: $main-purple;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 1px solid $light-grey;
+}
+
+@mixin h3 {
+    @include font-Regular;
+    font-size: 18px;
+    color: $main-purple;
+    padding-bottom: 3px;
+}
+
+@mixin text {
+    @include font-Regular;
+    font-size: 14px;
+    color: $main-black;
+    line-height: 16px;
 }
