@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 import * as search from './modules/search.mjs'
 
 const searchBar = document.getElementById('search-bar')
@@ -8,9 +6,11 @@ const searchBar = document.getElementById('search-bar')
 searchBar.addEventListener('focus', () => search.showReset())
 searchBar.addEventListener('blur', () => search.hideReset())
 
+
 //reset search input
 const searchResetIcon = document.getElementById('search-reset')
 searchResetIcon.addEventListener('click', e => search.reset(e))
+
 
 //listen to keyboard input
 document.addEventListener('keypress', e => {
@@ -20,4 +20,3 @@ document.addEventListener('keypress', e => {
             break
     }
 })
->>>>>>> Stashed changes
