@@ -11,9 +11,19 @@
             <% } %>
 
         </h3>
-        <p><%= section.content %></p>
+
+        <% section.content.forEach(item => { 
+        const key = Object.getOwnPropertyNames(item)[0] %>
+
+        <% if (key === 'text') { %>
+        <p><%= item.text %></p>
+        <% } else if (key ==='link') { %>
+        <a target="_blank" href="<%= item.link.url %>"><%= item.link.text %></a>
+        <% } %>
+
+        <% }) %>
     </article>
     <% }) %>
 
-    <a target="_blank" href="<%= link.url %>"><%= link.text %></a>
+    <a class="call_to_action" target="_blank" href="<%= link.url %>"><%= link.text %></a>
 </section>

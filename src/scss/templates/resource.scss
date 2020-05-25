@@ -16,18 +16,18 @@
 
     article {
         margin-top: 25px;
+
+        p {
+            margin-bottom: 10px;
+        }
     }
 
     a {
         display: block;
-        color: black;
+        color: $main-black;
     }
 
-    a:first-of-type {
-        margin-top: 15px;
-    }
-
-    a:last-of-type {
+    .call_to_action {
         width: fit-content;
         margin-top: 30px;
         text-transform: uppercase;
@@ -35,5 +35,13 @@
         background-color: $main-purple;
         color: $main-white;
         padding: 10px 20px;
+
+        &:hover {
+            background-color: $light-purple;
+        }
+
+        &:focus {
+            background-color: $extra-light-purple;
+        }
     }
 }
