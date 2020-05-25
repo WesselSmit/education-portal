@@ -43,6 +43,13 @@
     }
 
 
+    #home-icon-container:focus #home-icon {
+        background-color: $extra-light-purple;
+        border: 1px solid $extra-light-purple;
+        border-radius: 999px;
+    }
+
+
     #home-icon {
         position: fixed;
         top: 20px;
@@ -54,6 +61,13 @@
         background-position: center;
         background-size: 20px;
         background-image: url(../media/icons/hva-logo-white.svg);
+        border: 1px solid transparent;
+        border-radius: 999px;
+
+
+        &:hover {
+            background-color: $light-purple;
+        }
 
 
         @media only screen and (max-width: $max-mobile-width) {
