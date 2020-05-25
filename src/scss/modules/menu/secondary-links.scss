@@ -31,6 +31,17 @@
         }
 
 
+        &:focus {
+            background-color: $extra-light-purple;
+            outline: none;
+
+
+            p:last-of-type {
+                opacity: 0.75;
+            }
+        }
+
+
         p {
             display: inline-block;
         }
@@ -48,7 +59,7 @@
             opacity: 0;
 
 
-            @media only screen and (max-width: $max-mobile-width) {
+            @media only screen and (max-width: $max-tablet-width) {
                 display: none;
             }
         }

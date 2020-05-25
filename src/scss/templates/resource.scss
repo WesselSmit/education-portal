@@ -1,18 +1,18 @@
 #resource {
+    @include text;
     margin-left: 325px;
     padding: 10vh 10vw;
 
-    * {
-        @include text;
-    }
 
     h2 {
         @include h2;
     }
 
+
     h3 {
         @include h3;
     }
+
 
     article {
         margin-top: 25px;
@@ -21,6 +21,7 @@
             margin-bottom: 10px;
         }
     }
+
 
     a {
         display: block;
