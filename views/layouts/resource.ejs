@@ -1,13 +1,19 @@
 <section id="resource">
     <h2><%= title %></h2>
-    <a href="<%= link.url %>"><%= link.url %></a>
+    <a target="_blank" href="<%= link.url %>"><%= link.url %></a>
 
-    <% sections.forEach(section => { %>
-    <article id="<%= section.id %>">
-        <h3><%= section.title %></h3>
+    <% sections.forEach((section, index) => { %>
+    <article>
+        <h3><%= section.title %>
+
+            <% if (index === 0 || index === 1) { %>
+            <%= title %>?
+            <% } %>
+
+        </h3>
         <p><%= section.content %></p>
     </article>
     <% }) %>
 
-    <a href="<%= link.url %>"><%= link.text %></a>
+    <a target="_blank" href="<%= link.url %>"><%= link.text %></a>
 </section>
