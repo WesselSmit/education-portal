@@ -22,7 +22,7 @@
 
 
     &.hide {
-        @media only screen and (max-width: $max-mobile-width) {
+        @media only screen and (max-width: $max-tablet-width) {
             @include hide;
 
 
@@ -70,7 +70,7 @@
         }
 
 
-        @media only screen and (max-width: $max-mobile-width) {
+        @media only screen and (max-width: $max-tablet-width) {
             @include hide;
         }
     }
@@ -80,7 +80,7 @@
         @include hide;
 
 
-        @media only screen and (max-width: $max-mobile-width) {
+        @media only screen and (max-width: $max-tablet-width) {
             position: fixed;
             top: 20px;
             left: 20px;

@@ -59,7 +59,7 @@
             opacity: 0;
 
 
-            @media only screen and (max-width: $max-mobile-width) {
+            @media only screen and (max-width: $max-tablet-width) {
                 display: none;
             }
         }
