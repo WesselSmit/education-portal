@@ -22,10 +22,10 @@
 
 
     &.hide {
-        @include hide;
-
-
         @media only screen and (max-width: $max-mobile-width) {
+            @include hide;
+
+
             #home-icon {
                 background-image: url(../media/icons/hva-logo-purple.svg);
                 position: fixed;
