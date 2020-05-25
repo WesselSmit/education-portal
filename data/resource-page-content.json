@@ -62,22 +62,38 @@
             {
                 "id": 1,
                 "title": "Welke informatie kan je vinden op",
-                "content": ""
+                "content": [
+                    {
+                        "text": "..."
+                    }
+                ]
             },
             {
                 "id": 2,
                 "title": "Hoe kan je informatie vinden op",
-                "content": ""
+                "content": [
+                    {
+                        "text": "..."
+                    }
+                ]
             },
             {
                 "id": 3,
                 "title": "Waarom staat dit op een externe website?",
-                "content": ""
+                "content": [
+                    {
+                        "text": "..."
+                    }
+                ]
             },
             {
                 "id": 4,
                 "title": "Waar kan je naar toe voor extra hulp?",
-                "content": ""
+                "content": [
+                    {
+                        "text": "..."
+                    }
+                ]
             }
         ]
     }
