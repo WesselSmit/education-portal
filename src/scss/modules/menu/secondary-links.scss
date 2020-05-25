@@ -10,7 +10,7 @@
         text-transform: uppercase;
         color: $main-white;
         padding-left: 20px;
-        margin-bottom: 5px;
+        margin: 20px 0 5px 0;
         display: block;
     }
 
@@ -23,6 +23,16 @@
 
         &:hover {
             background-color: $light-purple;
+
+
+            p:last-of-type {
+                opacity: 0.75;
+            }
+        }
+
+
+        &:focus {
+            background-color: $extra-light-purple;
 
 
             p:last-of-type {
@@ -46,6 +56,11 @@
         p:last-of-type {
             font-size: 12px;
             opacity: 0;
+
+
+            @media only screen and (max-width: $max-tablet-width) {
+                display: none;
+            }
         }
     }
 }

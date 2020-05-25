@@ -7,15 +7,23 @@
 
 
     fieldset {
-        background-color: $dark-purple;
-        width: 100%;
+        //used calc() to account for home icon (menu-width - home-icon - gap - padding))
+        width: calc(#{$menu-width} - 30px - 10px - 40px);
         border: 1px solid $dark-purple;
         border-radius: 999px;
+        background-color: $dark-purple;
         background-image: url(../media/icons/search.svg);
         background-repeat: no-repeat;
         background-position: 8px center;
         background-size: 15px 15px;
         position: relative;
+        margin-left: 40px;
+
+
+        @media only screen and (max-width: $max-mobile-width) {
+            //used calc() to account for home icon (menu-width - home-icon - gap - padding))
+            width: calc(100vw - 30px - 10px - 40px);
+        }
 
 
         input[type=submit] {
@@ -33,15 +41,19 @@
         input[type=search] {
             @include font-Regular;
             border: none;
-            outline: none;
             background-color: transparent;
             font-size: 14px;
             color: $main-white;
             position: relative;
             top: -4px;
             left: 5px;
-            width: 100%;
-            max-width: 200px;
+            //used calc() to account for home icon (menu-width - home-icon - margin)
+            width: calc($menu-width - 30px - 10px);
+
+
+            &:hover::placeholder {
+                color: $main-white;
+            }
 
 
             &::placeholder {

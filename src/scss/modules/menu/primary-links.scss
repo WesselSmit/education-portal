@@ -14,6 +14,12 @@
         }
 
 
+        &:focus {
+            background-color: $extra-light-purple;
+            outline: none;
+        }
+
+
         li {
             display: grid;
             grid-template-columns: auto 1fr;

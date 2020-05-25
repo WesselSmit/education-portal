@@ -3,36 +3,53 @@
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+var utils = _interopRequireWildcard(require("./modules/utils.mjs"));
+
 var search = _interopRequireWildcard(require("./modules/search.mjs"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var searchBar = document.getElementById('search-bar'); //control search-reset icon 
+//menu 
+var menuIcon = document.getElementById('menu-icon');
 
-searchBar.addEventListener('focus', function () {
-  return search.showReset();
-});
-searchBar.addEventListener('blur', function () {
-  return search.hideReset();
-}); //reset search input
+if (utils.exists([menuIcon])) {
+  //toggle menu (on mobile)
+  menuIcon.addEventListener('click', function () {
+    var menu = document.getElementById('menu');
+    menu.classList.toggle('hide');
+  });
+} //search 
 
+
+var searchBar = document.getElementById('search-bar');
 var searchResetIcon = document.getElementById('search-reset');
-searchResetIcon.addEventListener('click', function (e) {
-  return search.reset(e);
-}); //listen to keyboard input
 
-document.addEventListener('keypress', function (e) {
-  switch (e.key) {
-    case "/":
-      search.focus(e); //give searchbar focus and hide search-reset icon
+if (utils.exists([searchBar, searchResetIcon])) {
+  //control search-reset icon 
+  searchBar.addEventListener('focus', function () {
+    return search.showReset();
+  });
+  searchBar.addEventListener('blur', function () {
+    return search.hideReset();
+  }); //reset search input
 
-      break;
-  }
-});
+  searchResetIcon.addEventListener('click', function (e) {
+    return search.reset(e);
+  }); //listen to keyboard input
 
-},{"./modules/search.mjs":2}],2:[function(require,module,exports){
+  document.addEventListener('keypress', function (e) {
+    switch (e.key) {
+      case "/":
+        search.focus(e); //give searchbar focus and hide search-reset icon
+
+        break;
+    }
+  });
+}
+
+},{"./modules/search.mjs":2,"./modules/utils.mjs":3}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -63,6 +80,36 @@ function hideReset() {
 function reset(e) {
   searchBar.value = "";
   focus(e);
+}
+
+},{}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.exists = exists;
+
+function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function exists(_ref) {
+  var _ref2 = _toArray(_ref),
+      variables = _ref2.slice(0);
+
+  var exists = variables.every(function (variable) {
+    return variable != null;
+  });
+  return exists;
 }
 
 },{}]},{},[1])

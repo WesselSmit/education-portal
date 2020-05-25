@@ -1,0 +1,100 @@
+[
+    {
+        "id": 1,
+        "title": "Brightspace",
+        "link": {
+            "url": "https://dlo.mijnhva.nl",
+            "text": "Naar Brightspace"
+        },
+        "sections": [
+            {
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [
+                    {
+                        "text": "Brightspace is het verzamelpunt waar je al het digitale onderwijsmateriaal kunt vinden. Je kunt meer informatie vinden van de vakken die je volgt of gaat volgen en is er een overzicht van alle leeractiviteiten: opdrachten, quizzes en discussies. Hier kun je eventueel ook up-to-date blijven van de laatste meldingen van je vakken, nieuwe cijfers en nieuw studiemateriaal."
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [
+                    {
+                        "text": "De navigatie op Brightspace bestaat uit twee navigatiebalken. Je hebt de hoofdnavigatie om door de website te navigeren en je hebt de subnavigatie om door een course te navigeren. In de hoofdnavigatie kun je navigeren naar: alle vakken, mail, meldingen, notificaties en je account. In de subnavigatie kun je naar: de hoofdpagina van een vak, de content (alle leeractiviteiten en studiemateriaal), overzicht van alle leeractiviteiten (opdrachten, quizzes en discussies) en administratie (cijfers en FAQ)."
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [
+                    {
+                        "text": "In 2016 was het de visie en het doel van de HvA om een Digitale Leeromgeving te realiseren. Dit kwam voort uit input van studenten, docenten en ondersteuners vanuit alle faculteiten. Na een aantal bijeenkomsten waren de belangrijkste eisen en wensen verzameld waar het leermanagementsysteem aan moest voldoen. Uiteindelijk is dit Brightspace geworden en is dit de verzamelplek waar studenten en docenten allerlei verschillende content met elkaar uit kunnen wisselen en de student informatie kan vinden over zijn vakken."
+                    }
+                ]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [
+                    {
+                        "text": "Als je extra hulp nodig hebt voor het gebruik maken van Brightspace heeft de HvA een punt aangemaakt waar je informatie kan vinden. Hier vindt je FAQ’s, video’s en een Quick Start Guide."
+                    },
+                    {
+                        "link": {
+                            "text": "Brightspace informatiepagina",
+                            "url": "https://help.mijnhva.nl/nl/student/brightspace/Paginas/default.aspx"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "SIS",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar SIS"
+        },
+        "sections": [
+            {
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [
+                    {
+                        "text": "..."
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [
+                    {
+                        "text": "..."
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [
+                    {
+                        "text": "..."
+                    }
+                ]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [
+                    {
+                        "text": "..."
+                    }
+                ]
+            }
+        ]
+    }
+]
