@@ -51,7 +51,8 @@
             width: calc($menu-width - 30px - 10px);
 
 
-            &:hover::placeholder {
+            &:hover::placeholder,
+            &:focus::placeholder {
                 color: $main-white;
             }
 
