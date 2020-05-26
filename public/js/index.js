@@ -13,11 +13,11 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 //menu 
 var menuIcon = document.getElementById('menu-icon');
+var menu = document.getElementById('menu');
 
-if (utils.exists([menuIcon])) {
+if (utils.exists([menuIcon, menu])) {
   //toggle menu (on mobile)
   menuIcon.addEventListener('click', function () {
-    var menu = document.getElementById('menu');
     menu.classList.toggle('hide');
   });
 } //search 

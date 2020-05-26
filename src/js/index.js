@@ -4,12 +4,12 @@ import * as search from './modules/search.mjs'
 
 //menu 
 const menuIcon = document.getElementById('menu-icon')
+const menu = document.getElementById('menu')
 
-if (utils.exists([menuIcon])) {
+if (utils.exists([menuIcon, menu])) {
 
     //toggle menu (on mobile)
     menuIcon.addEventListener('click', () => {
-        const menu = document.getElementById('menu')
         menu.classList.toggle('hide')
     })
 }
