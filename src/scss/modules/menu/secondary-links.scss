@@ -21,6 +21,13 @@
         padding: 5px 20px 5px 30px;
 
 
+        &:focus-within {
+            li p:last-of-type {
+                opacity: 0.75;
+            }
+        }
+
+
         &:hover {
             background-color: $light-purple;
 
