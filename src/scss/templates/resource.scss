@@ -4,7 +4,8 @@
 
 
     @media only screen and (max-width: $max-mobile-width) {
-        padding: 10vh 23px;
+        //used calc(header menu + whitespace)
+        padding: calc(60px + 10px) 23px;
     }
 
 
