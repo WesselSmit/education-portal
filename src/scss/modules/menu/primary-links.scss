@@ -11,18 +11,58 @@
 
         &:hover {
             background-color: $light-purple;
+
+
+            li object {
+                background-color: $light-purple;
+            }
+
+
+            li object a {
+                background-color: $light-purple;
+                border-color: $light-purple;
+            }
         }
 
 
         &:focus {
             background-color: $extra-light-purple;
             outline: none;
+
+
+            li object {
+                background-color: $extra-light-purple;
+            }
+
+
+            li object a {
+                background-color: $extra-light-purple;
+                border-color: $extra-light-purple;
+            }
+        }
+
+
+        &:hover,
+        &:focus {
+            li object {
+                grid-row: 1 / 2;
+                grid-column: 3;
+                position: relative;
+                top: 0;
+                left: 0;
+
+
+                a:hover {
+                    background-color: $extra-light-purple;
+                    border-color: $light-purple;
+                }
+            }
         }
 
 
         li {
             display: grid;
-            grid-template-columns: auto 1fr;
+            grid-template-columns: auto 1fr auto;
             grid-template-rows: 18px auto;
             grid-column-gap: 10px;
 
@@ -47,6 +87,39 @@
                 &:last-of-type {
                     font-size: 12px;
                     color: $light-white;
+                }
+            }
+
+
+            object {
+                @include hide;
+
+
+                &:focus-within {
+                    grid-row: 1 / 2;
+                    grid-column: 3;
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                }
+
+
+                a {
+                    background-color: $main-purple;
+                    padding: 0;
+                    width: 28px;
+                    height: 28px;
+                    border: 1px solid $main-purple;
+                    border-radius: 999px;
+                    background-image: url(../media/icons/detail.svg);
+                    background-repeat: no-repeat;
+                    background-position: center;
+
+
+                    &:hover {
+                        background-color: $extra-light-purple;
+                        border-color: $light-purple;
+                    }
                 }
             }
         }
