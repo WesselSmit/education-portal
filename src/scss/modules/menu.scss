@@ -9,7 +9,6 @@
     color: $main-white;
     box-sizing: border-box;
     background-color: $main-purple;
-    position: fixed;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -19,6 +18,11 @@
 
     @media only screen and (max-width: $max-mobile-width) {
         width: 100vw;
+    }
+
+
+    @media only screen and (max-width: $max-tablet-width) {
+        position: fixed;
     }
 
 
@@ -49,6 +53,15 @@
     }
 
 
+    &:not(.hide) {
+        @media only screen and (max-width: $max-tablet-width) {
+            #mobile-menu-header {
+                @include hide;
+            }
+        }
+    }
+
+
     &+#menu-overlay {
         position: fixed;
         top: 0;
@@ -61,6 +74,18 @@
 
         @media only screen and (min-width: $max-tablet-width) {
             @include hide;
+        }
+    }
+
+
+    #mobile-menu-header {
+        @media only screen and (max-width: $max-tablet-width) {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 60px;
+            background-color: $main-white;
         }
     }
 

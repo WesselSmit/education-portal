@@ -1,7 +1,11 @@
 #resource {
     @include text;
-    margin-left: 325px;
     padding: 10vh 10vw;
+
+
+    @media only screen and (max-width: $max-mobile-width) {
+        padding: 10vh 23px;
+    }
 
 
     h2 {
@@ -37,9 +41,11 @@
         color: $main-white;
         padding: 10px 20px;
 
+
         &:hover {
             background-color: $light-purple;
         }
+
 
         &:focus {
             background-color: $extra-light-purple;

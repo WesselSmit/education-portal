@@ -1,0 +1,14 @@
+body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+
+    #menu {
+        grid-column: 1 / 2;
+    }
+
+
+    #resource {
+        grid-column: 2 / 3;
+    }
+}
