@@ -25,8 +25,9 @@ if (utils.exists([menuIcon, menu])) {
 
 var searchBar = document.getElementById('search-bar');
 var searchResetIcon = document.getElementById('search-reset');
+var searchIcon = document.querySelector('#search-container input[type=submit]');
 
-if (utils.exists([searchBar, searchResetIcon])) {
+if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
   //control search-reset icon 
   searchBar.addEventListener('focus', function () {
     return search.showReset();
@@ -37,6 +38,12 @@ if (utils.exists([searchBar, searchResetIcon])) {
 
   searchResetIcon.addEventListener('click', function (e) {
     return search.reset(e);
+  }); //depending on search-query either give focus to searchbar or submit search-query
+
+  searchIcon.addEventListener('click', function (e) {
+    if (searchBar.value === "") {
+      search.focus(e);
+    }
   }); //listen to keyboard input
 
   document.addEventListener('keypress', function (e) {
