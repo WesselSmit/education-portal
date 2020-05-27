@@ -30,6 +30,10 @@
     a {
         display: block;
         color: $main-black;
+
+        &:hover, &:focus {
+            color: $main-purple;
+        }
     }
 
     .call_to_action {
@@ -42,13 +46,9 @@
         padding: 10px 20px;
 
 
-        &:hover {
-            background-color: $light-purple;
-        }
-
-
-        &:focus {
-            background-color: $extra-light-purple;
+        &:hover, &:focus {
+            color: $main-white;
+            background-color: $main-green;
         }
     }
 }
