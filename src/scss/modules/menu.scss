@@ -9,9 +9,6 @@
     color: $main-white;
     box-sizing: border-box;
     background-color: $main-purple;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
     width: $menu-width;
     z-index: 2;
 
@@ -142,7 +139,10 @@
     }
 
     #menu-scroll-container {
+        display: flex;
+        flex-direction: column;
         overflow-y: scroll;
+        height: 100vh;
 
 
         #search-container {
