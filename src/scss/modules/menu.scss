@@ -14,7 +14,7 @@
     flex-direction: column;
     width: $menu-width;
     z-index: 2;
-    overflow-y: scroll;
+    // overflow-y: scroll;
 
 
     @media only screen and (max-width: $max-mobile-width) {
