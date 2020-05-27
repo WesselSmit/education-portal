@@ -4,8 +4,6 @@
 @mixin search {
     //used calc() to include padding of account for first list item padding (7.5px)
     padding: 20px 19px calc(20px - 7.5px) 19px;
-    position: fixed;
-    background-color: $main-purple;
 
 
     fieldset {

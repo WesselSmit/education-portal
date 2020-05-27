@@ -159,4 +159,19 @@
             @include secondary-links;
         }
     }
+
+
+    &:not(.hide) {
+        @media only screen and (max-width: $max-tablet-width) {
+            #search-container {
+                position: fixed;
+                background-color: $main-purple;
+            }
+
+
+            #menu-primary-links {
+                margin-top: 60px;
+            }
+        }
+    }
 }
