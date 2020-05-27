@@ -14,7 +14,6 @@
     flex-direction: column;
     width: $menu-width;
     z-index: 2;
-    // overflow-y: scroll;
 
 
     @media only screen and (max-width: $max-mobile-width) {
@@ -142,18 +141,22 @@
         }
     }
 
-
-    #search-container {
-        @include search;
-    }
+    #menu-scroll-container {
+        overflow-y: scroll;
 
 
-    #menu-primary-links {
-        @include primary-links;
-    }
+        #search-container {
+            @include search;
+        }
 
 
-    #menu-secondary-links {
-        @include secondary-links;
+        #menu-primary-links {
+            @include primary-links;
+        }
+
+
+        #menu-secondary-links {
+            @include secondary-links;
+        }
     }
 }
