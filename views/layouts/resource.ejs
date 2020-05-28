@@ -1,13 +1,13 @@
-<section id="resource">
-    <h2><%= title %></h2>
-    <a target="_blank" href="<%= link.url %>"><%= link.url %></a>
+<main id="<%= pageName %>" stylingName="resource">
+    <h2><%= resource.title %></h2>
+    <a target="_blank" href="<%= resource.link.url %>"><%= resource.link.url %></a>
 
-    <% sections.forEach((section, index) => { %>
+    <% resource.sections.forEach((section, index) => { %>
     <article>
         <h3><%= section.title %>
 
             <% if (index === 0 || index === 1) { %>
-            <%= title %>?
+            <%= resource.title %>?
             <% } %>
 
         </h3>
@@ -25,5 +25,5 @@
     </article>
     <% }) %>
 
-    <a class="call_to_action" target="_blank" href="<%= link.url %>"><%= link.text %></a>
-</section>
+    <a class="call_to_action" target="_blank" href="<%= resource.link.url %>"><%= resource.link.text %></a>
+</main>
