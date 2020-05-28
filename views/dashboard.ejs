@@ -2,8 +2,7 @@
 
     <div id="schedule">
         <% schedules.forEach(schedule => { %>
-        <p><%= schedule.scheduleId %></p>
-        <p><%= schedule.startDateTime.day %>-<%= schedule.startDateTime.month %>-<%= schedule.startDateTime.year %></p>
+        <p><%= schedule.day %>-<%= schedule.month %>-<%= schedule.year %></p>
         <% }) %>
     </div>
 

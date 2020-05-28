@@ -8,7 +8,9 @@ const { changeDateTime, groupPerDay } = require('#data/mongodb/dataTransformer')
 const schedules = async () => {
     const rawSchedules = await fetcher('schedule')
     const formattedDates = changeDateTime(rawSchedules.items)
-    const arrayOfDates = groupPerDay(iets)
+    const arrayOfDates = groupPerDay(formattedDates)
+
+    console.log(arrayOfDates)
 
     return arrayOfDates
 }
