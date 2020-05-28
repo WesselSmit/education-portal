@@ -51,6 +51,8 @@
         "#builds": "build-scripts",
         "#src": "src",
         "#public": "public",
-        "#views": "views"
+        "#views": "views",
+        "#routes": "routes",
+        "#data": "data"
     }
 }
