@@ -3,7 +3,6 @@
 @import "menu/primary-links";
 @import "menu/secondary-links";
 
-
 #menu {
     @include font-Regular;
     color: $main-white;
@@ -12,21 +11,17 @@
     width: $menu-width;
     z-index: 2;
 
-
     @media only screen and (max-width: $max-mobile-width) {
         width: 100vw;
     }
-
 
     @media only screen and (max-width: $max-tablet-width) {
         position: fixed;
     }
 
-
     &.hide {
         @media only screen and (max-width: $max-tablet-width) {
             @include hide;
-
 
             #home-icon {
                 background-image: url(../media/icons/hva-logo-purple.svg);
@@ -35,7 +30,6 @@
                 right: 20px;
             }
 
-
             #menu-icon {
                 top: 20px;
                 left: 20px;
@@ -43,12 +37,10 @@
             }
         }
 
-
-        &+#menu-overlay {
+        & + #menu-overlay {
             @include hide;
         }
     }
-
 
     &:not(.hide) {
         @media only screen and (max-width: $max-tablet-width) {
@@ -56,10 +48,13 @@
                 @include hide;
             }
         }
+
+        &:hover {
+            background-color: $light-purple;
+        }
     }
 
-
-    &+#menu-overlay {
+    & + #menu-overlay {
         position: fixed;
         top: 0;
         left: 0;
@@ -68,12 +63,10 @@
         background-color: $opacity-black;
         z-index: 1;
 
-
         @media only screen and (min-width: $max-tablet-width) {
             @include hide;
         }
     }
-
 
     #mobile-menu-header {
         @media only screen and (max-width: $max-tablet-width) {
@@ -86,13 +79,13 @@
         }
     }
 
-
-    #home-icon-container:focus #home-icon {
-        background-color: $extra-light-purple;
-        border: 1px solid $extra-light-purple;
-        border-radius: 999px;
+    &:not(.hide) {
+        #home-icon-container:focus #home-icon {
+            background-color: $extra-light-purple;
+            border: 1px solid $extra-light-purple;
+            border-radius: 999px;
+        }
     }
-
 
     #home-icon {
         position: fixed;
@@ -108,21 +101,13 @@
         border: 1px solid transparent;
         border-radius: 999px;
 
-
-        &:hover {
-            background-color: $light-purple;
-        }
-
-
         @media only screen and (max-width: $max-tablet-width) {
             @include hide;
         }
     }
 
-
     #menu-icon {
         @include hide;
-
 
         @media only screen and (max-width: $max-tablet-width) {
             position: fixed;
@@ -137,29 +122,24 @@
         }
     }
 
-
     #menu-scroll-container {
         display: flex;
         flex-direction: column;
         overflow-y: scroll;
         height: 100vh;
 
-
         #search-container {
             @include search;
         }
-
 
         #menu-primary-links {
             @include primary-links;
         }
 
-
         #menu-secondary-links {
             @include secondary-links;
         }
     }
-
 
     &:not(.hide) {
         @media only screen and (max-width: $max-tablet-width) {
@@ -167,7 +147,6 @@
                 position: fixed;
                 background-color: $main-purple;
             }
-
 
             #menu-primary-links {
                 margin-top: 70px;
