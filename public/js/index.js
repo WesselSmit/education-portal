@@ -56,6 +56,18 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
   });
 }
 
+var data = {
+  name: 'Sjors'
+};
+var options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+};
+fetch('/', options);
+
 },{"./modules/search.mjs":2,"./modules/utils.mjs":3}],2:[function(require,module,exports){
 "use strict";
 

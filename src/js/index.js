@@ -1,7 +1,6 @@
 import * as utils from './modules/utils.mjs'
 import * as search from './modules/search.mjs'
 
-
 //menu 
 const menuIcon = document.getElementById('menu-icon')
 const menu = document.getElementById('menu')
@@ -50,3 +49,14 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
         }
     })
 }
+
+const data = { name: 'Sjors' }
+const options = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+}
+
+fetch('/', options)

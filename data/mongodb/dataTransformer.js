@@ -21,7 +21,7 @@ function groupPerDay(data) {
             scheduleDate.year === currentDate.year) {
             const fullDate = createFullDate(scheduleDate)
             const dateInArray = dates.find(date => date.fullDate === fullDate)
-            dateInArray.schedules.push(scheduleDate)
+            dateInArray.schedules.push(schedule)
         } else {
             dates.push(dateObj(scheduleDate))
         }
