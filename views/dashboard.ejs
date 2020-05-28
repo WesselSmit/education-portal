@@ -1,3 +1,10 @@
-<% schedules.forEach(schedule => { %>
-<p><%= schedule.scheduleId %></p>
-<% }) %>
+<section id="dashboard">
+
+    <div id="schedule">
+        <% schedules.forEach(schedule => { %>
+        <p><%= schedule.scheduleId %></p>
+        <p><%= schedule.startDateTime.day %>-<%= schedule.startDateTime.month %>-<%= schedule.startDateTime.year %></p>
+        <% }) %>
+    </div>
+
+</section>
