@@ -2,12 +2,15 @@ const express = require('express')
 const router = express.Router()
 
 const fetcher = require('#data/mongodb/fetcher')
-const { changeDateTime } = require('#data/mongodb/dataTransformer')
+const { changeDateTime, groupPerDay } = require('#data/mongodb/dataTransformer')
 
 // MongoDB
 const schedules = async () => {
     const rawSchedules = await fetcher('schedule')
-    return await changeDateTime(rawSchedules)
+    const formattedDates = changeDateTime(rawSchedules.items)
+    const arrayOfDates = groupPerDay(iets)
+
+    return arrayOfDates
 }
 
 module.exports = router

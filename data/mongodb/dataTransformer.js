@@ -1,15 +1,53 @@
-const changeDateTime = async (data) => {
-    const items = data.items
-
-    items.forEach(item => {
-        item.startDateTime = fix(item.startDateTime)
-        item.endDateTime = fix(item.endDateTime)
+function changeDateTime(data) {
+    data.forEach(item => {
+        item.startDateTime = formatDateTime(item.startDateTime)
+        item.endDateTime = formatDateTime(item.endDateTime)
     })
 
-    return items
+    return data
 }
 
-function fix(string) {
+function groupPerDay(data) {
+    const dates = []
+    let currentDate = data[0].startDateTime
+
+    dates.push(dateObj(currentDate))
+
+    data.forEach(schedule => {
+        const scheduleDate = schedule.startDateTime
+
+        if (scheduleDate.day === currentDate.day &&
+            scheduleDate.month === currentDate.month &&
+            scheduleDate.year === currentDate.year) {
+            const fullDate = createFullDate(scheduleDate)
+            const dateInArray = dates.find(date => date.fullDate === fullDate)
+            dateInArray.schedules.push(scheduleDate)
+        } else {
+            dates.push(dateObj(scheduleDate))
+        }
+
+        currentDate = scheduleDate
+    })
+
+    return dates
+}
+
+
+function dateObj(date) {
+    return {
+        day: date.day,
+        month: date.month,
+        year: date.year,
+        fullDate: createFullDate(date),
+        schedules: []
+    }
+}
+
+function createFullDate(date) {
+    return `${date.day}-${date.month}-${date.year}`
+}
+
+function formatDateTime(string) {
     // Date
     const dateArray = string.split('T')[0].split('-')
 
@@ -27,5 +65,6 @@ function fix(string) {
 }
 
 module.exports = {
-    changeDateTime
+    changeDateTime,
+    groupPerDay
 }
