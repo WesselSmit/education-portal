@@ -19,7 +19,7 @@ const schedules = async () => {
 
 module.exports = router
     .get('/', async (req, res) => res.render('dashboard', { schedules: await schedules(), pageName: 'dashboard' }))
-    .post('/', (req, res) => console.log(req.body))
+    .get('/schedule', async (req, res) => res.json(await schedules()))
     .get('/account', (req, res) => res.send('account'))
     .get('/timetable', (req, res) => res.send('timetable'))
     .get('/course_overview', (req, res) => res.send('course_overview'))

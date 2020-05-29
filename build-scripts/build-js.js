@@ -10,10 +10,10 @@ const js_folder = 'public/js'
 gulp.task('js', (done) => {
     ['index.js'].map((entry) => {
         return browserify({
-                entries: ['src/js/' + entry],
-                transform: [babelify.configure({ presets: ["@babel/preset-env"] })],
-                debug: true
-            })
+            entries: ['src/js/' + entry],
+            transform: [babelify.configure({ presets: ["@babel/preset-env"] })],
+            debug: true
+        })
             .bundle()
             .pipe(source(entry))
             .pipe(buffer())

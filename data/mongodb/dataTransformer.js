@@ -24,6 +24,9 @@ function groupPerDay(data) {
             dateInArray.schedules.push(schedule)
         } else {
             dates.push(dateObj(scheduleDate))
+            const fullDate = createFullDate(scheduleDate)
+            const dateInArray = dates.find(date => date.fullDate === fullDate)
+            dateInArray.schedules.push(schedule)
         }
 
         currentDate = scheduleDate
