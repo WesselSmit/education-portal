@@ -1,0 +1,39 @@
+<div id="schedule">
+
+    <h2>Dagrooster</h2>
+
+    <div id="navigator">
+        <img src="/media/icons/arrow-left.svg"></img>
+        <span><%= schedules[0].day %>-<%= schedules[0].month %>-<%= schedules[0].year %></span>
+        <img src="/media/icons/arrow-right.svg"></img>
+    </div>
+
+    <% schedules[1].schedules.forEach(schedule => { %>
+    <div class="schedule-course">
+        <!-- Time -->
+        <p>
+            <span><%= schedule.startDateTime.time %></span>
+            <span>-</span>
+            <span><%= schedule.endDateTime.time %></span>
+        </p>
+
+        <!-- Coursename -->
+        <p><%= schedule._links.courses[0].title %></p>
+
+        <!-- Room -->
+        <% if (schedule._embedded === undefined) { %>
+        <p>No room</p>
+        <% } else { %>
+        <p><%= schedule._embedded.rooms[0].abbreviation %></p>
+        <% } %>
+
+        <!-- Teacher -->
+        <p><%= schedule._links.lecturers[0].title %></p>
+    </div>
+    <% }) %>
+
+    <a target="_blank" href="https://rooster.hva.nl/schedule">Volledig rooster
+        <img src="/media/icons/arrow-right.svg"></img>
+    </a>
+
+</div>
