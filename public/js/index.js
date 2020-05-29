@@ -7,11 +7,17 @@ var utils = _interopRequireWildcard(require("./modules/utils.mjs"));
 
 var search = _interopRequireWildcard(require("./modules/search.mjs"));
 
+var _schedule = _interopRequireDefault(require("./modules/schedule.mjs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-//menu 
+// Dashboard interaction with Timetable
+(0, _schedule["default"])(); //menu 
+
 var menuIcon = document.getElementById('menu-icon');
 var menu = document.getElementById('menu');
 
@@ -56,19 +62,91 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
   });
 }
 
-var data = {
-  name: 'Sjors'
-};
+},{"./modules/schedule.mjs":2,"./modules/search.mjs":3,"./modules/utils.mjs":4}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = scheduleHandler;
+var scheduleMaster = document.querySelector('#schedule');
+var scheduleContainer = scheduleMaster.querySelector('#schedules-container');
+var dateElement = scheduleMaster.querySelector('#navigator span');
+var previousSchedule = scheduleMaster.querySelector('#navigator img:first-of-type');
+var nextSchedule = scheduleMaster.querySelector('#navigator img:last-of-type');
+
+function scheduleHandler() {
+  var scheduleIndex = 0;
+  arrowHandler(scheduleIndex);
+  previousSchedule.addEventListener('click', function () {
+    scheduleIndex--;
+    arrowHandler(scheduleIndex);
+    renderSchedules(scheduleIndex);
+  });
+  nextSchedule.addEventListener('click', function () {
+    scheduleIndex++;
+    arrowHandler(scheduleIndex);
+    renderSchedules(scheduleIndex);
+  });
+} // Helpers
+
+
+function renderSchedules(scheduleIndex) {
+  getSchedules().then(function (schedules) {
+    var schedule = schedules[scheduleIndex];
+    var divs = schedule.schedules.map(function (schedule) {
+      return createScheduleItem(schedule);
+    });
+    dateElement.textContent = "".concat(schedule.day, "-").concat(schedule.month, "-").concat(schedule.year);
+    scheduleContainer.textContent = '';
+    divs.forEach(function (div) {
+      return scheduleContainer.append(div);
+    });
+  });
+}
+
+function arrowHandler(index) {
+  index === 0 ? previousSchedule.classList.add('disabled') : previousSchedule.classList.remove('disabled');
+  index === 4 ? nextSchedule.classList.add('disabled') : nextSchedule.classList.remove('disabled');
+}
+
+function createScheduleItem(schedule) {
+  var schedule_time = "".concat(schedule.startDateTime.time, " - ").concat(schedule.endDateTime.time);
+  var schedule_coursename = schedule._links.courses[0].title;
+  var schedule_teacher = schedule._links.lecturers[0].title;
+  var schedule_room;
+  schedule._embedded ? schedule_room = schedule._embedded.rooms[0].abbreviation : schedule_room = 'No room';
+  var div = document.createElement('div');
+  var time = document.createElement('p');
+  var coursename = document.createElement('p');
+  var room = document.createElement('p');
+  var teacher = document.createElement('p');
+  time.textContent = schedule_time;
+  coursename.textContent = schedule_coursename;
+  room.textContent = schedule_room;
+  teacher.textContent = schedule_teacher;
+  div.append(time);
+  div.append(coursename);
+  div.append(room);
+  div.append(teacher);
+  div.classList.add('schedule-course');
+  return div;
+}
+
 var options = {
-  method: 'POST',
+  method: 'GET',
   headers: {
     'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(data)
-};
-fetch('/', options);
+  }
+}; // Data
 
-},{"./modules/search.mjs":2,"./modules/utils.mjs":3}],2:[function(require,module,exports){
+function getSchedules() {
+  return fetch('/schedule', options).then(function (res) {
+    return res.json();
+  });
+}
+
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -101,7 +179,7 @@ function reset(e) {
   focus(e);
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
