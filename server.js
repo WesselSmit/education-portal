@@ -23,6 +23,4 @@ app
     .use(express.static('public'))
     .use('/', indexRouter, resourceRouter)
 
-
-
 server.listen(port, () => console.log(`App now listening on port ${port}`))

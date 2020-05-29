@@ -22,7 +22,7 @@
 
             <!-- Room -->
             <% if (schedule._embedded === undefined) { %>
-            <p>No room</p>
+            <p>Geen lokaal</p>
             <% } else { %>
             <p><%= schedule._embedded.rooms[0].abbreviation %></p>
             <% } %>

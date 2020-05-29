@@ -1,6 +1,20 @@
 import * as utils from './modules/utils.mjs'
 import * as search from './modules/search.mjs'
 
+
+const page = document.querySelector('main').id.toLowerCase()
+
+const socket = io()
+
+socket.emit('join', page)
+
+socket.on('urgent-announcement', announcement => {
+    console.log(announcement)
+})
+
+
+
+
 //menu 
 const menuIcon = document.getElementById('menu-icon')
 const menu = document.getElementById('menu')
@@ -49,6 +63,9 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
         }
     })
 }
+
+
+
 
 const data = { name: 'Sjors' }
 const options = {
