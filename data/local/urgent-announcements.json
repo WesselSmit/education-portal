@@ -1,33 +1,33 @@
 {
     "announcements": [{
             "newsItemId": "3a502d02-a19a-11ea-bb37-0242ac130002",
-            "title": "R. Merkuur ziek, les: HCI 14:00 - 15:30 (LWB D1.21) vervalt",
-            "secondsBeforeShow": "10",
+            "title": "Ronald Merkuur is ziek, je HCI les van 14:00 - 15:30 vervalt",
+            "secondsBeforeShow": "20",
             "urgent": true,
             "tags": []
         },
         {
             "newsItemId": "3a50a48a-a19a-11ea-bb37-0242ac130002",
-            "title": "lokaal wijziging voor UCD (15:30 - 16:00), nieuwe lokaal: LWB D3.11",
-            "secondsBeforeShow": "20",
-            "urgent": true,
-            "tags": []
-        }, {
-            "newsItemId": "3a50a106-a19a-11ea-bb37-0242ac130002",
-            "title": "NPD tentamen gaat niet door in verband met corona maatregelen",
-            "secondsBeforeShow": "30",
-            "urgent": true,
-            "tags": []
-        }, {
-            "newsItemId": "3a50a32c-a19a-11ea-bb37-0242ac130002",
-            "title": "Nieuw cijfer geregistreerd op SIS: 9.5 voor IA",
+            "title": "Lokaal wijziging voor UCD (15:30 - 16:00), het nieuwe lokaal is LWB D3.11",
             "secondsBeforeShow": "40",
             "urgent": true,
             "tags": []
         }, {
+            "newsItemId": "3a50a106-a19a-11ea-bb37-0242ac130002",
+            "title": "New Product Design tentamen van 17:00 - 18:00 gaat niet door ivm Corona maatregelen",
+            "secondsBeforeShow": "60",
+            "urgent": true,
+            "tags": []
+        }, {
+            "newsItemId": "3a50a32c-a19a-11ea-bb37-0242ac130002",
+            "title": "Nieuw cijfer geregistreerd op SIS: 9.5 voor Informatie Design",
+            "secondsBeforeShow": "80",
+            "urgent": true,
+            "tags": []
+        }, {
             "newsItemId": "3a50a5de-a19a-11ea-bb37-0242ac130002",
-            "title": "Scholen dicht vanaf 18:00 in verband met coronas",
-            "secondsBeforeShow": "50",
+            "title": "Wegens Corona zijn alle HvA faciliteiten vanaf 18:00 gesloten",
+            "secondsBeforeShow": "100",
             "urgent": true,
             "tags": []
         }
