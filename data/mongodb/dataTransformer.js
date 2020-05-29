@@ -19,14 +19,10 @@ function groupPerDay(data) {
         if (scheduleDate.day === currentDate.day &&
             scheduleDate.month === currentDate.month &&
             scheduleDate.year === currentDate.year) {
-            const fullDate = createFullDate(scheduleDate)
-            const dateInArray = dates.find(date => date.fullDate === fullDate)
-            dateInArray.schedules.push(schedule)
+            addSchedule(dates, schedule, scheduleDate)
         } else {
             dates.push(dateObj(scheduleDate))
-            const fullDate = createFullDate(scheduleDate)
-            const dateInArray = dates.find(date => date.fullDate === fullDate)
-            dateInArray.schedules.push(schedule)
+            addSchedule(dates, schedule, scheduleDate)
         }
 
         currentDate = scheduleDate
@@ -44,6 +40,12 @@ function dateObj(date) {
         fullDate: createFullDate(date),
         schedules: []
     }
+}
+
+function addSchedule(dates, schedule, scheduleDate) {
+    const fullDate = createFullDate(scheduleDate)
+    const dateInArray = dates.find(date => date.fullDate === fullDate)
+    dateInArray.schedules.push(schedule)
 }
 
 function createFullDate(date) {
