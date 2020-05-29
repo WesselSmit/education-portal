@@ -37,7 +37,7 @@
             }
         }
 
-        & + #menu-overlay {
+        &+#menu-overlay {
             @include hide;
         }
     }
@@ -48,13 +48,9 @@
                 @include hide;
             }
         }
-
-        &:hover {
-            background-color: $light-purple;
-        }
     }
 
-    & + #menu-overlay {
+    &+#menu-overlay {
         position: fixed;
         top: 0;
         left: 0;
