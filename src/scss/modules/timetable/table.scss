@@ -24,6 +24,10 @@
             font-size: 16px;
         }
 
+        img:not(.disabled) {
+            cursor: pointer;
+        }
+
         .disabled {
             pointer-events: none;
             opacity: .5;
@@ -38,7 +42,8 @@
         padding: 15px 20px;
         border-bottom: 1px solid $light-grey;
 
-        p:first-of-type, p:nth-of-type(3) {
+        p:first-of-type,
+        p:nth-of-type(3) {
             @include font-Bold;
         }
     }
