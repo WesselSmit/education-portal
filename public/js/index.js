@@ -295,7 +295,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 var template = document.createElement('template');
 exports.WC_urgentAnnouncement = template;
-template.innerHTML = "\n<style>\n    div {\n        display: grid;\n        grid-template-columns: 1fr 60px;\n        grid-template-rows: 40px;\n        align-items: center;\n    }\n    div.hide {\n        position: absolute;\n        left: -9999px;\n    }\n    p {\n        margin: 0;\n        padding-left: 30px;\n        color: black;\n        justify-self: start;\n    }\n    img {\n        padding-right: 20px;\n        grid-column: 2 / 3;\n        justify-self: end;\n        cursor: pointer;\n    }\n</style>\n<div class=\"hide\">\n    <p></p>\n    <img src=\"./media/icons/notification-exit.svg\" alt=\"hide notification\">\n</div>";
+template.innerHTML = "\n<style>\n    div {\n        display: grid;\n        grid-template-columns: 1fr 50px;\n        grid-template-rows: 50px;\n        align-items: center;\n        background-color: #ECE7FA;\n    }\n    div.hide {\n        position: absolute;\n        left: -9999px;\n    }\n    p {\n        margin: 0;\n        padding-left: 30px;\n        color: black;\n        justify-self: start;\n    }\n    @media only screen and (max-width: 425px) {\n        p {\n            padding-left: 10px;\n        }\n    }\n    img {\n        padding-right: 20px;\n        grid-column: 2 / 3;\n        justify-self: end;\n        cursor: pointer;\n    }\n</style>\n<div class=\"hide\">\n    <p></p>\n    <img src=\"./media/icons/notification-exit.svg\" alt=\"hide notification\">\n</div>";
 
 var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
   _inherits(urgentAnnouncement, _HTMLElement);
@@ -353,11 +353,13 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
     key: "show",
     value: function show() {
       this.shadowRoot.querySelector('div').classList.remove('hide');
+      document.querySelector('main').classList.add('showsNotification');
     }
   }, {
     key: "hide",
     value: function hide() {
       this.shadowRoot.querySelector('div').classList.add('hide');
+      document.querySelector('main').classList.remove('showsNotification');
     }
   }, {
     key: "store",

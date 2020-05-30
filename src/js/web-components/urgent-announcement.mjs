@@ -7,9 +7,10 @@ template.innerHTML = `
 <style>
     div {
         display: grid;
-        grid-template-columns: 1fr 60px;
-        grid-template-rows: 40px;
+        grid-template-columns: 1fr 50px;
+        grid-template-rows: 50px;
         align-items: center;
+        background-color: #ECE7FA;
     }
     div.hide {
         position: absolute;
@@ -20,6 +21,11 @@ template.innerHTML = `
         padding-left: 30px;
         color: black;
         justify-self: start;
+    }
+    @media only screen and (max-width: 425px) {
+        p {
+            padding-left: 10px;
+        }
     }
     img {
         padding-right: 20px;
@@ -75,10 +81,12 @@ class urgentAnnouncement extends HTMLElement {
 
     show() {
         this.shadowRoot.querySelector('div').classList.remove('hide')
+        document.querySelector('main').classList.add('showsNotification')
     }
 
     hide() {
         this.shadowRoot.querySelector('div').classList.add('hide')
+        document.querySelector('main').classList.remove('showsNotification')
     }
 
     store() {

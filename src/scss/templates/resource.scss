@@ -1,56 +1,104 @@
 [stylingName=resource] {
     @include text;
-    padding: 10vh 10vw;
+    display: grid;
+    grid-template-columns: 1fr;
 
 
-    @media only screen and (max-width: $max-mobile-width) {
-        //used calc(header menu + whitespace)
-        padding: calc(60px + 10px) 23px;
-    }
+    &.showsNotification {
+        section {
+            padding-top: calc(10vh - 50px);
+        }
 
 
-    h2 {
-        @include h2;
-    }
+        @media only screen and (max-width: $max-tablet-width) {
+            padding-top: 60px;
 
 
-    h3 {
-        @include h3;
-    }
+            section {
+                padding-top: 30px;
+            }
 
 
-    article {
-        margin-top: 25px;
+            @media only screen and (min-width: $max-mobile-width) {
+                margin: 0 10vw;
 
-        p {
-            margin-bottom: 10px;
+
+                section {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+        }
+
+
+        @media only screen and (max-width: $max-mobile-width) {
+            urgent-announcement {
+                margin-right: 23px;
+                margin-left: 23px;
+                font-size: 12px;
+                line-height: 1.2;
+            }
         }
     }
 
 
-    a {
-        display: block;
-        color: $main-black;
+    section {
+        padding: 10vh 10vw;
 
-        &:hover, &:focus {
-            color: $main-purple;
+
+        @media only screen and (max-width: $max-mobile-width) {
+            //used calc(header menu + whitespace)
+            padding: calc(60px + 10px) 23px;
         }
-    }
-
-    
-    .call_to_action {
-        width: fit-content;
-        margin-top: 30px;
-        text-transform: uppercase;
-        text-decoration: none;
-        background-color: $main-purple;
-        color: $main-white;
-        padding: 10px 20px;
 
 
-        &:hover, &:focus {
+        h2 {
+            @include h2;
+        }
+
+
+        h3 {
+            @include h3;
+        }
+
+
+        article {
+            margin-top: 25px;
+
+
+            p {
+                margin-bottom: 10px;
+            }
+        }
+
+
+        a {
+            display: block;
+            color: $main-black;
+
+
+            &:hover,
+            &:focus {
+                color: $main-purple;
+            }
+        }
+
+
+        .call_to_action {
+            width: fit-content;
+            margin-top: 30px;
+            text-transform: uppercase;
+            text-decoration: none;
+            background-color: $main-purple;
             color: $main-white;
-            background-color: $main-green;
+            padding: 10px 20px;
+
+
+            &:hover,
+            &:focus {
+                color: $main-white;
+                background-color: $main-green;
+            }
         }
     }
 }

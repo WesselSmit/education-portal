@@ -1,29 +1,34 @@
 <main id="<%= pageName %>" stylingName="resource">
-    <h2><%= resource.title %></h2>
-    <a target="_blank" href="<%= resource.link.url %>"><%= resource.link.url %></a>
 
-    <% resource.sections.forEach((section, index) => { %>
-    <article>
-        <h3><%= section.title %>
+    <urgent-announcement message="" uid=""></urgent-announcement>
 
-            <% if (index === 0 || index === 1) { %>
-            <%= resource.title %>?
-            <% } %>
+    <section>
+        <h2><%= resource.title %></h2>
+        <a target="_blank" href="<%= resource.link.url %>"><%= resource.link.url %></a>
 
-        </h3>
+        <% resource.sections.forEach((section, index) => { %>
+        <article>
+            <h3><%= section.title %>
 
-        <% section.content.forEach(item => { 
+                <% if (index === 0 || index === 1) { %>
+                <%= resource.title %>?
+                <% } %>
+
+            </h3>
+
+            <% section.content.forEach(item => { 
         const key = Object.getOwnPropertyNames(item)[0] %>
 
-        <% if (key === 'text') { %>
-        <p><%= item.text %></p>
-        <% } else if (key ==='link') { %>
-        <a target="_blank" href="<%= item.link.url %>"><%= item.link.text %></a>
-        <% } %>
+            <% if (key === 'text') { %>
+            <p><%= item.text %></p>
+            <% } else if (key ==='link') { %>
+            <a target="_blank" href="<%= item.link.url %>"><%= item.link.text %></a>
+            <% } %>
 
+            <% }) %>
+        </article>
         <% }) %>
-    </article>
-    <% }) %>
 
-    <a class="call_to_action" target="_blank" href="<%= resource.link.url %>"><%= resource.link.text %></a>
+        <a class="call_to_action" target="_blank" href="<%= resource.link.url %>"><%= resource.link.text %></a>
+    </section>
 </main>

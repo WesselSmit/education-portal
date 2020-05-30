@@ -1,0 +1,109 @@
+@import 'dashboard/timetable';
+
+#dashboard {
+    @include text;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    grid-column-gap: 5vw;
+    grid-row-gap: 50px;
+    padding: 5vh 0;
+
+
+    @media only screen and (min-width: 1300px) {
+        &>div {
+            &:nth-child(odd) {
+                padding: 0 5vw 0 0;
+            }
+
+
+            &:nth-child(even) {
+                padding: 0 0 0 5vw;
+            }
+        }
+    }
+
+
+    @media only screen and (max-width: 1300px) {
+        padding: 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        grid-row-gap: 50px;
+
+
+        &.showsNotification {
+            padding: 0;
+            grid-template-rows: 50px auto auto auto auto;
+
+
+            @media only screen and (min-width: $max-mobile-width) and (max-width: $max-tablet-width) {
+                padding: calc(60px + 10px) 5vw;
+
+
+                &>div {
+                    padding: 0;
+                }
+            }
+
+
+            @media only screen and (max-width: $max-mobile-width) {
+                padding: calc(60px + 10px) 5vw;
+                grid-row-gap: 30px;
+            }
+        }
+
+
+        &>div {
+            padding: 0 5vw;
+        }
+
+
+        @media only screen and(max-width: $max-mobile-width) {
+            &>div {
+                padding: 0;
+            }
+        }
+    }
+
+
+    &.showsNotification {
+        @media only screen and (min-width: $max-mobile-width) {
+            padding: 0;
+        }
+
+
+        @media only screen and (min-width: $max-mobile-width) and (max-width: 1300px) {
+            padding: 0;
+
+
+            @media only screen and(max-width: $max-tablet-width) {
+                padding: calc(60px + 10px) 5vw;
+            }
+        }
+    }
+
+
+    &:not(.showsNotification) {
+        @media only screen and (max-width: $max-tablet-width) {
+            padding-top: 30px;
+        }
+
+
+        @media only screen and (max-width: $max-mobile-width) {
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+    }
+
+
+    urgent-announcement {
+        grid-row: 1 / 2;
+        grid-column: 1 / -1;
+
+
+        @media only screen and(max-width: $max-mobile-width) {
+            font-size: 12px;
+            line-height: 1.2;
+        }
+    }
+}
