@@ -48,24 +48,6 @@
         }
 
 
-        &:hover,
-        &:focus {
-            li object {
-                position: absolute;
-                top: 0;
-                right: 0;
-                background-color: $extra-light-purple;
-                border-color: $light-purple;
-
-
-                a {
-                    background-color: $extra-light-purple;
-                    border-color: $light-purple;
-                }
-            }
-        }
-
-
         li {
             position: relative;
 
@@ -89,41 +71,6 @@
 
                 @media only screen and (max-width: $max-tablet-width) {
                     display: none;
-                }
-            }
-
-
-            object {
-                @include hide;
-
-
-                &:focus-within {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                }
-
-
-                a {
-                    background-color: $main-purple;
-                    padding: 0;
-                    width: 21px;
-                    height: 21px;
-                    border: 1px solid $main-purple;
-                    border-radius: 999px;
-                    background-image: url(../media/icons/detail-small.svg);
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    position: absolute;
-                    top: -2px;
-                    right: 0;
-
-
-                    &:hover,
-                    &:focus {
-                        background-color: $extra-light-purple;
-                        border-color: $light-purple;
-                    }
                 }
             }
         }
