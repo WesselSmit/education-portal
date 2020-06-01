@@ -76,12 +76,16 @@
         }
     }
 
-    &:not(.hide) {
-        #home-icon-container:focus #home-icon {
-            background-color: $extra-light-purple;
-            border: 1px solid $extra-light-purple;
-            border-radius: 999px;
-        }
+    #home-icon-container:hover #home-icon {
+        background-color: $light-purple;
+        border: 1px solid $light-purple;
+        border-radius: 999px;
+    }
+
+    #home-icon-container:focus #home-icon {
+        background-color: $extra-light-purple;
+        border: 1px solid $extra-light-purple;
+        border-radius: 999px;
     }
 
     #home-icon {
