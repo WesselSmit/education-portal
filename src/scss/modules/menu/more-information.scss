@@ -1,0 +1,50 @@
+@mixin more-information {
+    color: $main-white;
+    text-decoration: none;
+    display: block;
+    padding: 5px 20px;
+    margin-bottom: 10px;
+
+
+    &:hover {
+        background-color: $light-purple;
+    }
+
+
+    &:focus {
+        background-color: $extra-light-purple;
+        outline: none;
+    }
+
+
+    div {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: 18px auto;
+        grid-column-gap: 10px;
+
+
+        img {
+            grid-row: 1 / 2;
+            align-self: start;
+            max-height: 30px;
+        }
+
+
+        p {
+            grid-column: 2;
+
+
+            &:first-of-type {
+                font-size: 18px;
+                text-transform: uppercase;
+            }
+
+
+            &:last-of-type {
+                font-size: 12px;
+                color: $light-white;
+            }
+        }
+    }
+}
