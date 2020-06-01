@@ -5,9 +5,6 @@ import urgentAnnouncement from './web-components/urgent-announcement.mjs'
 
 const page = document.querySelector('main').id.toLowerCase()
 
-//init web-components
-const template = urgentAnnouncement
-
 
 //init dashboard
 if (page === 'dashboard') {
