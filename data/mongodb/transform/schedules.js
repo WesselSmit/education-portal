@@ -1,14 +1,16 @@
-const { formatDateTime } = require('./utlis')
+const fetcher = require('../fetcher')
+const { createFullDate, formatDateTime } = require('./utlis')
 
-function changeDateTime(data) {
-    data.forEach(item => {
-        item.startDateTime = formatDateTime(item.startDateTime)
-        item.endDateTime = formatDateTime(item.endDateTime)
-    })
+module.exports = async function getSchedules() {
+    const rawSchedules = await fetcher('schedule')
+    const formattedDates = await changeDateTime(rawSchedules.items)
+    const arrayOfDates = groupPerDay(formattedDates)
 
-    return data
+    return arrayOfDates
 }
 
+
+// Helpers
 function groupPerDay(data) {
     const dates = []
     let currentDate = data[0].startDateTime
@@ -33,6 +35,15 @@ function groupPerDay(data) {
     return dates
 }
 
+function changeDateTime(data) {
+    data.forEach(item => {
+        item.startDateTime = formatDateTime(item.startDateTime)
+        item.endDateTime = formatDateTime(item.endDateTime)
+    })
+
+    return data
+}
+
 function dateObj(date) {
     return {
         day: date.day,
@@ -47,13 +58,4 @@ function addSchedule(dates, schedule, scheduleDate) {
     const fullDate = createFullDate(scheduleDate)
     const dateInArray = dates.find(date => date.fullDate === fullDate)
     dateInArray.schedules.push(schedule)
-}
-
-function createFullDate(date) {
-    return `${date.day}-${date.month}-${date.year}`
-}
-
-module.exports = {
-    changeDateTime,
-    groupPerDay
 }

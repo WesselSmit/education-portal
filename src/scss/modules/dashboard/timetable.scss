@@ -14,13 +14,15 @@ schedule-widget {
 
     #navigator {
         background-color: $light-grey;
-        padding: 15px 20px;
+        padding: 5px 10px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        color: $main-purple;
+        font-size: 16px;
 
-        * {
-            color: $main-purple;
-            font-size: 16px;
+        img {
+            padding: 10px;
         }
 
         img:not(.disabled) {

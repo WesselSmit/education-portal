@@ -19,11 +19,16 @@ p {
 }
 #navigator {
     background-color: #DDDDDD;
-    padding: 15px 20px;
+    padding: 5px 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     color: #25167A;
     font-size: 16px;
+}
+
+#navigator img {
+    padding: 10px;
 }
 
 #navigator img:not(.disabled) {

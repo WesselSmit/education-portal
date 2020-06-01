@@ -15,6 +15,11 @@ function formatDateTime(string) {
     }
 }
 
+function createFullDate(date) {
+    return `${date.day}-${date.month}-${date.year}`
+}
+
 module.exports = {
+    createFullDate,
     formatDateTime
 }

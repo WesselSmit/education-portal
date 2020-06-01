@@ -1,11 +1,14 @@
-const { formatDateTime } = require('./utlis')
+const fetcher = require('../fetcher')
+const { formatDateTime, createFullDate } = require('./utlis')
 
-function getRecentResults(data) {
-    const results = changeDateTime(data)
-    const sortedResults = sortByDate(results)
+module.exports = async function getRecentResults() {
+    const results = await fetcher('results')
+    const changeDate = await changeDateTime(results)
+    const sortedResults = await sortByDate(changeDate)
 
     return sortedResults.slice(0, 4)
 }
+
 
 // Helpers
 function sortByDate(results) {
@@ -25,13 +28,4 @@ function changeDateTime(data) {
     })
 
     return results
-}
-
-function createFullDate(date) {
-    return `${date.day}-${date.month}-${date.year}`
-}
-
-
-module.exports = {
-    getRecentResults
 }
