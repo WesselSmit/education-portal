@@ -25,3 +25,4 @@ module.exports = router
     .get('/course_overview', (req, res) => res.send('course_overview'))
     .get('/study_progress', (req, res) => res.send('study_progress'))
     .get('/announcements', (req, res) => res.send('announcements'))
+    .get('/information', (req, res) => res.send('information'))
