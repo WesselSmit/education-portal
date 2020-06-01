@@ -12,7 +12,7 @@
 
 
     @media only screen and (min-width: 1300px) {
-        &>div {
+        &>* {
             &:nth-child(odd) {
                 padding: 0 5vw 0 0;
             }
@@ -41,7 +41,7 @@
                 padding: calc(60px + 10px) 5vw;
 
 
-                &>div {
+                &>* {
                     padding: 0;
                 }
             }
@@ -54,13 +54,13 @@
         }
 
 
-        &>div {
+        &>* {
             padding: 0 5vw;
         }
 
 
         @media only screen and(max-width: $max-mobile-width) {
-            &>div {
+            &>* {
                 padding: 0;
             }
         }

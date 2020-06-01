@@ -7,9 +7,9 @@ var utils = _interopRequireWildcard(require("./modules/utils.mjs"));
 
 var search = _interopRequireWildcard(require("./modules/search.mjs"));
 
-var _schedule = _interopRequireDefault(require("./modules/schedule.mjs"));
-
 var _urgentAnnouncement = _interopRequireDefault(require("./web-components/urgent-announcement.mjs"));
+
+var _schedule = require("./web-components/schedule.mjs");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -20,7 +20,11 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
-  (0, _schedule["default"])();
+  var scheduleWidget = document.getElementById('schedule');
+  scheduleWidget.remove();
+  var urgentNotification = document.querySelector('urgent-announcement');
+  document.querySelector('main').insertBefore(document.createElement('schedule-widget'), urgentNotification.nextSibling);
+  (0, _schedule.WC_scheduleWidget)();
 } //urgent announcements
 
 
@@ -81,90 +85,7 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
   });
 }
 
-},{"./modules/schedule.mjs":2,"./modules/search.mjs":3,"./modules/utils.mjs":4,"./web-components/urgent-announcement.mjs":5}],2:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = scheduleHandler;
-var scheduleContainer = document.querySelector('#schedules-container');
-var dateElement = document.querySelector('#navigator span');
-var previousSchedule = document.querySelector('#navigator img:first-of-type');
-var nextSchedule = document.querySelector('#navigator img:last-of-type');
-
-function scheduleHandler() {
-  var scheduleIndex = 0;
-  arrowHandler(scheduleIndex);
-  previousSchedule.addEventListener('click', function () {
-    scheduleIndex--;
-    arrowHandler(scheduleIndex);
-    renderSchedules(scheduleIndex);
-  });
-  nextSchedule.addEventListener('click', function () {
-    scheduleIndex++;
-    arrowHandler(scheduleIndex);
-    renderSchedules(scheduleIndex);
-  });
-} // Helpers
-
-
-function renderSchedules(scheduleIndex) {
-  getSchedules().then(function (schedules) {
-    var schedule = schedules[scheduleIndex];
-    var divs = schedule.schedules.map(function (schedule) {
-      return createScheduleItem(schedule);
-    });
-    dateElement.textContent = "".concat(schedule.day, "-").concat(schedule.month, "-").concat(schedule.year);
-    scheduleContainer.textContent = '';
-    divs.forEach(function (div) {
-      return scheduleContainer.append(div);
-    });
-  });
-}
-
-function arrowHandler(index) {
-  index === 0 ? previousSchedule.classList.add('disabled') : previousSchedule.classList.remove('disabled');
-  index === 4 ? nextSchedule.classList.add('disabled') : nextSchedule.classList.remove('disabled');
-}
-
-function createScheduleItem(schedule) {
-  var schedule_time = "".concat(schedule.startDateTime.time, " - ").concat(schedule.endDateTime.time);
-  var schedule_coursename = schedule._links.courses[0].title;
-  var schedule_teacher = schedule._links.lecturers[0].title;
-  var schedule_room;
-  schedule._embedded ? schedule_room = schedule._embedded.rooms[0].abbreviation : schedule_room = 'No room';
-  var div = document.createElement('div');
-  var time = document.createElement('p');
-  var coursename = document.createElement('p');
-  var room = document.createElement('p');
-  var teacher = document.createElement('p');
-  time.textContent = schedule_time;
-  coursename.textContent = schedule_coursename;
-  room.textContent = schedule_room;
-  teacher.textContent = schedule_teacher;
-  div.append(time);
-  div.append(coursename);
-  div.append(room);
-  div.append(teacher);
-  div.classList.add('schedule-course');
-  return div;
-}
-
-var options = {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-}; // Data
-
-function getSchedules() {
-  return fetch('/schedule', options).then(function (res) {
-    return res.json();
-  });
-}
-
-},{}],3:[function(require,module,exports){
+},{"./modules/search.mjs":2,"./modules/utils.mjs":3,"./web-components/schedule.mjs":4,"./web-components/urgent-announcement.mjs":5}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -197,7 +118,7 @@ function reset(e) {
   focus(e);
 }
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -251,6 +172,139 @@ function storageAvailable(type) {
   } catch (e) {
     return e instanceof DOMException && (e.code === 22 || e.code === 1014 || e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') && storage && storage.length !== 0;
   }
+}
+
+},{}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.WC_scheduleWidget = init;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var template = document.createElement('template');
+template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n#navigator {\n    background-color: #DDDDDD;\n    padding: 15px 20px;\n    display: flex;\n    justify-content: space-between;\n    color: #25167A;\n    font-size: 16px;\n}\n\n#navigator img:not(.disabled) {\n    cursor: pointer;\n}\n\n#navigator img.disabled {\n    pointer-events: none;\n    opacity: .5;\n}\n\n.schedule-course {\n    display: grid;\n    grid-template-columns: auto 1fr;\n    grid-column-gap: 20px;\n    grid-row-gap: 5px;\n    padding: 15px 20px;\n    border-bottom: 1px solid #DDDDDD;\n}\n\n.schedule-course p:first-of-type,\n.schedule-course p:nth-of-type(3) {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n<h2>Dagrooster</h2>\n<div id=\"navigator\">\n\t<img src=\"/media/icons/arrow-left.svg\" alt=\"arrow-left\" class=\"disabled\"></img>\n\t<span></span>\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</div>\n<div id=\"schedules-container\"></div>\n<a target=\"_blank\" href=\"https://rooster.hva.nl/schedule\">Volledig rooster\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
+
+function init() {
+  var schedule = /*#__PURE__*/function (_HTMLElement) {
+    _inherits(schedule, _HTMLElement);
+
+    var _super = _createSuper(schedule);
+
+    function schedule() {
+      var _this;
+
+      _classCallCheck(this, schedule);
+
+      _this = _super.call(this);
+
+      _this.attachShadow({
+        mode: 'open'
+      });
+
+      _this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+      _this.data = _this.getData().then(function (json) {
+        _this.updateSchedule(json[0]);
+
+        _this.data = json;
+      });
+      _this.navigator = _this.shadowRoot.getElementById('navigator');
+      _this.arrowPrevious = _this.navigator.querySelector('#navigator img:first-of-type');
+      _this.arrowNext = _this.navigator.querySelector('#navigator img:last-of-type');
+
+      _this.arrowNext.addEventListener('click', function () {
+        return _this.navigate('next');
+      });
+
+      _this.arrowPrevious.addEventListener('click', function () {
+        return _this.navigate('previous');
+      });
+
+      _this.index = 0;
+      return _this;
+    }
+
+    _createClass(schedule, [{
+      key: "getData",
+      value: function getData() {
+        var options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        return fetch('/schedule', options).then(function (res) {
+          return res.json();
+        });
+      }
+    }, {
+      key: "updateSchedule",
+      value: function updateSchedule(data) {
+        var schedulesContainer = this.shadowRoot.getElementById('schedules-container');
+        schedulesContainer.textContent = "";
+        this.navigator.querySelector('span').textContent = "".concat(data.day, "-").concat(data.month, "-").concat(data.year);
+        data.schedules.forEach(function (schedule) {
+          var classRoom = schedule._embedded ? schedule._embedded.rooms[0].abbreviation : "Geen lokaal";
+          var div = document.createElement('div');
+          div.classList.add('schedule-course');
+          schedulesContainer.appendChild(div);
+          var time = document.createElement('p');
+          time.textContent = "".concat(schedule.startDateTime.time, " - ").concat(schedule.endDateTime.time);
+          div.appendChild(time);
+          var name = document.createElement('p');
+          name.textContent = schedule._links.courses[0].title;
+          div.appendChild(name);
+          var room = document.createElement('p');
+          room.textContent = classRoom;
+          div.appendChild(room);
+          var teacher = document.createElement('p');
+          teacher.textContent = schedule._links.lecturers[0].title;
+          div.appendChild(teacher);
+        });
+      }
+    }, {
+      key: "navigate",
+      value: function navigate(direction) {
+        direction === 'previous' ? this.index-- : this.index++;
+        this.index === 0 ? this.arrowPrevious.classList.add('disabled') : this.arrowPrevious.classList.remove('disabled');
+        this.index === 4 ? this.arrowNext.classList.add('disabled') : this.arrowNext.classList.remove('disabled');
+        this.updateSchedule(this.data[this.index]);
+      }
+    }]);
+
+    return schedule;
+  }( /*#__PURE__*/_wrapNativeSuper(HTMLElement));
+
+  window.customElements.define('schedule-widget', schedule);
 }
 
 },{}],5:[function(require,module,exports){
@@ -383,6 +437,6 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
 
 window.customElements.define('urgent-announcement', urgentAnnouncement);
 
-},{"../modules/utils.mjs":4}]},{},[1])
+},{"../modules/utils.mjs":3}]},{},[1])
 
 //# sourceMappingURL=index.js.map

@@ -1,3 +1,10 @@
+schedule-widget {
+    font-size: 15px;
+    font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
+    color: black;
+    line-height: 18px;
+}
+
 #schedule {
     @include text;
 
