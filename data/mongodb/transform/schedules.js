@@ -1,3 +1,5 @@
+const { formatDateTime } = require('./utlis')
+
 function changeDateTime(data) {
     data.forEach(item => {
         item.startDateTime = formatDateTime(item.startDateTime)
@@ -31,7 +33,6 @@ function groupPerDay(data) {
     return dates
 }
 
-
 function dateObj(date) {
     return {
         day: date.day,
@@ -50,23 +51,6 @@ function addSchedule(dates, schedule, scheduleDate) {
 
 function createFullDate(date) {
     return `${date.day}-${date.month}-${date.year}`
-}
-
-function formatDateTime(string) {
-    // Date
-    const dateArray = string.split('T')[0].split('-')
-
-    // Time
-    const rawTime = string.split('T')[1].split('+')[0]
-    const time = rawTime.slice(0, rawTime.lastIndexOf(':'))
-
-    // Merge
-    return {
-        day: dateArray[2],
-        month: dateArray[1],
-        year: dateArray[0],
-        time: time
-    }
 }
 
 module.exports = {

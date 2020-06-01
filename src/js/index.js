@@ -10,7 +10,9 @@ const template = urgentAnnouncement
 
 
 //init dashboard
-scheduleHandler()
+if (page === 'dashboard') {
+    scheduleHandler()
+}
 
 
 //urgent announcements

@@ -21,7 +21,10 @@ var page = document.querySelector('main').id.toLowerCase(); //init web-component
 
 var template = _urgentAnnouncement["default"]; //init dashboard
 
-(0, _schedule["default"])(); //urgent announcements
+if (page === 'dashboard') {
+  (0, _schedule["default"])();
+} //urgent announcements
+
 
 var socket = io(); //subscribe to urgent-announcements
 
@@ -87,11 +90,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = scheduleHandler;
-var scheduleMaster = document.querySelector('#schedule');
-var scheduleContainer = scheduleMaster.querySelector('#schedules-container');
-var dateElement = scheduleMaster.querySelector('#navigator span');
-var previousSchedule = scheduleMaster.querySelector('#navigator img:first-of-type');
-var nextSchedule = scheduleMaster.querySelector('#navigator img:last-of-type');
+var scheduleContainer = document.querySelector('#schedules-container');
+var dateElement = document.querySelector('#navigator span');
+var previousSchedule = document.querySelector('#navigator img:first-of-type');
+var nextSchedule = document.querySelector('#navigator img:last-of-type');
 
 function scheduleHandler() {
   var scheduleIndex = 0;

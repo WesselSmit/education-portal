@@ -1,0 +1,44 @@
+<div id="study-progress">
+
+    <h2>Studieresultaten en -voortgang</h2>
+
+    <div id="recent-results">
+        <% studyProgress.forEach(result => { %>
+        <div>
+            <% if (typeof result.grade === 'number' && result.grade >= 5.5 || result.grade === 'V') { %>
+            <span class="success"></span>
+            <% } else if (typeof result.grade === 'number' && result.grade < 5.5 || result.grade === '-' || result.grade === 'GR') { %>
+            <span class="failed"></span>
+            <% } else { %>
+            <span class="failed"></span>
+            <% } %>
+
+            <p><%= result._links.course.title %></p>
+            <p><%= result.grade %></p>
+            <p><%= result.fullDate %></p>
+        </div>
+        <% }) %>
+    </div>
+
+    <div id="recent-progress">
+        <div>
+            <span></span>
+            <p>Leerjaar 1</p>
+            <p>60/60 studiepunten</p>
+        </div>
+        <div>
+            <span></span>
+            <p>Leerjaar 2</p>
+            <p>60/60 studiepunten</p>
+        </div>
+        <div class="current-year">
+            <span></span>
+            <p>Leerjaar 3</p>
+            <p>30/60 studiepunten</p>
+        </div>
+    </div>
+
+    <a target="_blank" href="https://sis.hva.nl/">Alle resultaten in SIS
+        <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
+    </a>
+</div>

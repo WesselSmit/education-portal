@@ -1,8 +1,7 @@
-const scheduleMaster = document.querySelector('#schedule')
-const scheduleContainer = scheduleMaster.querySelector('#schedules-container')
-const dateElement = scheduleMaster.querySelector('#navigator span')
-const previousSchedule = scheduleMaster.querySelector('#navigator img:first-of-type')
-const nextSchedule = scheduleMaster.querySelector('#navigator img:last-of-type')
+const scheduleContainer = document.querySelector('#schedules-container')
+const dateElement = document.querySelector('#navigator span')
+const previousSchedule = document.querySelector('#navigator img:first-of-type')
+const nextSchedule = document.querySelector('#navigator img:last-of-type')
 
 export default function scheduleHandler() {
     let scheduleIndex = 0

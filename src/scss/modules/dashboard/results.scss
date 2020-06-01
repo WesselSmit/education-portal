@@ -1,0 +1,112 @@
+#study-progress {
+    h2 {
+        @include h2;
+    }
+
+    * {
+        @include text;
+    }
+
+    #recent-results {
+
+        div {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            grid-template-rows: 1fr auto;
+
+            span {
+                display: block;
+                grid-column: 1 / 2;
+                grid-row: 1 / 3;
+                width: 5px;
+                height: 100%;
+                background-color: red;
+            }
+
+            span.success {
+                background-color: $main-purple;
+            }
+
+            span.failed {
+                background-color: $light-grey;
+            }
+
+            p:nth-of-type(1) {
+                grid-column: 2 / 3;
+                padding: 4px 0px 0px 10px;
+            }
+
+            p:nth-of-type(2) {
+                grid-row: 1 / 3;
+                grid-column: 3 / 4;
+                align-self: center;
+            }
+
+            p:nth-of-type(3) {
+                padding: 0px 0px 4px 10px;
+                font-size: 14px;
+                color: $dark-grey;
+            }
+
+            p:nth-of-type(1),
+            p:nth-of-type(2) {
+                @include font-Bold;
+            }
+
+            &:not(:last-of-type) {
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+    #recent-progress {
+        margin-top: 30px;
+
+        div {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+
+            span {
+                display: block;
+                width: 5px;
+            }
+
+            p {
+                padding: 5px 0px;
+            }
+
+            p:first-of-type {
+                padding-left: 10px;
+            }
+        }
+
+        .current-year {
+            background-color: $light-grey;
+
+            span {
+                background-color: $main-purple;
+            }
+
+            p {
+                @include font-Bold;
+            }
+
+            p:last-of-type {
+                padding-right: 10px;
+            }
+        }
+    }
+
+    a {
+        margin-top: 30px;
+        text-decoration: none;
+        color: $main-purple;
+        display: flex;
+        align-items: center;
+
+        img {
+            height: 12px;
+            margin-left: 20px;
+        }
+    }
+}
