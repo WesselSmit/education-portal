@@ -21,24 +21,20 @@
     </div>
 
     <div id="recent-progress">
-        <div>
-            <span></span>
-            <p>Leerjaar 1</p>
-            <p>60/60 studiepunten</p>
-        </div>
-        <div>
-            <span></span>
-            <p>Leerjaar 2</p>
-            <p>60/60 studiepunten</p>
-        </div>
+        <% studyProgress.forEach(result => { %>
+        <% if (result.currentYear) { %>
         <div class="current-year">
-            <span></span>
-            <p>Leerjaar 3</p>
-            <p>30/60 studiepunten</p>
+            <% } else { %>
+            <div>
+                <% } %>
+                <span></span>
+                <p>Leerjaar <%= result.studyYear %></p>
+                <p><%= result.studypoints.achieved %>/<%= result.studypoints.available %> studiepunten</p>
+            </div>
+            <% }) %>
         </div>
-    </div>
 
-    <a target="_blank" href="https://sis.hva.nl/">Alle resultaten in SIS
-        <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
-    </a>
-</div>
+        <a target="_blank" href="https://sis.hva.nl/">Alle resultaten in SIS
+            <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
+        </a>
+    </div>

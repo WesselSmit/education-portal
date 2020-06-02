@@ -149,24 +149,17 @@ function init() {
 
         progressComponent(results) {
             results.forEach(result => {
-                // Parent container
                 const div = document.createElement('div')
                 if (result.currentYear) {
                     div.classList.add('current-year')
                 }
 
-                // Children
-                const indicator = document.createElement('span')
-                div.append(indicator)
+                const template = `
+                <span></span>
+                <p>Leerjaar ${result.studyYear}</p>
+                <p>${result.studypoints.achieved}/${result.studypoints.available} studiepunten</p>`
 
-                const studyYear = document.createElement('p')
-                studyYear.textContent = `Leerjaar ${result.studyYear}`
-                div.append(studyYear)
-
-                const studyPoints = document.createElement('p')
-                studyPoints.textContent = `${result.studypoints.achieved}/${result.studypoints.available} studiepunten`
-                div.append(studyPoints)
-
+                div.innerHTML = template
                 this.progressContainer.append(div)
             })
         }
@@ -177,27 +170,21 @@ function init() {
                 // Parent container
                 const div = document.createElement('div')
 
-                // Children
-                const indicator = document.createElement('span')
+                let indicator
                 if (typeof result.grade === 'number' && result.grade >= 5.5 || result.grade === 'V') {
-                    indicator.classList.add('success')
+                    indicator = `<span class="success"></span>`
                 } else if (typeof result.grade === 'number' && result.grade < 5.5 || result.grade === '-' || result.grade === 'GR') {
-                    indicator.classList.add('failed')
+                    indicator = `<span class="failed"></span>`
                 }
-                div.append(indicator)
 
-                const course = document.createElement('p')
-                course.textContent = result._links.course.title
-                div.append(course)
+                const template = `
+                ${indicator}
+                <p>${result._links.course.title}</p>
+                <p>${result.grade}</p>
+                <p>${result.fullDate}</p>
+                `
 
-                const grade = document.createElement('p')
-                grade.textContent = result.grade
-                div.append(grade)
-
-                const date = document.createElement('p')
-                date.textContent = result.fullDate
-                div.append(date)
-
+                div.innerHTML = template
                 this.resultsContainer.append(div)
             })
         }

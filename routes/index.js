@@ -9,6 +9,8 @@ router.use(bodyParser.json())
 const schedules = require('#data/mongodb/transform/schedules')
 const { recentResults, studyProgress } = require('#data/mongodb/transform/studyprogress')
 
+console.log(studyProgress())
+
 module.exports = router
     .get('/', async (req, res) => res.render('dashboard', {
         pageName: 'dashboard',

@@ -9,6 +9,7 @@ const page = document.querySelector('main').id.toLowerCase()
 //init dashboard
 if (page === 'dashboard') {
     const urgentNotification = document.querySelector('urgent-announcement')
+    console.log(urgentNotification)
 
     // Studyprogress widget
     const studyProgressWidget = document.getElementById('study-progress')
@@ -21,7 +22,6 @@ if (page === 'dashboard') {
     scheduleWidget.remove()
     document.querySelector('main').insertBefore(document.createElement('schedule-widget'), urgentNotification.nextSibling)
     WC_scheduleWidget()
-
 }
 
 

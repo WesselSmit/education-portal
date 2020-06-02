@@ -22,7 +22,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
-  var urgentNotification = document.querySelector('urgent-announcement'); // Studyprogress widget
+  var urgentNotification = document.querySelector('urgent-announcement');
+  console.log(urgentNotification); // Studyprogress widget
 
   var studyProgressWidget = document.getElementById('study-progress');
   studyProgressWidget.remove();
@@ -390,22 +391,14 @@ function init() {
         var _this2 = this;
 
         results.forEach(function (result) {
-          // Parent container
           var div = document.createElement('div');
 
           if (result.currentYear) {
             div.classList.add('current-year');
-          } // Children
+          }
 
-
-          var indicator = document.createElement('span');
-          div.append(indicator);
-          var studyYear = document.createElement('p');
-          studyYear.textContent = "Leerjaar ".concat(result.studyYear);
-          div.append(studyYear);
-          var studyPoints = document.createElement('p');
-          studyPoints.textContent = "".concat(result.studypoints.achieved, "/").concat(result.studypoints.available, " studiepunten");
-          div.append(studyPoints);
+          var template = "\n                <span></span>\n                <p>Leerjaar ".concat(result.studyYear, "</p>\n                <p>").concat(result.studypoints.achieved, "/").concat(result.studypoints.available, " studiepunten</p>");
+          div.innerHTML = template;
 
           _this2.progressContainer.append(div);
         });
@@ -417,26 +410,17 @@ function init() {
 
         results.forEach(function (result) {
           // Parent container
-          var div = document.createElement('div'); // Children
-
-          var indicator = document.createElement('span');
+          var div = document.createElement('div');
+          var indicator;
 
           if (typeof result.grade === 'number' && result.grade >= 5.5 || result.grade === 'V') {
-            indicator.classList.add('success');
+            indicator = "<span class=\"success\"></span>";
           } else if (typeof result.grade === 'number' && result.grade < 5.5 || result.grade === '-' || result.grade === 'GR') {
-            indicator.classList.add('failed');
+            indicator = "<span class=\"failed\"></span>";
           }
 
-          div.append(indicator);
-          var course = document.createElement('p');
-          course.textContent = result._links.course.title;
-          div.append(course);
-          var grade = document.createElement('p');
-          grade.textContent = result.grade;
-          div.append(grade);
-          var date = document.createElement('p');
-          date.textContent = result.fullDate;
-          div.append(date);
+          var template = "\n                ".concat(indicator, "\n                <p>").concat(result._links.course.title, "</p>\n                <p>").concat(result.grade, "</p>\n                <p>").concat(result.fullDate, "</p>\n                ");
+          div.innerHTML = template;
 
           _this3.resultsContainer.append(div);
         });
