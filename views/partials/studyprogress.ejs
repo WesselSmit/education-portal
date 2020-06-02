@@ -3,7 +3,7 @@
     <h2>Studieresultaten en -voortgang</h2>
 
     <div id="recent-results">
-        <% studyProgress.forEach(result => { %>
+        <% studyResults.forEach(result => { %>
         <div>
             <% if (typeof result.grade === 'number' && result.grade >= 5.5 || result.grade === 'V') { %>
             <span class="success"></span>

@@ -1,0 +1,28 @@
+[{
+        "id": 0,
+        "studyYear": "1",
+        "currentYear": false,
+        "studypoints": {
+            "available": 60,
+            "achieved": 60
+        }
+    },
+    {
+        "id": 1,
+        "studyYear": "2",
+        "currentYear": false,
+        "studypoints": {
+            "available": 60,
+            "achieved": 60
+        }
+    },
+    {
+        "id": 2,
+        "studyYear": "3",
+        "currentYear": true,
+        "studypoints": {
+            "available": 60,
+            "achieved": 30
+        }
+    }
+]

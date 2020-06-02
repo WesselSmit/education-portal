@@ -1,18 +1,27 @@
 import * as utils from './modules/utils.mjs'
 import * as search from './modules/search.mjs'
 import urgentAnnouncement from './web-components/urgent-announcement.mjs'
+import { WC_studyprogress } from './web-components/study-progress.mjs'
 import { WC_scheduleWidget } from './web-components/schedule.mjs'
 
 const page = document.querySelector('main').id.toLowerCase()
 
-
 //init dashboard
 if (page === 'dashboard') {
+    const urgentNotification = document.querySelector('urgent-announcement')
+
+    // Studyprogress widget
+    const studyProgressWidget = document.getElementById('study-progress')
+    studyProgressWidget.remove()
+    document.querySelector('main').insertBefore(document.createElement('study-progress'), urgentNotification.nextSibling)
+    WC_studyprogress()
+
+    // Schedule widget
     const scheduleWidget = document.getElementById('schedule')
     scheduleWidget.remove()
-    const urgentNotification = document.querySelector('urgent-announcement')
     document.querySelector('main').insertBefore(document.createElement('schedule-widget'), urgentNotification.nextSibling)
     WC_scheduleWidget()
+
 }
 
 

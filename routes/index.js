@@ -7,13 +7,14 @@ router.use(bodyParser.json())
 
 // MongoDB
 const schedules = require('#data/mongodb/transform/schedules')
-const studyprogress = require('#data/mongodb/transform/studyprogress')
+const { recentResults, studyProgress } = require('#data/mongodb/transform/studyprogress')
 
 module.exports = router
     .get('/', async (req, res) => res.render('dashboard', {
         pageName: 'dashboard',
         schedules: await schedules(),
-        studyProgress: await studyprogress()
+        studyResults: await recentResults(),
+        studyProgress: studyProgress()
     }))
     .get('/account', (req, res) => res.send('account'))
     .get('/timetable', (req, res) => res.send('timetable'))
@@ -24,3 +25,4 @@ module.exports = router
 
     // Fetch from client to server to get schedules to achieve enhancement
     .get('/schedule', async (req, res) => res.json(await schedules()))
+    .get('/studyprogress', async (req, res) => res.json([await recentResults(), studyProgress()]))

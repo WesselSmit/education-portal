@@ -9,6 +9,8 @@ var search = _interopRequireWildcard(require("./modules/search.mjs"));
 
 var _urgentAnnouncement = _interopRequireDefault(require("./web-components/urgent-announcement.mjs"));
 
+var _studyProgress = require("./web-components/study-progress.mjs");
+
 var _schedule = require("./web-components/schedule.mjs");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -20,9 +22,15 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
+  var urgentNotification = document.querySelector('urgent-announcement'); // Studyprogress widget
+
+  var studyProgressWidget = document.getElementById('study-progress');
+  studyProgressWidget.remove();
+  document.querySelector('main').insertBefore(document.createElement('study-progress'), urgentNotification.nextSibling);
+  (0, _studyProgress.WC_studyprogress)(); // Schedule widget
+
   var scheduleWidget = document.getElementById('schedule');
   scheduleWidget.remove();
-  var urgentNotification = document.querySelector('urgent-announcement');
   document.querySelector('main').insertBefore(document.createElement('schedule-widget'), urgentNotification.nextSibling);
   (0, _schedule.WC_scheduleWidget)();
 } //urgent announcements
@@ -85,7 +93,7 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
   });
 }
 
-},{"./modules/search.mjs":2,"./modules/utils.mjs":3,"./web-components/schedule.mjs":4,"./web-components/urgent-announcement.mjs":5}],2:[function(require,module,exports){
+},{"./modules/search.mjs":2,"./modules/utils.mjs":3,"./web-components/schedule.mjs":4,"./web-components/study-progress.mjs":5,"./web-components/urgent-announcement.mjs":6}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -308,6 +316,154 @@ function init() {
 }
 
 },{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.WC_studyprogress = init;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var template = document.createElement('template');
+template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n    font-weight: lighter;\n    line-height: 1.1;\n}\n\np {\n    margin: 0;\n}\n\n#recent-results div {\n    display: grid;\n    grid-template-columns: auto 1fr auto;\n    grid-template-rows: 1fr auto;\n}\n\n#recent-results div:not(:last-of-type) {\n    margin-bottom: 15px;\n}\n\n#recent-results span {\n    display: block;\n    grid-column: 1 / 2;\n    grid-row: 1 / 3;\n    width: 5px;\n    height: 100%;\n}\n\nspan.success {\n    background-color: #25167A;\n}\n\nspan.failed {\n    background-color: #DDDDDD;\n}\n\n#recent-results p:nth-of-type(1) {\n    grid-column: 2 / 3;\n    padding: 4px 0px 0px 10px;\n}\n\n#recent-results p:nth-of-type(2) {\n    grid-row: 1 / 3;\n    grid-column: 3 / 4;\n    align-self: center;\n}\n\n#recent-results p:nth-of-type(3) {\n    padding: 0px 0px 4px 10px;\n    font-size: 14px;\n    color: #666666;\n}\n\n#recent-results p:nth-of-type(1),\n#recent-results p:nth-of-type(2) {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n\n}\n\n#recent-progress {\n    margin-top: 30px;\n}\n\n#recent-progress div {\n    display: grid;\n    grid-template-columns: auto 1fr auto;\n}\n\n#recent-progress div span {\n        display: block;\n        width: 5px;\n}\n\n#recent-progress p {\n    padding: 5px 0px;\n}\n\n#recent-progress p:first-of-type {\n    padding-left: 10px;\n}\n\n#recent-progress .current-year {\n    background-color: #DDDDDD;\n}\n\n#recent-progress .current-year span {\n    background-color: #25167A;\n}\n\n#recent-progress .current-year p {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n\n#recent-progress .current-year p:last-of-type {\n    padding-right: 10px;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n\n<h2>Studieresultaten en -voortgang</h2>\n\n<div id=\"recent-results\"></div>\n<div id=\"recent-progress\"></div>\n\n<a target=\"_blank\" href=\"https://sis.hva.nl/\">Alle resultaten in SIS\n    <img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
+
+function init() {
+  var StudyProgress = /*#__PURE__*/function (_HTMLElement) {
+    _inherits(StudyProgress, _HTMLElement);
+
+    var _super = _createSuper(StudyProgress);
+
+    function StudyProgress() {
+      var _this;
+
+      _classCallCheck(this, StudyProgress);
+
+      // Setup
+      _this = _super.call(this);
+
+      _this.attachShadow({
+        mode: 'open'
+      });
+
+      _this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+      _this.data = _this.getData().then(function (json) {
+        _this.resultComponent(json[0]);
+
+        _this.progressComponent(json[1]);
+      });
+      _this.resultsContainer = _this.shadowRoot.querySelector('#recent-results');
+      _this.progressContainer = _this.shadowRoot.querySelector('#recent-progress');
+      return _this;
+    }
+
+    _createClass(StudyProgress, [{
+      key: "progressComponent",
+      value: function progressComponent(results) {
+        var _this2 = this;
+
+        results.forEach(function (result) {
+          // Parent container
+          var div = document.createElement('div');
+
+          if (result.currentYear) {
+            div.classList.add('current-year');
+          } // Children
+
+
+          var indicator = document.createElement('span');
+          div.append(indicator);
+          var studyYear = document.createElement('p');
+          studyYear.textContent = "Leerjaar ".concat(result.studyYear);
+          div.append(studyYear);
+          var studyPoints = document.createElement('p');
+          studyPoints.textContent = "".concat(result.studypoints.achieved, "/").concat(result.studypoints.available, " studiepunten");
+          div.append(studyPoints);
+
+          _this2.progressContainer.append(div);
+        });
+      }
+    }, {
+      key: "resultComponent",
+      value: function resultComponent(results) {
+        var _this3 = this;
+
+        results.forEach(function (result) {
+          // Parent container
+          var div = document.createElement('div'); // Children
+
+          var indicator = document.createElement('span');
+
+          if (typeof result.grade === 'number' && result.grade >= 5.5 || result.grade === 'V') {
+            indicator.classList.add('success');
+          } else if (typeof result.grade === 'number' && result.grade < 5.5 || result.grade === '-' || result.grade === 'GR') {
+            indicator.classList.add('failed');
+          }
+
+          div.append(indicator);
+          var course = document.createElement('p');
+          course.textContent = result._links.course.title;
+          div.append(course);
+          var grade = document.createElement('p');
+          grade.textContent = result.grade;
+          div.append(grade);
+          var date = document.createElement('p');
+          date.textContent = result.fullDate;
+          div.append(date);
+
+          _this3.resultsContainer.append(div);
+        });
+      } // Helpers
+
+    }, {
+      key: "getData",
+      value: function getData() {
+        var options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        return fetch('/studyprogress', options).then(function (res) {
+          return res.json();
+        });
+      }
+    }]);
+
+    return StudyProgress;
+  }( /*#__PURE__*/_wrapNativeSuper(HTMLElement));
+
+  customElements.define('study-progress', StudyProgress);
+}
+
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

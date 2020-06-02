@@ -106,13 +106,10 @@ function init() {
         getData() {
             const options = {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: { 'Content-Type': 'application/json' }
             }
 
-            return fetch('/schedule', options)
-                .then(res => res.json())
+            return fetch('/schedule', options).then(res => res.json())
         }
 
         updateSchedule(data) {
