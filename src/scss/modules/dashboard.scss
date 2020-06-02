@@ -1,5 +1,6 @@
 @import 'dashboard/timetable';
 @import 'dashboard/results';
+@import 'dashboard/course-overview.scss';
 
 #dashboard {
     @include text;

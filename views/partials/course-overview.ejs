@@ -1,0 +1,30 @@
+<div id="course-overview">
+
+    <h2>Vakkenoverzicht</h2>
+
+    <div class="navigator">
+        <img class="disabled" src="/media/icons/arrow-left.svg" alt="arrow-left"></img>
+        <span>Jaar <%= courseOverview[2].year %> - Blok <%= courseOverview[2].quarters[3].quarter %></span>
+        <img class="disabled" src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
+    </div>
+
+    <div id="course-overview">
+        <% courseOverview[2].quarters[3].courses.forEach(item => { %>
+        <div class="course">
+            <p><%= item.course %></p>
+
+            <% item.lecturers.forEach(lecturer => { %>
+            <% if (lecturer === '') { %>
+            <p>Geen specifieke docent</p>
+            <% } else { %>
+            <p><%= lecturer %></p>
+            <% } %>
+            <% }) %>
+        </div>
+        <% }) %>
+    </div>
+
+    <a target="_blank" href="https://sis.hva.nl/">Volledig overzicht
+        <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
+    </a>
+</div>

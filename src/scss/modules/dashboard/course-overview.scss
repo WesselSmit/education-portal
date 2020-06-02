@@ -1,13 +1,4 @@
-schedule-widget {
-    font-size: 15px;
-    font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
-    color: black;
-    line-height: 18px;
-}
-
-#schedule {
-    @include text;
-
+#course-overview {
     h2 {
         @include h2;
     }
@@ -35,17 +26,21 @@ schedule-widget {
         }
     }
 
-    .schedule-course {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-column-gap: 20px;
-        grid-row-gap: 5px;
-        padding: 15px 20px;
-        border-bottom: 1px solid $light-grey;
+    #course-overview {
+        .course {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: 20px;
+            padding: 15px 20px;
+            border-bottom: 1px solid $light-grey;
 
-        p:first-of-type,
-        p:nth-of-type(3) {
-            @include font-Bold;
+            p:first-of-type {
+                @include font-Bold;
+            }
+
+            p:last-of-type {
+                align-self: center;
+            }
         }
     }
 

@@ -139,8 +139,10 @@ function init() {
             this.shadowRoot.appendChild(template.content.cloneNode(true))
 
             this.data = this.getData().then(json => {
-                this.resultComponent(json[0])
-                this.progressComponent(json[1])
+                const [results, progress] = json
+
+                this.resultComponent(results)
+                this.progressComponent(progress)
             })
 
             this.resultsContainer = this.shadowRoot.querySelector('#recent-results')

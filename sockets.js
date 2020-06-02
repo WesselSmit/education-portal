@@ -1,4 +1,4 @@
-const fs = require('fs')
+const { readJSON } = require('#data/mongodb/transform/utlis')
 
 const users = []
 
@@ -24,7 +24,7 @@ module.exports = io => {
 
             socket.join(room)
 
-            const data = JSON.parse(fs.readFileSync('./data/local/urgent-announcements.json', { encoding: 'utf8' }))
+            const data = readJSON('./data/local/urgent-announcements.json')
 
             data.announcements.forEach(announcement => {
                 if (announcement.urgent) {

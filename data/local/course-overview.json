@@ -1,0 +1,258 @@
+[{
+        "year": 1,
+        "quarters": [{
+            "quarter": 1,
+            "courses": [{
+                    "course": "Project 1 Individueel",
+                    "lecturers": ["Nicky Heijmen"]
+                },
+                {
+                    "course": "Internet Standaarden",
+                    "lecturers": ["Walter Giannuzzi"]
+                },
+                {
+                    "course": "Content",
+                    "lecturers": ["Pauline Hoogweg"]
+                },
+                {
+                    "course": "Vormgeving",
+                    "lecturers": ["Djie Han Thung"]
+                }
+            ]
+        }, {
+            "quarter": 2,
+            "courses": [{
+                    "course": "Project 1 Team",
+                    "lecturers": ["Elise Luttik"]
+                },
+                {
+                    "course": "Human Computer Interaction",
+                    "lecturers": ["Fransiska Groenland"]
+                },
+                {
+                    "course": "User Centred Design",
+                    "lecturers": ["Valine Convent"]
+                },
+                {
+                    "course": "Ontwerpgeschiedenis",
+                    "lecturers": ["Karin van den Driesche"]
+                }
+            ]
+        }, {
+            "quarter": 3,
+            "courses": [{
+                    "course": "Project 2 Individueel",
+                    "lecturers": ["Kai Giuseppin"]
+                },
+                {
+                    "course": "Web Applicaties",
+                    "lecturers": ["Ilja Meewezen"]
+                },
+                {
+                    "course": "New Product Development",
+                    "lecturers": ["Bianca Oei"]
+                },
+                {
+                    "course": "Visual Interface Design",
+                    "lecturers": ["Fransiska Groenland"]
+                }
+            ]
+        }, {
+            "quarter": 4,
+            "courses": [{
+                    "course": "Project 2 Team",
+                    "lecturers": ["Micky van Zeijl"]
+                },
+                {
+                    "course": "Inleiding Programmeren",
+                    "lecturers": ["Laura Benvenuti"]
+                },
+                {
+                    "course": "Informatie Architectuur",
+                    "lecturers": ["Bart Schoenmakers"]
+                },
+                {
+                    "course": "Maatschappij en Interactie",
+                    "lecturers": ["Micky van Zeijl"]
+                }
+            ]
+        }]
+    },
+    {
+        "year": 2,
+        "quarters": [{
+            "quarter": 1,
+            "courses": [{
+                    "course": "Project Web",
+                    "lecturers": ["Koop Reynders"]
+                },
+                {
+                    "course": "Frontend Development",
+                    "lecturers": ["Koop Reynders"]
+                },
+                {
+                    "course": "Vormgeving 2",
+                    "lecturers": ["Koop Reynders"]
+                },
+                {
+                    "course": "Design Patterns",
+                    "lecturers": ["Koop Reynders"]
+                }
+            ]
+        }, {
+            "quarter": 2,
+            "courses": [{
+                    "course": "Project Beyond",
+                    "lecturers": ["Harm van Vugt", "David de Vries"]
+                },
+                {
+                    "course": "Ubicomp",
+                    "lecturers": ["Shirley Niemans"]
+                },
+                {
+                    "course": "Content Delivery",
+                    "lecturers": ["Jos Kok", "Marc van Strien"]
+                },
+                {
+                    "course": "Ontwerponderzoek",
+                    "lecturers": ["Laura van der Vlies"]
+                }
+            ]
+        }, {
+            "quarter": 3,
+            "courses": [{
+                    "course": "Project Tech",
+                    "lecturers": ["Danny", "Anne Marleen"]
+                },
+                {
+                    "course": "Frontend",
+                    "lecturers": ["Joost Faber"]
+                },
+                {
+                    "course": "Backend",
+                    "lecturers": ["Danny"]
+                },
+                {
+                    "course": "Frontend voor Designers",
+                    "lecturers": ["Koop Reynders"]
+                }
+            ]
+        }, {
+            "quarter": 4,
+            "courses": [{
+                "course": "Korte stage",
+                "lecturers": [""]
+            }]
+        }]
+    }, {
+        "year": 3,
+        "quarters": [{
+            "quarter": 1,
+            "courses": [{
+                    "course": "Datavisualisatie",
+                    "lecturers": ["Christiaan", "Jan-Jaap", "Laurens", "Peter"]
+                },
+                {
+                    "course": "Research for Data",
+                    "lecturers": ["Michel", "Marije"]
+                },
+                {
+                    "course": "Frontend Apps",
+                    "lecturers": ["Titus", "Laurens"]
+                }
+            ]
+        }, {
+            "quarter": 2,
+            "courses": [{
+                    "course": "Functional Programming",
+                    "lecturers": ["Titus", "Laurens"]
+                },
+                {
+                    "course": "Frontend Data",
+                    "lecturers": ["Titus", "Laurens"]
+                },
+                {
+                    "course": "Project (deel 1)",
+                    "lecturers": ["Titus", "Laurens"]
+                },
+                {
+                    "course": "Project (deel 2)",
+                    "lecturers": ["Titus", "Laurens"]
+                }
+            ]
+        }, {
+            "quarter": 3,
+            "courses": [{
+                    "course": "Web App from Scratch",
+                    "lecturers": [""]
+                },
+                {
+                    "course": "CSS to the Rescue",
+                    "lecturers": [""]
+                },
+                {
+                    "course": "Projectweek 1 - Quick, Hack, Prototype",
+                    "lecturers": [""]
+                },
+                {
+                    "course": "Progressive Web Apps",
+                    "lecturers": [""]
+                },
+                {
+                    "course": "Browser Technologies",
+                    "lecturers": [""]
+                }
+            ]
+        }, {
+            "quarter": 4,
+            "courses": [{
+                    "course": "Project 2 - Solve, Debug & Optimize website",
+                    "lecturers": [""]
+                },
+                {
+                    "course": "Real Time Web",
+                    "lecturers": [""]
+                },
+                {
+                    "course": "Web Design",
+                    "lecturers": [""]
+                },
+                {
+                    "course": "Project 3 - Design for Real Time",
+                    "lecturers": [""]
+                },
+                {
+                    "course": "Meesterproef",
+                    "lecturers": [""]
+                }
+            ]
+        }]
+    }, {
+        "year": 4,
+        "quarters": [{
+            "quarter": 1,
+            "courses": [{
+                "course": "Lange stage",
+                "lecturers": [""]
+            }]
+        }, {
+            "quarter": 2,
+            "courses": [{
+                "course": "Lange stage",
+                "lecturers": [""]
+            }]
+        }, {
+            "quarter": 3,
+            "courses": [{
+                "course": "Afstudeerproject",
+                "lecturers": [""]
+            }]
+        }, {
+            "quarter": 4,
+            "courses": [{
+                "course": "Afstudeerproject",
+                "lecturers": [""]
+            }]
+        }]
+    }
+]

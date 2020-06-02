@@ -5,18 +5,20 @@ const bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
-// MongoDB
+// Get data
+const { readJSON } = require('#data/mongodb/transform/utlis')
+
 const schedules = require('#data/mongodb/transform/schedules')
 const { recentResults, studyProgress } = require('#data/mongodb/transform/studyprogress')
-
-console.log(studyProgress())
+const courseOverview = readJSON('./data/local/course-overview.json')
 
 module.exports = router
     .get('/', async (req, res) => res.render('dashboard', {
         pageName: 'dashboard',
         schedules: await schedules(),
         studyResults: await recentResults(),
-        studyProgress: studyProgress()
+        studyProgress: studyProgress(),
+        courseOverview: courseOverview
     }))
     .get('/account', (req, res) => res.send('account'))
     .get('/timetable', (req, res) => res.send('timetable'))

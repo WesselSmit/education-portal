@@ -1,6 +1,5 @@
 const fetcher = require('../fetcher')
-const { formatDateTime, createFullDate } = require('./utlis')
-const json = require('#data/local/study-progress.json')
+const { formatDateTime, createFullDate, readJSON } = require('./utlis')
 
 async function recentResults() {
     const results = await fetcher('results')
@@ -13,8 +12,7 @@ async function recentResults() {
 }
 
 function studyProgress() {
-    const studyProgress = json
-
+    const studyProgress = readJSON('./data/local/study-progress.json')
     return studyProgress
 }
 
@@ -31,7 +29,6 @@ function changeStringtoNumber(results) {
 
     return results
 }
-
 
 function sortByDate(results) {
     results.sort((a, b) => b.testDate.year - a.testDate.year)

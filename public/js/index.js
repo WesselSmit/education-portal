@@ -22,8 +22,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
-  var urgentNotification = document.querySelector('urgent-announcement');
-  console.log(urgentNotification); // Studyprogress widget
+  var urgentNotification = document.querySelector('urgent-announcement'); // Studyprogress widget
 
   var studyProgressWidget = document.getElementById('study-progress');
   studyProgressWidget.remove();
@@ -220,7 +219,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var template = document.createElement('template');
-template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n#navigator {\n    background-color: #DDDDDD;\n    padding: 5px 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    color: #25167A;\n    font-size: 16px;\n}\n\n#navigator img {\n    padding: 10px;\n}\n\n#navigator img:not(.disabled) {\n    cursor: pointer;\n}\n\n#navigator img.disabled {\n    pointer-events: none;\n    opacity: .5;\n}\n\n.schedule-course {\n    display: grid;\n    grid-template-columns: auto 1fr;\n    grid-column-gap: 20px;\n    grid-row-gap: 5px;\n    padding: 15px 20px;\n    border-bottom: 1px solid #DDDDDD;\n}\n\n.schedule-course p:first-of-type,\n.schedule-course p:nth-of-type(3) {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n<h2>Dagrooster</h2>\n<div id=\"navigator\">\n\t<img src=\"/media/icons/arrow-left.svg\" alt=\"arrow-left\" class=\"disabled\"></img>\n\t<span></span>\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</div>\n<div id=\"schedules-container\"></div>\n<a target=\"_blank\" href=\"https://rooster.hva.nl/schedule\">Volledig rooster\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
+template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n\n.navigator {\n    background-color: #DDDDDD;\n    padding: 5px 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    color: #25167A;\n    font-size: 16px;\n}\n\n.navigator img {\n    padding: 10px;\n}\n\n.navigator img:not(.disabled) {\n    cursor: pointer;\n}\n\n.navigator img.disabled {\n    pointer-events: none;\n    opacity: .5;\n}\n\n.schedule-course {\n    display: grid;\n    grid-template-columns: auto 1fr;\n    grid-column-gap: 20px;\n    grid-row-gap: 5px;\n    padding: 15px 20px;\n    border-bottom: 1px solid #DDDDDD;\n}\n\n.schedule-course p:first-of-type,\n.schedule-course p:nth-of-type(3) {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n<h2>Dagrooster</h2>\n<div class=\"navigator\">\n\t<img src=\"/media/icons/arrow-left.svg\" alt=\"arrow-left\" class=\"disabled\"></img>\n\t<span></span>\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</div>\n<div id=\"schedules-container\"></div>\n<a target=\"_blank\" href=\"https://rooster.hva.nl/schedule\">Volledig rooster\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
 
 function init() {
   var schedule = /*#__PURE__*/function (_HTMLElement) {
@@ -246,9 +245,9 @@ function init() {
 
         _this.data = json;
       });
-      _this.navigator = _this.shadowRoot.getElementById('navigator');
-      _this.arrowPrevious = _this.navigator.querySelector('#navigator img:first-of-type');
-      _this.arrowNext = _this.navigator.querySelector('#navigator img:last-of-type');
+      _this.navigator = _this.shadowRoot.querySelector('.navigator');
+      _this.arrowPrevious = _this.navigator.querySelector('img:first-of-type');
+      _this.arrowNext = _this.navigator.querySelector('img:last-of-type');
 
       _this.arrowNext.addEventListener('click', function () {
         return _this.navigate('next');
@@ -326,6 +325,18 @@ exports.WC_studyprogress = init;
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -376,9 +387,13 @@ function init() {
       _this.shadowRoot.appendChild(template.content.cloneNode(true));
 
       _this.data = _this.getData().then(function (json) {
-        _this.resultComponent(json[0]);
+        var _json = _slicedToArray(json, 2),
+            results = _json[0],
+            progress = _json[1];
 
-        _this.progressComponent(json[1]);
+        _this.resultComponent(results);
+
+        _this.progressComponent(progress);
       });
       _this.resultsContainer = _this.shadowRoot.querySelector('#recent-results');
       _this.progressContainer = _this.shadowRoot.querySelector('#recent-progress');

@@ -9,7 +9,6 @@ const page = document.querySelector('main').id.toLowerCase()
 //init dashboard
 if (page === 'dashboard') {
     const urgentNotification = document.querySelector('urgent-announcement')
-    console.log(urgentNotification)
 
     // Studyprogress widget
     const studyProgressWidget = document.getElementById('study-progress')

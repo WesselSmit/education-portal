@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 function formatDateTime(string) {
     // Date
     const dateArray = string.split('T')[0].split('-')
@@ -19,7 +21,12 @@ function createFullDate(date) {
     return `${date.day}-${date.month}-${date.year}`
 }
 
+function readJSON(fileName) {
+    return JSON.parse(fs.readFileSync(fileName, { encoding: 'utf8' }))
+}
+
 module.exports = {
     createFullDate,
-    formatDateTime
+    formatDateTime,
+    readJSON
 }

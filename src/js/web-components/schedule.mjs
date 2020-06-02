@@ -17,7 +17,8 @@ h2 {
 p {
 	margin: 0;
 }
-#navigator {
+
+.navigator {
     background-color: #DDDDDD;
     padding: 5px 10px;
     display: flex;
@@ -27,15 +28,15 @@ p {
     font-size: 16px;
 }
 
-#navigator img {
+.navigator img {
     padding: 10px;
 }
 
-#navigator img:not(.disabled) {
+.navigator img:not(.disabled) {
     cursor: pointer;
 }
 
-#navigator img.disabled {
+.navigator img.disabled {
     pointer-events: none;
     opacity: .5;
 }
@@ -68,7 +69,7 @@ a img {
 }
 </style>
 <h2>Dagrooster</h2>
-<div id="navigator">
+<div class="navigator">
 	<img src="/media/icons/arrow-left.svg" alt="arrow-left" class="disabled"></img>
 	<span></span>
 	<img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
@@ -94,9 +95,9 @@ function init() {
                     this.data = json
                 })
 
-            this.navigator = this.shadowRoot.getElementById('navigator')
-            this.arrowPrevious = this.navigator.querySelector('#navigator img:first-of-type')
-            this.arrowNext = this.navigator.querySelector('#navigator img:last-of-type')
+            this.navigator = this.shadowRoot.querySelector('.navigator')
+            this.arrowPrevious = this.navigator.querySelector('img:first-of-type')
+            this.arrowNext = this.navigator.querySelector('img:last-of-type')
 
             this.arrowNext.addEventListener('click', () => this.navigate('next'))
             this.arrowPrevious.addEventListener('click', () => this.navigate('previous'))
