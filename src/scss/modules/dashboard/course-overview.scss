@@ -35,6 +35,7 @@
 
         p:first-of-type {
             @include font-Bold;
+            align-self: center;
         }
 
         ul {

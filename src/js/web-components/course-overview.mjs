@@ -52,6 +52,7 @@ p {
 
 .course p:first-of-type {
     font-family: "OpenSans-Bold", sans-serif, Arial, Helvetica;
+    align-self: center;
 }
 
 .course ul {
