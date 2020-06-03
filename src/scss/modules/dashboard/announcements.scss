@@ -1,0 +1,35 @@
+@import "../../global/fonts/mixins";
+
+#announcements {
+    @include text;
+
+    h2 {
+        @include h2;
+    }
+
+    #announcements-container {
+        &.preview {
+            .announcement:nth-child(n+6) {
+                @include hide;
+            }
+        }
+
+        .announcement {
+            margin: 15px 0;
+            padding: 5px 0 5px 10px;
+            border-left: 5px solid $main-purple;
+
+
+            p:first-of-type {
+                @include font-Bold;
+            }
+
+            p:last-of-type {
+                color: $dark-grey;
+                font-size: 14px;
+            }
+        }
+    }
+
+    @include widgetLink;
+}

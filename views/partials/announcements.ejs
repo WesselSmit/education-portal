@@ -1,0 +1,18 @@
+<div id="announcements">
+
+    <h2>Mededelingen</h2>
+
+    <div id="announcements-container" class="preview">
+        <% announcements.forEach(announcement => { %>
+        <div class="announcement" id="<%= announcement.newsItemId %>">
+            <p><%= announcement.title %></p>
+            <p><%= announcement.publishDate %></p>
+        </div>
+        <% }) %>
+    </div>
+
+    <a href="/announcements">Alle mededelingen
+        <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
+    </a>
+
+</div>
