@@ -161,6 +161,9 @@ function init() {
                 <p>Leerjaar ${result.studyYear}</p>
                 <p>${result.studypoints.achieved}/${result.studypoints.available} studiepunten</p>`
 
+                // InsertAdjacentHtml
+                // Template engine uitzoeken voor Webcomponents
+
                 div.innerHTML = template
                 this.progressContainer.append(div)
             })

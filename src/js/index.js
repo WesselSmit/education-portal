@@ -3,6 +3,7 @@ import * as search from './modules/search.mjs'
 import urgentAnnouncement from './web-components/urgent-announcement.mjs'
 import { WC_studyprogress } from './web-components/study-progress.mjs'
 import { WC_scheduleWidget } from './web-components/schedule.mjs'
+import { WC_courseoverview } from './web-components/course-overview.mjs'
 
 const page = document.querySelector('main').id.toLowerCase()
 
@@ -15,6 +16,12 @@ if (page === 'dashboard') {
     studyProgressWidget.remove()
     document.querySelector('main').insertBefore(document.createElement('study-progress'), urgentNotification.nextSibling)
     WC_studyprogress()
+
+    // Courseoverview widget
+    const courseOverviewWidget = document.getElementById('course-overview')
+    courseOverviewWidget.remove()
+    document.querySelector('main').insertBefore(document.createElement('course-overview'), urgentNotification.nextSibling)
+    WC_courseoverview()
 
     // Schedule widget
     const scheduleWidget = document.getElementById('schedule')

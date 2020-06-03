@@ -14,6 +14,7 @@ h2 {
 	font-weight: lighter;
 	line-height: 1.1;
 }
+
 p {
 	margin: 0;
 }
@@ -82,7 +83,6 @@ a img {
 
 function init() {
     class schedule extends HTMLElement {
-
         constructor() {
             super()
 

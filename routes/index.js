@@ -30,3 +30,4 @@ module.exports = router
     // Fetch from client to server to get schedules to achieve enhancement
     .get('/schedule', async (req, res) => res.json(await schedules()))
     .get('/studyprogress', async (req, res) => res.json([await recentResults(), studyProgress()]))
+    .get('/courseoverview', async (req, res) => res.json(courseOverview))
