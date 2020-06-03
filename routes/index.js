@@ -6,7 +6,7 @@ router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
 // Get data
-const { readJSON } = require('#data/mongodb/transform/utlis')
+const { readJSON, limit } = require('#data/mongodb/transform/utlis')
 
 const schedules = require('#data/mongodb/transform/schedules')
 const { recentResults, studyProgress } = require('#data/mongodb/transform/studyprogress')
@@ -20,13 +20,23 @@ module.exports = router
         studyResults: await recentResults(),
         studyProgress: studyProgress(),
         courseOverview: courseOverview,
-        announcements: await announcements()
+        announcements: limit(await announcements(), 5)
     }))
     .get('/account', (req, res) => res.send('account'))
     .get('/timetable', (req, res) => res.send('timetable'))
     .get('/course_overview', (req, res) => res.send('course_overview'))
     .get('/study_progress', (req, res) => res.send('study_progress'))
-    .get('/announcements', (req, res) => res.send('announcements'))
+    .get('/announcements', async (req, res) => res.render('list-overview', {
+        pageName: 'announcements-overview',
+        announcements: await announcements()
+    }))
+    .get('/announcements/:id', async (req, res) => {
+        const newsId = req.params.id
+        const allAnnouncements = await announcements()
+        const matchedAnnouncement = allAnnouncements.find(item => item.newsItemId === newsId)
+        console.log({ announcement: matchedAnnouncement })
+        res.render('layouts/announcement-details', { pageName: 'announcement-detail', announcement: matchedAnnouncement })
+    })
     .get('/information', (req, res) => res.send('information'))
 
     // Fetch from client to server to achieve enhancement

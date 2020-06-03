@@ -34,7 +34,6 @@ function formatDate(data) {
     data.forEach(item => {
         const dateArr = item.publishDateTime.split("T")[0].split("-")
         item.publishDate = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`
-        item.publishTime = dateArr[1]
     })
     return data
 }

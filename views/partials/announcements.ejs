@@ -4,16 +4,19 @@
 
     <div id="announcements-container">
         <% announcements.forEach((announcement, i) => { %>
-        <% if (i < 5) { %>
-        <div class="announcement" id="<%= announcement.newsItemId %>">
-            <p><%= announcement.title %></p>
-            <p><%= announcement.publishDate %></p>
-        </div>
-        <% } }) %>
+        <a href="/announcements/<%= announcement.newsItemId %>" target="_self">
+            <div class="announcement" id="<%= announcement.newsItemId %>">
+                <p><%= announcement.title %></p>
+                <p><%= announcement.publishDate %></p>
+            </div>
+        </a>
+        <% }) %>
     </div>
 
+    <% if (pageName === 'dashboard') { %>
     <a href="/announcements">Alle mededelingen
         <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
     </a>
+    <% } %>
 
 </div>

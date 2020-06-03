@@ -28,17 +28,20 @@ if (page === 'dashboard') {
 
   var studyProgressWidget = document.getElementById('study-progress');
   studyProgressWidget.remove();
-  document.querySelector('main').insertBefore(document.createElement('study-progress'), urgentNotification.nextSibling);
+  document.querySelector('main section').append(document.createElement('study-progress')); // document.querySelector('main').insertBefore(document.createElement('study-progress'), urgentNotification.nextSibling)
+
   (0, _studyProgress.WC_studyprogress)(); // Courseoverview widget
 
   var courseOverviewWidget = document.getElementById('course-overview');
   courseOverviewWidget.remove();
-  document.querySelector('main').insertBefore(document.createElement('course-overview'), urgentNotification.nextSibling);
+  document.querySelector('main section').append(document.createElement('course-overview')); // document.querySelector('main').insertBefore(document.createElement('course-overview'), urgentNotification.nextSibling)
+
   (0, _courseOverview.WC_courseoverview)(); // Schedule widget
 
   var scheduleWidget = document.getElementById('schedule');
   scheduleWidget.remove();
-  document.querySelector('main').insertBefore(document.createElement('schedule-widget'), urgentNotification.nextSibling);
+  document.querySelector('main section').append(document.createElement('schedule-widget')); // document.querySelector('main').insertBefore(document.createElement('schedule-widget'), urgentNotification.nextSibling)
+
   (0, _schedule.WC_scheduleWidget)();
 } //urgent announcements
 

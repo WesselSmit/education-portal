@@ -25,8 +25,14 @@ function readJSON(fileName) {
     return JSON.parse(fs.readFileSync(fileName, { encoding: 'utf8' }))
 }
 
+function limit(data, limiter) {
+    data.splice(limiter, data.length)
+    return data
+}
+
 module.exports = {
     createFullDate,
     formatDateTime,
-    readJSON
+    readJSON,
+    limit
 }

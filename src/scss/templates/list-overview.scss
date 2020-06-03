@@ -1,0 +1,60 @@
+[stylingName=list-overview] {
+    @include text;
+    display: grid;
+    grid-template-columns: 1fr;
+
+
+    &.showsNotification {
+        section {
+            padding-top: calc(10vh - 50px);
+        }
+
+
+        @media only screen and (max-width: $max-tablet-width) {
+            padding-top: 60px;
+
+
+            section {
+                padding-top: 30px;
+            }
+
+
+            @media only screen and (min-width: $max-mobile-width) {
+                margin: 0 10vw;
+
+
+                section {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+        }
+
+
+        @media only screen and (max-width: $max-mobile-width) {
+            urgent-announcement {
+                margin-right: 23px;
+                margin-left: 23px;
+                font-size: 12px;
+                line-height: 1.2;
+            }
+        }
+    }
+
+
+    section {
+        padding: 10vh 10vw;
+
+
+        @media only screen and (max-width: $max-mobile-width) {
+            //used calc(header menu + whitespace)
+            padding: calc(60px + 10px) 23px;
+        }
+    }
+
+    a {
+        margin: 0;
+        display: unset;
+        color: $main-black;
+    }
+}
