@@ -3,7 +3,7 @@
 @import 'dashboard/course-overview';
 @import 'dashboard/announcements';
 
-#dashboard {
+#dashboard section {
     @include text;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -58,6 +58,10 @@
 
         &>* {
             padding: 0 5vw;
+
+            &:last-of-type {
+                margin-bottom: 50px;
+            }
         }
 
 
