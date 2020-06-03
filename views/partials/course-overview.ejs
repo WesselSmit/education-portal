@@ -13,13 +13,15 @@
         <div class="course">
             <p><%= item.course %></p>
 
-            <% item.lecturers.forEach(lecturer => { %>
-            <% if (lecturer === '') { %>
-            <p>Geen specifieke docent</p>
-            <% } else { %>
-            <p><%= lecturer %></p>
-            <% } %>
-            <% }) %>
+            <ul>
+                <% item.lecturers.forEach(lecturer => { %>
+                <% if (lecturer === '') { %>
+                <li>Geen specifieke docent</li>
+                <% } else { %>
+                <li><%= lecturer %></li>
+                <% } %>
+                <% }) %>
+            </ul>
         </div>
         <% }) %>
     </div>

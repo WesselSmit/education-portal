@@ -28,20 +28,31 @@
         }
     }
 
-    #course-overview {
-        .course {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-column-gap: 20px;
-            padding: 15px 20px;
-            border-bottom: 1px solid $light-grey;
+    .course {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 20px;
+        padding: 15px 20px;
+        border-bottom: 1px solid $light-grey;
 
-            p:first-of-type {
-                @include font-Bold;
-            }
+        p:first-of-type {
+            @include font-Bold;
+            align-self: center;
+        }
 
-            p:last-of-type {
-                align-self: center;
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-self: center;
+
+            li {
+                display: inline;
+
+                &:not(:last-of-type):after {
+                    content: ", ";
+                    white-space: pre;
+                }
             }
         }
     }

@@ -78,5 +78,365 @@
                 }]
             }
         ]
+    }, {
+        "id": 3,
+        "title": "Mail",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar HvA mail"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 4,
+        "title": "Evenementen",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar eventmenten"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 5,
+        "title": "Teamsites",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar teamsites"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 6,
+        "title": "A-Z lijst",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar A-Z lijst"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 7,
+        "title": "Medewerkers",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar staff"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 8,
+        "title": "Locaties",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar locaties"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 9,
+        "title": "Bibliotheek",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar bibliotheek"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 10,
+        "title": "Studies",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar alle studies"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 11,
+        "title": "HvA organisatie",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar HvA organisatie"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
+    }, {
+        "id": 12,
+        "title": "Hulp",
+        "link": {
+            "url": "https://sis.hva.nl",
+            "text": "Naar hulp"
+        },
+        "sections": [{
+                "id": 1,
+                "title": "Welke informatie kan je vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 2,
+                "title": "Hoe kan je informatie vinden op",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 3,
+                "title": "Waarom staat dit op een externe website?",
+                "content": [{
+                    "text": "..."
+                }]
+            },
+            {
+                "id": 4,
+                "title": "Waar kan je naar toe voor extra hulp?",
+                "content": [{
+                    "text": "..."
+                }]
+            }
+        ]
     }
 ]
