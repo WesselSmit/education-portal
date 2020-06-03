@@ -8,12 +8,6 @@
     }
 
     #announcements-container {
-        &.preview {
-            .announcement:nth-child(n+6) {
-                @include hide;
-            }
-        }
-
         .announcement {
             margin: 15px 0;
             padding: 5px 0 5px 10px;

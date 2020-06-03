@@ -2,13 +2,14 @@
 
     <h2>Mededelingen</h2>
 
-    <div id="announcements-container" class="preview">
-        <% announcements.forEach(announcement => { %>
+    <div id="announcements-container">
+        <% announcements.forEach((announcement, i) => { %>
+        <% if (i < 5) { %>
         <div class="announcement" id="<%= announcement.newsItemId %>">
             <p><%= announcement.title %></p>
             <p><%= announcement.publishDate %></p>
         </div>
-        <% }) %>
+        <% } }) %>
     </div>
 
     <a href="/announcements">Alle mededelingen
