@@ -11,6 +11,7 @@ const { readJSON } = require('#data/mongodb/transform/utlis')
 const schedules = require('#data/mongodb/transform/schedules')
 const { recentResults, studyProgress } = require('#data/mongodb/transform/studyprogress')
 const courseOverview = readJSON('./data/local/course-overview.json')
+const announcements = require('#data/mongodb/transform/announcements')
 
 module.exports = router
     .get('/', async (req, res) => res.render('dashboard', {
@@ -18,7 +19,8 @@ module.exports = router
         schedules: await schedules(),
         studyResults: await recentResults(),
         studyProgress: studyProgress(),
-        courseOverview: courseOverview
+        courseOverview: courseOverview,
+        announcements: await announcements()
     }))
     .get('/account', (req, res) => res.send('account'))
     .get('/timetable', (req, res) => res.send('timetable'))
