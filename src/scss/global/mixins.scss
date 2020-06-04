@@ -44,3 +44,12 @@
         }
     }
 }
+
+@mixin divider {
+    .divider {
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid $light-grey;
+        margin: 15px 0px;
+    }
+}

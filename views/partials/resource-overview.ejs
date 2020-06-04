@@ -1,0 +1,25 @@
+<main id="resource-overview" stylingName="resource">
+
+    <urgent-announcement message="" uid=""></urgent-announcement>
+    <section>
+
+        <h2>Meer informatie</h2>
+
+        <p>Heb je problemen met een externe website of kan je iets niet vinden? Gebruik dan de onderstaande pagina's voor meer informatie. Hier kun je
+            informatie vinden over wat er op de externe website staat, hoe je daar informatie kan vinden, waarom dit op een externe website staat en
+            mogelijkheden voor extra hulp. Ook kun je vanaf deze pagina rechtstreeks naar de externe website.</p>
+
+        <span class="divider"></span>
+
+        <ul>
+            <% information.forEach(entry => { %>
+            <li>
+                <img src="/media/icons/arrow-right.svg" alt="arrow-right">
+                <a href="/<%= entry.route %>"><%= entry.title %></a>
+            </li>
+            <% }) %>
+        </ul>
+
+    </section>
+
+</main>
