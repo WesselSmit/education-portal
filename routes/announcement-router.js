@@ -16,5 +16,8 @@ module.exports = router
     }))
     .get('/:id', async (req, res) => {
         const announcement = await getAnnouncement(req.params.id)
-        res.render('test-template', { pageName: 'announcement-detail', announcement: announcement })
+        res.render('announcement', {
+            pageName: 'announcement-detail',
+            announcement: announcement
+        })
     })
