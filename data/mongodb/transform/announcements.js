@@ -39,6 +39,8 @@ function formatDate(data) {
 }
 
 function formatContent(data) {
+    console.log(data[0])
+
     data.forEach(item => {
         const newLines = item.content.replace(/<br\s*\/?>/mg, "\n")
         item.content = newLines.replace(/(&nbsp;|<([^>]+)>)/ig, "")

@@ -55,5 +55,18 @@
         h2 {
             @include h2;
         }
+
+        .time {
+            color: $main-black;
+            font-size: 14px;
+            margin-bottom: 15px;
+
+
+            &::before {
+                content: "Geplaatst op: ";
+                color: $main-black;
+                font-size: 14px;
+            }
+        }
     }
 }
