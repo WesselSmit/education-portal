@@ -13,6 +13,8 @@ const { recentResults, studyProgress } = require('#data/mongodb/transform/studyp
 const courseOverview = readJSON('./data/local/course-overview.json')
 const announcements = require('#data/mongodb/transform/announcements')
 
+const announcementRouter = require('./announcement-router')
+
 module.exports = router
     .get('/', async (req, res) => res.render('dashboard', {
         pageName: 'dashboard',
@@ -26,17 +28,7 @@ module.exports = router
     .get('/timetable', (req, res) => res.send('timetable'))
     .get('/course_overview', (req, res) => res.send('course_overview'))
     .get('/study_progress', (req, res) => res.send('study_progress'))
-    .get('/announcements', async (req, res) => res.render('list-overview', {
-        pageName: 'announcements-overview',
-        announcements: await announcements()
-    }))
-    .get('/announcements/:id', async (req, res) => {
-        const newsId = req.params.id
-        const allAnnouncements = await announcements()
-        const matchedAnnouncement = allAnnouncements.find(item => item.newsItemId === newsId)
-        console.log({ announcement: matchedAnnouncement })
-        res.render('layouts/announcement-details', { pageName: 'announcement-detail', announcement: matchedAnnouncement })
-    })
+    .use('/announcements', announcementRouter)
     .get('/information', (req, res) => res.send('information'))
 
     // Fetch from client to server to achieve enhancement

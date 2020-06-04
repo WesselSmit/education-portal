@@ -20,7 +20,7 @@ app
     .set('views', __dirname + '/views')
     .set('layout', 'layouts/base')
     .use(expressLayouts)
-    .use(express.static('public'))
+    .use(express.static(__dirname + '/public'))
     .use('/', indexRouter, resourceRouter)
 
 server.listen(port, () => console.log(`App now listening on port ${port}`))
