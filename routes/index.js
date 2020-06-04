@@ -29,7 +29,10 @@ module.exports = router
     .get('/course_overview', (req, res) => res.send('course_overview'))
     .get('/study_progress', (req, res) => res.send('study_progress'))
     .use('/announcements', announcementRouter)
-    .get('/information', (req, res) => res.send('information'))
+    .get('/information', (req, res) => res.render('partials/resource-overview', {
+        pageName: 'information',
+        information: readJSON('./data/local/resource-page-content.json')
+    }))
 
     // Fetch from client to server to achieve enhancement
     .get('/schedule', async (req, res) => res.json(await schedules()))

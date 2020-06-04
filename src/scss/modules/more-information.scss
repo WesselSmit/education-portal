@@ -1,0 +1,21 @@
+#resource-overview {
+    @include divider;
+    @include text;
+
+    h2 {
+        @include h2;
+    }
+
+    ul li {
+        padding: 4px 0px;
+
+        img {
+            height: 12px;
+        }
+
+        a {
+            display: inline;
+            margin-left: 6px;
+        }
+    }
+}
