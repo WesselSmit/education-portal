@@ -29,6 +29,10 @@ p {
     font-size: 16px;
 }
 
+.navigator span  {
+    cursor: default;
+}
+
 .navigator img {
     padding: 10px;
 }
