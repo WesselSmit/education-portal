@@ -1,5 +1,6 @@
 import * as utils from './modules/utils.mjs'
 import * as search from './modules/search.mjs'
+import togglePreferences from './modules/togglePreferences'
 import urgentAnnouncement from './web-components/urgent-announcement.mjs'
 import { WC_studyprogress } from './web-components/study-progress.mjs'
 import { WC_scheduleWidget } from './web-components/schedule.mjs'
@@ -14,6 +15,10 @@ if (page === 'dashboard') {
     const domElements = ['study-progress', 'course-overview', 'schedule']
     const widgetElements = ['study-progress', 'course-overview', 'schedule-widget']
     appendWidgets(domElements, widgetElements)
+}
+
+if (page === 'account') {
+    togglePreferences()
 }
 
 function appendWidgets(dom, widget) {
@@ -99,25 +104,4 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
                 break
         }
     })
-}
-
-
-
-// Write in module
-if (page === 'account') {
-    document.querySelector('#account form').classList.remove('disabled')
-    const inputs = [...document.querySelectorAll('#account form label')]
-
-    setLocalStorage()
-
-    inputs.forEach(input => {
-        input.addEventListener('change', event => {
-            const id = input.id
-            const state = event.target.checked
-        })
-    })
-}
-
-function setLocalStorage() {
-    localStorage.setItem('preferences', 'test')
 }

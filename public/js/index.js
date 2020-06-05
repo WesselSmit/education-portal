@@ -7,6 +7,8 @@ var utils = _interopRequireWildcard(require("./modules/utils.mjs"));
 
 var search = _interopRequireWildcard(require("./modules/search.mjs"));
 
+var _togglePreferences = _interopRequireDefault(require("./modules/togglePreferences"));
+
 var _urgentAnnouncement = _interopRequireDefault(require("./web-components/urgent-announcement.mjs"));
 
 var _studyProgress = require("./web-components/study-progress.mjs");
@@ -21,37 +23,16 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-//register service worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/service-worker.js', {
-      scope: '/'
-    }).then(function (registration) {
-      return registration.update();
-    })["catch"](function (err) {
-      return console.log("ServiceWorker failed registration: ".concat(err));
-    });
-  });
-}
-
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
   var domElements = ['study-progress', 'course-overview', 'schedule'];
   var widgetElements = ['study-progress', 'course-overview', 'schedule-widget'];
   appendWidgets(domElements, widgetElements);
+}
+
+if (page === 'account') {
+  (0, _togglePreferences["default"])();
 }
 
 function appendWidgets(dom, widget) {
@@ -66,21 +47,25 @@ function appendWidgets(dom, widget) {
   (0, _studyProgress.WC_studyprogress)();
   (0, _courseOverview.WC_courseoverview)();
   (0, _schedule.WC_scheduleWidget)();
-} //urgent announcements
+} //check if browser is online
 
 
-var socket = io(); //subscribe to urgent-announcements
+if (navigator.onLine) {
+  //urgent announcements
+  var socket = io(); //subscribe to urgent-announcements
 
-socket.emit('join', page); //on urgent-announcement hook update interface (see WC_urgentAnnouncement)
+  socket.emit('join', page); //on urgent-announcement hook update interface (see WC_urgentAnnouncement)
 
-socket.on('urgent-announcement', function (announcement) {
-  var urgentAnnouncement = document.querySelector('urgent-announcement');
+  socket.on('urgent-announcement', function (announcement) {
+    var urgentAnnouncement = document.querySelector('urgent-announcement');
 
-  if (utils.exists([urgentAnnouncement])) {
-    urgentAnnouncement.setAttribute('message', announcement.title);
-    urgentAnnouncement.setAttribute('uid', announcement.newsItemId);
-  }
-}); //menu 
+    if (utils.exists([urgentAnnouncement])) {
+      urgentAnnouncement.setAttribute('message', announcement.title);
+      urgentAnnouncement.setAttribute('uid', announcement.newsItemId);
+    }
+  });
+} //menu 
+
 
 var menuIcon = document.getElementById('menu-icon');
 var menu = document.getElementById('menu');
@@ -124,28 +109,9 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
         break;
     }
   });
-} // Write in module
-
-
-if (page === 'account') {
-  document.querySelector('#account form').classList.remove('disabled');
-
-  var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
-
-  setLocalStorage();
-  inputs.forEach(function (input) {
-    input.addEventListener('change', function (event) {
-      var id = input.id;
-      var state = event.target.checked;
-    });
-  });
 }
 
-function setLocalStorage() {
-  localStorage.setItem('preferences', 'test');
-}
-
-},{"./modules/search.mjs":2,"./modules/utils.mjs":3,"./web-components/course-overview.mjs":4,"./web-components/schedule.mjs":5,"./web-components/study-progress.mjs":6,"./web-components/urgent-announcement.mjs":7}],2:[function(require,module,exports){
+},{"./modules/search.mjs":2,"./modules/togglePreferences":3,"./modules/utils.mjs":4,"./web-components/course-overview.mjs":5,"./web-components/schedule.mjs":6,"./web-components/study-progress.mjs":7,"./web-components/urgent-announcement.mjs":8}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -179,6 +145,60 @@ function reset(e) {
 }
 
 },{}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = togglePreferences;
+
+var _utils = require("../modules/utils.mjs");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function togglePreferences() {
+  document.querySelector('#account form').classList.remove('disabled');
+
+  var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
+
+  var preferences = [];
+  inputs.forEach(function (label) {
+    // Data
+    var id = label.id;
+    var text = label.textContent;
+    var state = label.querySelector('input').checked; // Set LocalStorage
+
+    var object = {
+      id: id,
+      name: text,
+      state: state
+    };
+    preferences.push(object);
+    (0, _utils.setLocalStorage)('preferences', preferences); // Toggle
+
+    label.addEventListener('change', function (event) {
+      // Data
+      var id = label.id;
+      var state = event.target.checked; // Change LocalStorage
+
+      var data = (0, _utils.getLocalStorage)('preferences');
+      data[id].state = state;
+      (0, _utils.setLocalStorage)('preferences', data);
+    });
+  });
+}
+
+},{"../modules/utils.mjs":4}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -234,7 +254,7 @@ function storageAvailable(type) {
   }
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -271,7 +291,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var template = document.createElement('template');
-template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\n\np {\n\tmargin: 0;\n}\n\n.navigator {\n    background-color: #DDDDDD;\n    padding: 5px 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    color: #25167A;\n    font-size: 16px;\n}\n\n.navigator img {\n    padding: 10px;\n}\n\n.navigator img:not(.disabled) {\n    cursor: pointer;\n}\n\n.navigator img.disabled {\n    pointer-events: none;\n    opacity: .5;\n}\n\n.course {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    grid-column-gap: 20px;\n    padding: 15px 20px;\n    border-bottom: 1px solid #DDDDDD;\n}\n\n.course p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n    align-self: center;\n}\n\n.course ul {\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    align-self: center;\n}\n\n.course ul li {\n    display: inline;\n}\n\n.course ul li:not(:last-of-type):after {\n    content: \", \";\n    white-space: pre;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n\n<h2>Vakkenoverzicht</h2>\n\n<div class=\"navigator\">\n    <img src=\"/media/icons/arrow-left.svg\" alt=\"arrow-left\"></img>\n    <span></span>\n    <img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</div>\n\n<div id=\"course-overview\"></div>\n\n<a target=\"_blank\" href=\"https://sis.hva.nl/\">Volledig overzicht\n    <img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
+template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\n\np {\n\tmargin: 0;\n}\n\n.navigator {\n    background-color: #DDDDDD;\n    padding: 5px 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    color: #25167A;\n    font-size: 16px;\n}\n\n.navigator img {\n    padding: 10px;\n}\n\n.navigator img:not(.disabled) {\n    cursor: pointer;\n}\n\n.navigator img.disabled {\n    pointer-events: none;\n    opacity: .5;\n}\n\n.course {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    grid-column-gap: 20px;\n    padding: 15px 20px;\n    border-bottom: 1px solid #DDDDDD;\n}\n\n.course p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n    align-self: center;\n}\n\n.course ul {\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    align-self: center;\n}\n\n.course ul li {\n    display: inline;\n}\n\n.course ul li:not(:last-of-type):after {\n    content: \", \";\n    white-space: pre;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na:hover,\na:focus {\n    text-decoration: underline;\n    outline: none;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n\n<h2>Vakkenoverzicht</h2>\n\n<div class=\"navigator\">\n    <img src=\"/media/icons/arrow-left.svg\" alt=\"arrow-left\"></img>\n    <span></span>\n    <img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</div>\n\n<div id=\"course-overview\"></div>\n\n<a target=\"_blank\" href=\"https://sis.hva.nl/\">Volledig overzicht\n    <img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
 
 function init() {
   var CourseOverview = /*#__PURE__*/function (_HTMLElement) {
@@ -404,7 +424,7 @@ function init() {
   customElements.define('course-overview', CourseOverview);
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -441,7 +461,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var template = document.createElement('template');
-template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\n\np {\n\tmargin: 0;\n}\n\n.navigator {\n    background-color: #DDDDDD;\n    padding: 5px 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    color: #25167A;\n    font-size: 16px;\n}\n\n.navigator img {\n    padding: 10px;\n}\n\n.navigator img:not(.disabled) {\n    cursor: pointer;\n}\n\n.navigator img.disabled {\n    pointer-events: none;\n    opacity: .5;\n}\n\n.schedule-course {\n    display: grid;\n    grid-template-columns: auto 1fr;\n    grid-column-gap: 20px;\n    grid-row-gap: 5px;\n    padding: 15px 20px;\n    border-bottom: 1px solid #DDDDDD;\n}\n\n.schedule-course p:first-of-type,\n.schedule-course p:nth-of-type(3) {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n<h2>Dagrooster</h2>\n<div class=\"navigator\">\n\t<img src=\"/media/icons/arrow-left.svg\" alt=\"arrow-left\" class=\"disabled\"></img>\n\t<span></span>\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</div>\n<div id=\"schedules-container\"></div>\n<a target=\"_blank\" href=\"https://rooster.hva.nl/schedule\">Volledig rooster\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
+template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\n\np {\n\tmargin: 0;\n}\n\n.navigator {\n    background-color: #DDDDDD;\n    padding: 5px 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    color: #25167A;\n    font-size: 16px;\n}\n\n.navigator img {\n    padding: 10px;\n}\n\n.navigator img:not(.disabled) {\n    cursor: pointer;\n}\n\n.navigator img.disabled {\n    pointer-events: none;\n    opacity: .5;\n}\n\n.schedule-course {\n    display: grid;\n    grid-template-columns: auto 1fr;\n    grid-column-gap: 20px;\n    grid-row-gap: 5px;\n    padding: 15px 20px;\n    border-bottom: 1px solid #DDDDDD;\n}\n\n.schedule-course p:first-of-type,\n.schedule-course p:nth-of-type(3) {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na:hover,\na:focus {\n    text-decoration: underline;\n    outline: none;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n<h2>Dagrooster</h2>\n<div class=\"navigator\">\n\t<img src=\"/media/icons/arrow-left.svg\" alt=\"arrow-left\" class=\"disabled\"></img>\n\t<span></span>\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</div>\n<div id=\"schedules-container\"></div>\n<a target=\"_blank\" href=\"https://rooster.hva.nl/schedule\">Volledig rooster\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
 
 function init() {
   var schedule = /*#__PURE__*/function (_HTMLElement) {
@@ -537,7 +557,7 @@ function init() {
   window.customElements.define('schedule-widget', schedule);
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -586,7 +606,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var template = document.createElement('template');
-template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n    font-weight: lighter;\n    line-height: 1.1;\n}\n\np {\n    margin: 0;\n}\n\n#recent-results div {\n    display: grid;\n    grid-template-columns: auto 1fr auto;\n    grid-template-rows: 1fr auto;\n}\n\n#recent-results div:not(:last-of-type) {\n    margin-bottom: 15px;\n}\n\n#recent-results span {\n    display: block;\n    grid-column: 1 / 2;\n    grid-row: 1 / 3;\n    width: 5px;\n    height: 100%;\n}\n\nspan.success {\n    background-color: #25167A;\n}\n\nspan.failed {\n    background-color: #DDDDDD;\n}\n\n#recent-results p:nth-of-type(1) {\n    grid-column: 2 / 3;\n    padding: 4px 0px 0px 10px;\n}\n\n#recent-results p:nth-of-type(2) {\n    grid-row: 1 / 3;\n    grid-column: 3 / 4;\n    align-self: center;\n}\n\n#recent-results p:nth-of-type(3) {\n    padding: 0px 0px 4px 10px;\n    font-size: 14px;\n    color: #666666;\n}\n\n#recent-results p:nth-of-type(1),\n#recent-results p:nth-of-type(2) {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n\n}\n\n#recent-progress {\n    margin-top: 30px;\n}\n\n#recent-progress div {\n    display: grid;\n    grid-template-columns: auto 1fr auto;\n}\n\n#recent-progress div span {\n        display: block;\n        width: 5px;\n}\n\n#recent-progress p {\n    padding: 5px 0px;\n}\n\n#recent-progress p:first-of-type {\n    padding-left: 10px;\n}\n\n#recent-progress .current-year {\n    background-color: #DDDDDD;\n}\n\n#recent-progress .current-year span {\n    background-color: #25167A;\n}\n\n#recent-progress .current-year p {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n\n#recent-progress .current-year p:last-of-type {\n    padding-right: 10px;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n\n<h2>Studieresultaten en -voortgang</h2>\n\n<div id=\"recent-results\"></div>\n<div id=\"recent-progress\"></div>\n\n<a target=\"_blank\" href=\"https://sis.hva.nl/\">Alle resultaten in SIS\n    <img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
+template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n    font-weight: lighter;\n    line-height: 1.1;\n}\n\np {\n    margin: 0;\n}\n\n#recent-results div {\n    display: grid;\n    grid-template-columns: auto 1fr auto;\n    grid-template-rows: 1fr auto;\n}\n\n#recent-results div:not(:last-of-type) {\n    margin-bottom: 15px;\n}\n\n#recent-results span {\n    display: block;\n    grid-column: 1 / 2;\n    grid-row: 1 / 3;\n    width: 5px;\n    height: 100%;\n}\n\nspan.success {\n    background-color: #25167A;\n}\n\nspan.failed {\n    background-color: #DDDDDD;\n}\n\n#recent-results p:nth-of-type(1) {\n    grid-column: 2 / 3;\n    padding: 4px 0px 0px 10px;\n}\n\n#recent-results p:nth-of-type(2) {\n    grid-row: 1 / 3;\n    grid-column: 3 / 4;\n    align-self: center;\n}\n\n#recent-results p:nth-of-type(3) {\n    padding: 0px 0px 4px 10px;\n    font-size: 14px;\n    color: #666666;\n}\n\n#recent-results p:nth-of-type(1),\n#recent-results p:nth-of-type(2) {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n\n}\n\n#recent-progress {\n    margin-top: 30px;\n}\n\n#recent-progress div {\n    display: grid;\n    grid-template-columns: auto 1fr auto;\n}\n\n#recent-progress div span {\n        display: block;\n        width: 5px;\n}\n\n#recent-progress p {\n    padding: 5px 0px;\n}\n\n#recent-progress p:first-of-type {\n    padding-left: 10px;\n}\n\n#recent-progress .current-year {\n    background-color: #DDDDDD;\n}\n\n#recent-progress .current-year span {\n    background-color: #25167A;\n}\n\n#recent-progress .current-year p {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n\n#recent-progress .current-year p:last-of-type {\n    padding-right: 10px;\n}\n\na {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n    align-items: center;\n}\n\na:hover,\na:focus {\n    text-decoration: underline;\n    outline: none;\n}\n\na img {\n    height: 12px;\n    margin-left: 20px;\n}\n</style>\n\n<h2>Studieresultaten en -voortgang</h2>\n\n<div id=\"recent-results\"></div>\n<div id=\"recent-progress\"></div>\n\n<a target=\"_blank\" href=\"https://sis.hva.nl/\">Alle resultaten in SIS\n    <img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>\n";
 
 function init() {
   var StudyProgress = /*#__PURE__*/function (_HTMLElement) {
@@ -686,7 +706,7 @@ function init() {
   customElements.define('study-progress', StudyProgress);
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -816,6 +836,6 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
 
 window.customElements.define('urgent-announcement', urgentAnnouncement);
 
-},{"../modules/utils.mjs":3}]},{},[1])
+},{"../modules/utils.mjs":4}]},{},[1])
 
 //# sourceMappingURL=index.js.map
