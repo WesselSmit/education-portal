@@ -24,7 +24,9 @@ module.exports = router
         courseOverview: courseOverview,
         announcements: limit(await announcements(), 5)
     }))
-    .get('/account', (req, res) => res.send('account'))
+    .get('/account', (req, res) => res.render('account', {
+        pageName: 'account'
+    }))
     .get('/timetable', (req, res) => res.send('timetable'))
     .get('/course_overview', (req, res) => res.send('course_overview'))
     .get('/study_progress', (req, res) => res.send('study_progress'))
@@ -33,7 +35,7 @@ module.exports = router
         pageName: 'information',
         information: readJSON('./data/local/resource-page-content.json')
     }))
-    .get('/offline', (req, res) => res.render('offline'))
+    .get('/offline', (req, res) => res.render('offline', { pageName: 'offline' }))
 
 
     // Fetch from client to server to achieve enhancement
