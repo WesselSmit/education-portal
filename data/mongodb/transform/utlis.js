@@ -30,9 +30,20 @@ function limit(data, limiter) {
     return data
 }
 
+function getCategories(data) {
+    const cats = []
+    data.forEach(item => {
+        const cat = item.tags[0]
+        if (!cats.includes(cat))
+            cats.push(cat)
+    })
+    return cats
+}
+
 module.exports = {
     createFullDate,
     formatDateTime,
     readJSON,
-    limit
+    limit,
+    getCategories
 }

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const announcements = require('#data/mongodb/transform/announcements')
+const { getCategories } = require('#data/mongodb/transform/utlis')
 
 function getAnnouncement(id) {
     return announcements()
@@ -12,7 +13,9 @@ module.exports = router
     .use(express.static(__dirname + '../../public'))
     .get('/', async (req, res) => res.render('list-overview', {
         pageName: 'announcements-overview',
-        announcements: await announcements()
+        announcements: await announcements(),
+        categories: getCategories(await announcements())
+
     }))
     .get('/:id', async (req, res) => {
         const announcement = await getAnnouncement(req.params.id)
