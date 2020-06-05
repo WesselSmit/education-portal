@@ -12,21 +12,19 @@ const schedules = require('#data/mongodb/transform/schedules')
 const { recentResults, studyProgress } = require('#data/mongodb/transform/studyprogress')
 const courseOverview = readJSON('./data/local/course-overview.json')
 const announcements = require('#data/mongodb/transform/announcements')
-
 const announcementRouter = require('./announcement-router')
 
 module.exports = router
     .get('/', async (req, res) => res.render('dashboard', {
         pageName: 'dashboard',
         schedules: await schedules(),
-        studyResults: await recentResults(),
-        studyProgress: studyProgress(),
+        study: { results: await recentResults(), progress: studyProgress() },
         courseOverview: courseOverview,
         announcements: limit(await announcements(), 5)
     }))
-    .get('/account', (req, res) => res.render('account', {
-        pageName: 'account'
-    }))
+
+
+    .get('/account', (req, res) => res.render('account', { pageName: 'account' }))
     .get('/timetable', (req, res) => res.send('timetable'))
     .get('/course_overview', (req, res) => res.send('course_overview'))
     .get('/study_progress', (req, res) => res.send('study_progress'))

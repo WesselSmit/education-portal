@@ -1,0 +1,23 @@
+#account {
+    @include text;
+
+    h2 {
+        @include h2
+    }
+
+    form {
+
+        &.disabled label {
+            pointer-events: none;
+            opacity: .7;
+        }
+
+        label {
+            display: block;
+
+            input {
+                margin-right: 10px;
+            }
+        }
+    }
+}

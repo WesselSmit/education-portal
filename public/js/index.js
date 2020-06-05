@@ -21,6 +21,18 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //register service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
@@ -37,24 +49,22 @@ if ('serviceWorker' in navigator) {
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
-  var urgentNotification = document.querySelector('urgent-announcement'); // Studyprogress widget
+  var domElements = ['study-progress', 'course-overview', 'schedule'];
+  var widgetElements = ['study-progress', 'course-overview', 'schedule-widget'];
+  appendWidgets(domElements, widgetElements);
+}
 
-  var studyProgressWidget = document.getElementById('study-progress');
-  studyProgressWidget.remove();
-  document.querySelector('main section').append(document.createElement('study-progress')); // document.querySelector('main').insertBefore(document.createElement('study-progress'), urgentNotification.nextSibling)
+function appendWidgets(dom, widget) {
+  for (var i = 0; i < dom.length; i++) {
+    if (document.getElementById(dom[i])) {
+      document.getElementById(dom[i]).remove();
+    }
 
-  (0, _studyProgress.WC_studyprogress)(); // Courseoverview widget
+    document.querySelector('main section').append(document.createElement(widget[i]));
+  }
 
-  var courseOverviewWidget = document.getElementById('course-overview');
-  courseOverviewWidget.remove();
-  document.querySelector('main section').append(document.createElement('course-overview')); // document.querySelector('main').insertBefore(document.createElement('course-overview'), urgentNotification.nextSibling)
-
-  (0, _courseOverview.WC_courseoverview)(); // Schedule widget
-
-  var scheduleWidget = document.getElementById('schedule');
-  scheduleWidget.remove();
-  document.querySelector('main section').append(document.createElement('schedule-widget')); // document.querySelector('main').insertBefore(document.createElement('schedule-widget'), urgentNotification.nextSibling)
-
+  (0, _studyProgress.WC_studyprogress)();
+  (0, _courseOverview.WC_courseoverview)();
   (0, _schedule.WC_scheduleWidget)();
 } //urgent announcements
 
@@ -114,6 +124,25 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
         break;
     }
   });
+} // Write in module
+
+
+if (page === 'account') {
+  document.querySelector('#account form').classList.remove('disabled');
+
+  var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
+
+  setLocalStorage();
+  inputs.forEach(function (input) {
+    input.addEventListener('change', function (event) {
+      var id = input.id;
+      var state = event.target.checked;
+    });
+  });
+}
+
+function setLocalStorage() {
+  localStorage.setItem('preferences', 'test');
 }
 
 },{"./modules/search.mjs":2,"./modules/utils.mjs":3,"./web-components/course-overview.mjs":4,"./web-components/schedule.mjs":5,"./web-components/study-progress.mjs":6,"./web-components/urgent-announcement.mjs":7}],2:[function(require,module,exports){

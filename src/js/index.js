@@ -20,27 +20,21 @@ const page = document.querySelector('main').id.toLowerCase()
 
 //init dashboard
 if (page === 'dashboard') {
-    const urgentNotification = document.querySelector('urgent-announcement')
+    const domElements = ['study-progress', 'course-overview', 'schedule']
+    const widgetElements = ['study-progress', 'course-overview', 'schedule-widget']
+    appendWidgets(domElements, widgetElements)
+}
 
-    // Studyprogress widget
-    const studyProgressWidget = document.getElementById('study-progress')
-    studyProgressWidget.remove()
-    document.querySelector('main section').append(document.createElement('study-progress'))
-    // document.querySelector('main').insertBefore(document.createElement('study-progress'), urgentNotification.nextSibling)
+function appendWidgets(dom, widget) {
+    for (let i = 0; i < dom.length; i++) {
+        if (document.getElementById(dom[i])) {
+            document.getElementById(dom[i]).remove()
+        }
+        document.querySelector('main section').append(document.createElement(widget[i]))
+    }
+
     WC_studyprogress()
-
-    // Courseoverview widget
-    const courseOverviewWidget = document.getElementById('course-overview')
-    courseOverviewWidget.remove()
-    document.querySelector('main section').append(document.createElement('course-overview'))
-    // document.querySelector('main').insertBefore(document.createElement('course-overview'), urgentNotification.nextSibling)
     WC_courseoverview()
-
-    // Schedule widget
-    const scheduleWidget = document.getElementById('schedule')
-    scheduleWidget.remove()
-    document.querySelector('main section').append(document.createElement('schedule-widget'))
-    // document.querySelector('main').insertBefore(document.createElement('schedule-widget'), urgentNotification.nextSibling)
     WC_scheduleWidget()
 }
 
@@ -111,4 +105,25 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
                 break
         }
     })
+}
+
+
+
+// Write in module
+if (page === 'account') {
+    document.querySelector('#account form').classList.remove('disabled')
+    const inputs = [...document.querySelectorAll('#account form label')]
+
+    setLocalStorage()
+
+    inputs.forEach(input => {
+        input.addEventListener('change', event => {
+            const id = input.id
+            const state = event.target.checked
+        })
+    })
+}
+
+function setLocalStorage() {
+    localStorage.setItem('preferences', 'test')
 }
