@@ -7,7 +7,7 @@ var utils = _interopRequireWildcard(require("./modules/utils.mjs"));
 
 var search = _interopRequireWildcard(require("./modules/search.mjs"));
 
-var _togglePreferences = _interopRequireDefault(require("./modules/togglePreferences"));
+var _togglePreferences = _interopRequireDefault(require("./modules/togglePreferences.mjs"));
 
 var _urgentAnnouncement = _interopRequireDefault(require("./web-components/urgent-announcement.mjs"));
 
@@ -111,7 +111,7 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
   });
 }
 
-},{"./modules/search.mjs":2,"./modules/togglePreferences":3,"./modules/utils.mjs":4,"./web-components/course-overview.mjs":5,"./web-components/schedule.mjs":6,"./web-components/study-progress.mjs":7,"./web-components/urgent-announcement.mjs":8}],2:[function(require,module,exports){
+},{"./modules/search.mjs":2,"./modules/togglePreferences.mjs":3,"./modules/utils.mjs":4,"./web-components/course-overview.mjs":5,"./web-components/schedule.mjs":6,"./web-components/study-progress.mjs":7,"./web-components/urgent-announcement.mjs":8}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
