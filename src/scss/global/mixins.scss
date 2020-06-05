@@ -31,17 +31,20 @@
 }
 
 @mixin widgetLink {
-    a {
-        margin-top: 30px;
-        text-decoration: none;
-        color: $main-purple;
-        display: flex;
-        align-items: center;
+    margin-top: 30px;
+    text-decoration: none;
+    color: $main-purple;
+    display: flex;
+    align-items: center;
 
-        img {
-            height: 12px;
-            margin-left: 20px;
-        }
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+
+    img {
+        height: 12px;
+        margin-left: 20px;
     }
 }
 
