@@ -54,5 +54,7 @@ schedule-widget {
         }
     }
 
-    @include widgetLink;
+    &>a {
+        @include widgetLink;
+    }
 }

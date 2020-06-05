@@ -6,7 +6,7 @@ router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
 // Get data
-const { readJSON, limit } = require('#data/mongodb/transform/utlis')
+const { readJSON, limit, getCategories } = require('#data/mongodb/transform/utlis')
 
 const schedules = require('#data/mongodb/transform/schedules')
 const { recentResults, studyProgress } = require('#data/mongodb/transform/studyprogress')
@@ -20,7 +20,8 @@ module.exports = router
         schedules: await schedules(),
         study: { results: await recentResults(), progress: studyProgress() },
         courseOverview: courseOverview,
-        announcements: limit(await announcements(), 5)
+        announcements: limit(await announcements(), 5),
+        categories: getCategories(limit(await announcements(), 5))
     }))
 
 

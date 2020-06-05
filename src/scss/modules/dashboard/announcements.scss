@@ -8,16 +8,83 @@
     }
 
     #announcements-container {
+        #announcement-legend {
+            margin-bottom: 20px;
+
+            p {
+                color: $main-black;
+                font-size: 14px;
+                display: inline-block;
+                margin-right: 20px;
+
+                &:last-of-type {
+                    margin-right: 0;
+                }
+
+                &::before {
+                    content: "";
+                    height: 15px;
+                    margin-bottom: -2px;
+                    width: 15px;
+                    margin-right: 10px;
+                    display: inline-block;
+                }
+
+                &.Opleiding::before {
+                    background-color: $code-red;
+                }
+
+                &.Faciliteit::before {
+                    background-color: $code-yellow;
+                }
+
+                &.HvA::before {
+                    background-color: $code-blue;
+                }
+
+                &.Medezeggenschap::before {
+                    background-color: $code-green;
+                }
+            }
+        }
+
+
         a {
-            margin: 0;
-            display: unset;
+            margin: 0 0 15px 0;
+            display: block;
             color: $main-black;
+            text-decoration: none;
+
+
+            &:hover {
+                background-color: $main-grey;
+            }
+
+            &:focus {
+                background-color: $light-grey;
+            }
         }
 
         .announcement {
-            margin: 15px 0;
+            margin: 0;
             padding: 5px 0 5px 10px;
-            border-left: 5px solid $main-purple;
+            border-left: 5px solid;
+
+            &.Opleiding {
+                border-color: $code-red;
+            }
+
+            &.Faciliteit {
+                border-color: $code-yellow;
+            }
+
+            &.HvA {
+                border-color: $code-blue;
+            }
+
+            &.Medezeggenschap {
+                border-color: $code-green;
+            }
 
 
             p:first-of-type {
@@ -31,5 +98,7 @@
         }
     }
 
-    @include widgetLink;
+    &>a {
+        @include widgetLink;
+    }
 }

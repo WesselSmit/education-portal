@@ -5,15 +5,6 @@ import { WC_studyprogress } from './web-components/study-progress.mjs'
 import { WC_scheduleWidget } from './web-components/schedule.mjs'
 import { WC_courseoverview } from './web-components/course-overview.mjs'
 
-//register service worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
-            .then(registration => registration.update())
-            .catch(err => console.log(`ServiceWorker failed registration: ${err}`))
-    })
-}
-
 
 
 const page = document.querySelector('main').id.toLowerCase()
@@ -39,21 +30,24 @@ function appendWidgets(dom, widget) {
 }
 
 
-//urgent announcements
-const socket = io()
+//check if browser is online
+if (navigator.onLine) {
+    //urgent announcements
+    const socket = io()
 
-//subscribe to urgent-announcements
-socket.emit('join', page)
+    //subscribe to urgent-announcements
+    socket.emit('join', page)
 
-//on urgent-announcement hook update interface (see WC_urgentAnnouncement)
-socket.on('urgent-announcement', announcement => {
-    const urgentAnnouncement = document.querySelector('urgent-announcement')
+    //on urgent-announcement hook update interface (see WC_urgentAnnouncement)
+    socket.on('urgent-announcement', announcement => {
+        const urgentAnnouncement = document.querySelector('urgent-announcement')
 
-    if (utils.exists([urgentAnnouncement])) {
-        urgentAnnouncement.setAttribute('message', announcement.title)
-        urgentAnnouncement.setAttribute('uid', announcement.newsItemId)
-    }
-})
+        if (utils.exists([urgentAnnouncement])) {
+            urgentAnnouncement.setAttribute('message', announcement.title)
+            urgentAnnouncement.setAttribute('uid', announcement.newsItemId)
+        }
+    })
+}
 
 
 

@@ -94,5 +94,7 @@
         }
     }
 
-    @include widgetLink;
+    &>a {
+        @include widgetLink;
+    }
 }

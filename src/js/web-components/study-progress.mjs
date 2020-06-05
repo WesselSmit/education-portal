@@ -114,6 +114,12 @@ a {
     align-items: center;
 }
 
+a:hover,
+a:focus {
+    text-decoration: underline;
+    outline: none;
+}
+
 a img {
     height: 12px;
     margin-left: 20px;
