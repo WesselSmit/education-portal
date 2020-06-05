@@ -35,6 +35,8 @@ module.exports = router
         pageName: 'information',
         information: readJSON('./data/local/resource-page-content.json')
     }))
+    .get('/offline', (req, res) => res.render('offline'))
+
 
     // Fetch from client to server to achieve enhancement
     .get('/schedule', async (req, res) => res.json(await schedules()))
