@@ -45,21 +45,24 @@ if (page === 'dashboard') {
 }
 
 
-//urgent announcements
-const socket = io()
+//check if browser is online
+if (navigator.onLine) {
+    //urgent announcements
+    const socket = io()
 
-//subscribe to urgent-announcements
-socket.emit('join', page)
+    //subscribe to urgent-announcements
+    socket.emit('join', page)
 
-//on urgent-announcement hook update interface (see WC_urgentAnnouncement)
-socket.on('urgent-announcement', announcement => {
-    const urgentAnnouncement = document.querySelector('urgent-announcement')
+    //on urgent-announcement hook update interface (see WC_urgentAnnouncement)
+    socket.on('urgent-announcement', announcement => {
+        const urgentAnnouncement = document.querySelector('urgent-announcement')
 
-    if (utils.exists([urgentAnnouncement])) {
-        urgentAnnouncement.setAttribute('message', announcement.title)
-        urgentAnnouncement.setAttribute('uid', announcement.newsItemId)
-    }
-})
+        if (utils.exists([urgentAnnouncement])) {
+            urgentAnnouncement.setAttribute('message', announcement.title)
+            urgentAnnouncement.setAttribute('uid', announcement.newsItemId)
+        }
+    })
+}
 
 
 
