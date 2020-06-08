@@ -11,12 +11,6 @@ var _togglePreferences = _interopRequireDefault(require("./modules/togglePrefere
 
 var _urgentAnnouncement = _interopRequireDefault(require("./web-components/urgent-announcement.mjs"));
 
-var _studyProgress = require("./web-components/study-progress.mjs");
-
-var _schedule = require("./web-components/schedule.mjs");
-
-var _courseOverview = require("./web-components/course-overview.mjs");
-
 var _announcements = require("./web-components/announcements.mjs");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -28,16 +22,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
-  var widgetElements;
-  var preferences = (0, utils.getLocalStorage)('preferences');
-
-  if (preferences) {
-    widgetElements = checker(preferences);
-  } else {
-    widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget'];
-  }
-
-  appendWidgets(widgetElements);
+  utils.appendWidgets(utils.getPreferences());
 }
 
 if (page === 'account') {
@@ -49,59 +34,6 @@ if (page === 'announcements-overview') {
   announcementList.remove();
   document.querySelector('main section').append(document.createElement('announcements-widget'));
   (0, _announcements.WC_announcementsWidget)(page);
-}
-
-function appendWidgets(widget) {
-  // Remove EJS templates
-  var domElements = ['announcements', 'study-progress', 'course-overview', 'schedule'];
-  domElements.forEach(function (element) {
-    return document.getElementById(element).remove();
-  }); // Adding widgets
-
-  widget.forEach(function (item) {
-    document.querySelector('main section').append(document.createElement(item));
-
-    if (item === 'study-progress') {
-      (0, _studyProgress.WC_studyprogress)();
-    }
-
-    if (item === 'course-overview') {
-      (0, _courseOverview.WC_courseoverview)();
-    }
-
-    if (item === 'schedule-widget') {
-      (0, _schedule.WC_scheduleWidget)();
-    }
-
-    if (item === 'announcements-widget') {
-      (0, _announcements.WC_announcementsWidget)(page);
-    }
-  });
-}
-
-function checker(preferences) {
-  var widgetElements = []; // Announcements
-
-  preferences.forEach(function (preference) {
-    preference.id = parseInt(preference.id);
-
-    if (preference.state && preference.id === 0) {
-      widgetElements.push('announcements-widget');
-    }
-
-    if (preference.state && preference.id === 1) {
-      widgetElements.push('study-progress');
-    }
-
-    if (preference.state && preference.id === 2) {
-      widgetElements.push('course-overview');
-    }
-
-    if (preference.state && preference.id === 3) {
-      widgetElements.push('schedule-widget');
-    }
-  });
-  return widgetElements;
 } //check if browser is online
 
 
@@ -166,7 +98,7 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
   });
 }
 
-},{"./modules/search.mjs":2,"./modules/togglePreferences.mjs":3,"./modules/utils.mjs":4,"./web-components/announcements.mjs":5,"./web-components/course-overview.mjs":6,"./web-components/schedule.mjs":7,"./web-components/study-progress.mjs":8,"./web-components/urgent-announcement.mjs":9}],2:[function(require,module,exports){
+},{"./modules/search.mjs":2,"./modules/togglePreferences.mjs":3,"./modules/utils.mjs":4,"./web-components/announcements.mjs":5,"./web-components/urgent-announcement.mjs":9}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -348,6 +280,17 @@ exports.exists = exists;
 exports.setLocalStorage = setLocalStorage;
 exports.getLocalStorage = getLocalStorage;
 exports.storageAvailable = storageAvailable;
+exports.getPreferences = getPreferences;
+exports.appendWidgets = appendWidgets;
+exports.checker = checker;
+
+var _studyProgress = require("../web-components/study-progress.mjs");
+
+var _schedule = require("../web-components/schedule.mjs");
+
+var _courseOverview = require("../web-components/course-overview.mjs");
+
+var _announcements = require("../web-components/announcements.mjs");
 
 function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest(); }
 
@@ -394,7 +337,76 @@ function storageAvailable(type) {
   }
 }
 
-},{}],5:[function(require,module,exports){
+function getPreferences() {
+  var widgetElements;
+
+  if (storageAvailable('localStorage')) {
+    var preferences = getLocalStorage('preferences');
+
+    if (preferences) {
+      widgetElements = checker(preferences);
+    }
+  } else {
+    widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget'];
+  }
+
+  return widgetElements;
+}
+
+function appendWidgets(widget) {
+  // Remove EJS templates
+  var domElements = ['announcements', 'study-progress', 'course-overview', 'schedule'];
+  domElements.forEach(function (element) {
+    return document.getElementById(element).remove();
+  }); // Adding widgets
+
+  widget.forEach(function (item) {
+    document.querySelector('main section').append(document.createElement(item));
+
+    if (item === 'study-progress') {
+      (0, _studyProgress.WC_studyprogress)();
+    }
+
+    if (item === 'course-overview') {
+      (0, _courseOverview.WC_courseoverview)();
+    }
+
+    if (item === 'schedule-widget') {
+      (0, _schedule.WC_scheduleWidget)();
+    }
+
+    if (item === 'announcements-widget') {
+      (0, _announcements.WC_announcementsWidget)('dashboard');
+    }
+  });
+}
+
+function checker(preferences) {
+  var widgetElements = []; // Announcements
+
+  preferences.forEach(function (preference) {
+    preference.id = parseInt(preference.id);
+
+    if (preference.state && preference.id === 0) {
+      widgetElements.push('announcements-widget');
+    }
+
+    if (preference.state && preference.id === 1) {
+      widgetElements.push('study-progress');
+    }
+
+    if (preference.state && preference.id === 2) {
+      widgetElements.push('course-overview');
+    }
+
+    if (preference.state && preference.id === 3) {
+      widgetElements.push('schedule-widget');
+    }
+  });
+  return widgetElements;
+}
+
+},{"../web-components/announcements.mjs":5,"../web-components/course-overview.mjs":6,"../web-components/schedule.mjs":7,"../web-components/study-progress.mjs":8}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

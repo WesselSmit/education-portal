@@ -2,27 +2,13 @@ import * as utils from './modules/utils.mjs'
 import * as search from './modules/search.mjs'
 import togglePreferences from './modules/togglePreferences.mjs'
 import urgentAnnouncement from './web-components/urgent-announcement.mjs'
-import { WC_studyprogress } from './web-components/study-progress.mjs'
-import { WC_scheduleWidget } from './web-components/schedule.mjs'
-import { WC_courseoverview } from './web-components/course-overview.mjs'
 import { WC_announcementsWidget } from './web-components/announcements.mjs'
-
-import { getLocalStorage } from './modules/utils.mjs'
 
 const page = document.querySelector('main').id.toLowerCase()
 
 //init dashboard
 if (page === 'dashboard') {
-    let widgetElements
-
-    const preferences = getLocalStorage('preferences')
-    if (preferences) {
-        widgetElements = checker(preferences)
-    } else {
-        widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']
-    }
-
-    appendWidgets(widgetElements)
+    utils.appendWidgets(utils.getPreferences())
 }
 
 if (page === 'account') {
@@ -36,53 +22,6 @@ if (page === 'announcements-overview') {
     WC_announcementsWidget(page)
 }
 
-function appendWidgets(widget) {
-    // Remove EJS templates
-    const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
-    domElements.forEach(element => document.getElementById(element).remove())
-
-    // Adding widgets
-    widget.forEach(item => {
-        document.querySelector('main section').append(document.createElement(item))
-
-        if (item === 'study-progress') {
-            WC_studyprogress()
-        }
-        if (item === 'course-overview') {
-            WC_courseoverview()
-        }
-        if (item === 'schedule-widget') {
-            WC_scheduleWidget()
-        }
-        if (item === 'announcements-widget') {
-            WC_announcementsWidget(page)
-        }
-    })
-}
-
-function checker(preferences) {
-    const widgetElements = []
-
-    // Announcements
-    preferences.forEach(preference => {
-        preference.id = parseInt(preference.id)
-
-        if (preference.state && preference.id === 0) {
-            widgetElements.push('announcements-widget')
-        }
-        if (preference.state && preference.id === 1) {
-            widgetElements.push('study-progress')
-        }
-        if (preference.state && preference.id === 2) {
-            widgetElements.push('course-overview')
-        }
-        if (preference.state && preference.id === 3) {
-            widgetElements.push('schedule-widget')
-        }
-    })
-
-    return widgetElements
-}
 
 //check if browser is online
 if (navigator.onLine) {
