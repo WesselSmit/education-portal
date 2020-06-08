@@ -7,12 +7,19 @@ import { WC_scheduleWidget } from './web-components/schedule.mjs'
 import { WC_courseoverview } from './web-components/course-overview.mjs'
 import { WC_announcementsWidget } from './web-components/announcements.mjs'
 
+import { getLocalStorage } from './modules/utils.mjs'
+
+
 
 
 const page = document.querySelector('main').id.toLowerCase()
 
 //init dashboard
 if (page === 'dashboard') {
+
+    const preferences = getLocalStorage('preferences')
+    console.log(preferences)
+
     const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
     const widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']
     appendWidgets(domElements, widgetElements)

@@ -28,6 +28,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
+  var preferences = (0, utils.getLocalStorage)('preferences');
+  console.log(preferences);
   var domElements = ['announcements', 'study-progress', 'course-overview', 'schedule'];
   var widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget'];
   appendWidgets(domElements, widgetElements);
