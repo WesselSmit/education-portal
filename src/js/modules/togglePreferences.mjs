@@ -23,15 +23,10 @@ function setPreferences() {
 function dragHandler() {
     const preferencesContainer = document.querySelector('#preferences')
 
-    const sortable = new Sortable(preferencesContainer, {
+    new Sortable(preferencesContainer, {
         animation: 150,
-        onEnd: (evt) => {
-            console.log(evt.to)
-            setPreferencesObject()
-        }
+        onEnd: () => setPreferencesObject()
     })
-
-    return sortable
 }
 
 // Saving and changing preferences 
@@ -40,6 +35,7 @@ function setPreferencesObject() {
     let preferences = []
 
     inputs.forEach(label => {
+        console.log(label)
         // Data
         const id = label.id
         const text = label.textContent

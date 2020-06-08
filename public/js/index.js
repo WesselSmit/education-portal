@@ -3901,14 +3901,12 @@ function setPreferences() {
 
 function dragHandler() {
   var preferencesContainer = document.querySelector('#preferences');
-  var sortable = new _sortablejs["default"](preferencesContainer, {
+  new _sortablejs["default"](preferencesContainer, {
     animation: 150,
-    onEnd: function onEnd(evt) {
-      console.log(evt.to);
-      setPreferencesObject();
+    onEnd: function onEnd() {
+      return setPreferencesObject();
     }
   });
-  return sortable;
 } // Saving and changing preferences 
 
 
@@ -3917,7 +3915,8 @@ function setPreferencesObject() {
 
   var preferences = [];
   inputs.forEach(function (label) {
-    // Data
+    console.log(label); // Data
+
     var id = label.id;
     var text = label.textContent;
     var state = label.querySelector('input').checked; // Set LocalStorage
