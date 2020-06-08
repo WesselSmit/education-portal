@@ -43,6 +43,8 @@ export function getPreferences() {
         const preferences = getLocalStorage('preferences')
         if (preferences) {
             widgetElements = checker(preferences)
+        } else {
+            widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']
         }
     } else {
         widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']

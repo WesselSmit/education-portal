@@ -1,6 +1,6 @@
 import * as utils from './modules/utils.mjs'
 import * as search from './modules/search.mjs'
-import togglePreferences from './modules/togglePreferences.mjs'
+import togglePreferences from './modules/togglePreferences2.mjs'
 import urgentAnnouncement from './web-components/urgent-announcement.mjs'
 import { WC_announcementsWidget } from './web-components/announcements.mjs'
 
