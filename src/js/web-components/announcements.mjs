@@ -40,7 +40,7 @@ p {
 .announcements-container #announcement-legend p.Opleiding::before {
 	background-color: #DC143C;
 }
-.announcements-container #announcement-legend p.Faciliteit::before {
+.announcements-container #announcement-legend p.Faculteit::before {
 	background-color: #DCB614;
 }
 .announcements-container #announcement-legend p.HvA::before {
@@ -69,7 +69,7 @@ p {
 .announcements-container .announcement.Opleiding {
 	border-color: #DC143C;
 }
-.announcements-container .announcement.Faciliteit {
+.announcements-container .announcement.Faculteit {
 	border-color: #DCB614;
 }
 .announcements-container .announcement.HvA {
@@ -106,7 +106,7 @@ p {
 <div class="announcements-container">
 	<div id="announcement-legend"></div>
 </div>
-<a class="allAnnouncements" target="_blank" href="/announcements/" target="_self">Alle mededelingen
+<a class="allAnnouncements" href="/announcements/" target="_self">Alle mededelingen
 	<img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
 </a>`
 
