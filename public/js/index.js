@@ -56,13 +56,11 @@ function appendWidgets(widget) {
   var domElements = ['announcements', 'study-progress', 'course-overview', 'schedule'];
   domElements.forEach(function (element) {
     return document.getElementById(element).remove();
-  });
-  console.log(widget);
-  widget.forEach(function (item) {
-    return document.querySelector('main section').append(document.createElement(item));
   }); // Adding widgets
 
   widget.forEach(function (item) {
+    document.querySelector('main section').append(document.createElement(item));
+
     if (item === 'study-progress') {
       (0, _studyProgress.WC_studyprogress)();
     }

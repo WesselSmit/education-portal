@@ -41,11 +41,10 @@ function appendWidgets(widget) {
     const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
     domElements.forEach(element => document.getElementById(element).remove())
 
-    console.log(widget)
-    widget.forEach(item => document.querySelector('main section').append(document.createElement(item)))
-
     // Adding widgets
     widget.forEach(item => {
+        document.querySelector('main section').append(document.createElement(item))
+
         if (item === 'study-progress') {
             WC_studyprogress()
         }
