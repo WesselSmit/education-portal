@@ -5,6 +5,9 @@ export { init as WC_announcementsWidget }
 const template = document.createElement('template')
 template.innerHTML = `
 <style>
+*:focus {
+    outline: none;
+}
 h2 {
     font-size: 24px;
     color: #25167A;
