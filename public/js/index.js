@@ -17,6 +17,8 @@ var _schedule = require("./web-components/schedule.mjs");
 
 var _courseOverview = require("./web-components/course-overview.mjs");
 
+var _announcements = require("./web-components/announcements.mjs");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -26,8 +28,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
-  var domElements = ['study-progress', 'course-overview', 'schedule'];
-  var widgetElements = ['study-progress', 'course-overview', 'schedule-widget'];
+  var domElements = ['announcements', 'study-progress', 'course-overview', 'schedule'];
+  var widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget'];
   appendWidgets(domElements, widgetElements);
 }
 
@@ -35,15 +37,16 @@ if (page === 'account') {
   (0, _togglePreferences["default"])();
 }
 
-function appendWidgets(dom, widget) {
-  for (var i = 0; i < dom.length; i++) {
-    if (document.getElementById(dom[i])) {
-      document.getElementById(dom[i]).remove();
+function appendWidgets(domEl, widget) {
+  for (var i = 0; i < domEl.length; i++) {
+    if (document.getElementById(domEl[i])) {
+      document.getElementById(domEl[i]).remove();
     }
 
     document.querySelector('main section').append(document.createElement(widget[i]));
   }
 
+  (0, _announcements.WC_announcementsWidget)(page);
   (0, _studyProgress.WC_studyprogress)();
   (0, _courseOverview.WC_courseoverview)();
   (0, _schedule.WC_scheduleWidget)();
@@ -111,7 +114,7 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
   });
 }
 
-},{"./modules/search.mjs":2,"./modules/togglePreferences.mjs":3,"./modules/utils.mjs":4,"./web-components/course-overview.mjs":5,"./web-components/schedule.mjs":6,"./web-components/study-progress.mjs":7,"./web-components/urgent-announcement.mjs":8}],2:[function(require,module,exports){
+},{"./modules/search.mjs":2,"./modules/togglePreferences.mjs":3,"./modules/utils.mjs":4,"./web-components/announcements.mjs":5,"./web-components/course-overview.mjs":6,"./web-components/schedule.mjs":7,"./web-components/study-progress.mjs":8,"./web-components/urgent-announcement.mjs":9}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -342,6 +345,134 @@ function storageAvailable(type) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.WC_announcementsWidget = init;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var template = document.createElement('template');
+template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n.announcements-container #announcement-legend {\n\tmargin-bottom: 20px;\n}\n.announcements-container #announcement-legend p {\n\tcolor: black;\n\tfont-size: 14px;\n\tdisplay: inline-block;\n\tmargin-right: 20px;\n}\n.announcements-container #announcement-legend p:last-of-type {\n\tmargin-right: 0;\n}\n.announcements-container #announcement-legend p::before {\n\tcontent: \"\";\n\theight: 15px;\n\tmargin-bottom: -2px;\n\twidth: 15px;\n\tmargin-right: 10px;\n\tdisplay: inline-block;\n}\n.announcements-container #announcement-legend p.Opleiding::before {\n\tbackground-color: #DC143C;\n}\n.announcements-container #announcement-legend p.Faculteit::before {\n\tbackground-color: #DCB614;\n}\n.announcements-container #announcement-legend p.HvA::before {\n\tbackground-color: #149EDC;\n}\n.announcements-container #announcement-legend p.Medezeggenschap::before {\n\tbackground-color: #14DC69;\n}\n.announcements-container a {\n\tmargin: 0 0 15px 0;\n\tdisplay: block;\n\tcolor: black;\n\ttext-decoration: none;\n}\n.announcements-container a:hover {\n\tbackground-color: #F2F2F2;\n}\n.announcements-container a:focus {\n\tbackground-color: #DDDDDD;\n}\n.announcements-container .announcement {\n\tmargin: 0;\n\tpadding: 5px 0 5px 10px;\n\tborder-left: 5px solid;\n}\n.announcements-container .announcement.Opleiding {\n\tborder-color: #DC143C;\n}\n.announcements-container .announcement.Faculteit {\n\tborder-color: #DCB614;\n}\n.announcements-container .announcement.HvA {\n\tborder-color: #149EDC;\n}\n.announcements-container .announcement.Medezeggenschap {\n\tborder-color: #14DC69;\n}\n.announcements-container .announcement p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .announcement p:last-of-type {\n\tcolor: #666666;\n\tfont-size: 14px;\n}    \n.allAnnouncements {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n\talign-items: center;\n}\n.allAnnouncements:hover,\n.allAnnouncements:focus {\n        text-decoration: underline;\n}\n.allAnnouncements img {\n        height: 12px;\n        margin-left: 20px;\n}\n</style>\n<div id=\"announcements\"></div>\n<h2>Mededelingen</h2>\n<div class=\"announcements-container\">\n\t<div id=\"announcement-legend\"></div>\n</div>\n<a class=\"allAnnouncements\" href=\"/announcements/\" target=\"_self\">Alle mededelingen\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>";
+
+function init(pageName) {
+  var announcementList = /*#__PURE__*/function (_HTMLElement) {
+    _inherits(announcementList, _HTMLElement);
+
+    var _super = _createSuper(announcementList);
+
+    function announcementList() {
+      var _this;
+
+      _classCallCheck(this, announcementList);
+
+      _this = _super.call(this);
+
+      _this.attachShadow({
+        mode: 'open'
+      });
+
+      _this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+      _this.getData().then(function (json) {
+        var _json = _slicedToArray(json, 2),
+            announcements = _json[0],
+            categories = _json[1];
+
+        _this.createLegenda(categories);
+
+        if (pageName === 'dashboard') {
+          announcements.splice(5, announcements.length);
+        }
+
+        _this.appendAnnouncements(announcements);
+      });
+
+      _this.announcementContainer = _this.shadowRoot.querySelector('.announcements-container');
+      _this.announcementLegend = _this.shadowRoot.querySelector('#announcement-legend');
+      return _this;
+    }
+
+    _createClass(announcementList, [{
+      key: "getData",
+      value: function getData() {
+        var options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        return fetch('/announcementslist', options).then(function (res) {
+          return res.json();
+        });
+      }
+    }, {
+      key: "createLegenda",
+      value: function createLegenda(categories) {
+        var _this2 = this;
+
+        categories.forEach(function (cat) {
+          _this2.announcementLegend.insertAdjacentHTML('beforeend', "<p class=\"".concat(cat, "\">").concat(cat, "</p>"));
+        });
+      }
+    }, {
+      key: "appendAnnouncements",
+      value: function appendAnnouncements(announcements) {
+        var _this3 = this;
+
+        announcements.forEach(function (announcement) {
+          _this3.announcementContainer.insertAdjacentHTML('beforeend', "\n\t\t\t\t<a href=\"/announcements/".concat(announcement.newsItemId, "\" target=\"_self\">\n\t\t\t\t\t<div class=\"announcement ").concat(announcement.tags[0], "\" id=\"").concat(announcement.newsItemId, "\">\n                \t\t<p>").concat(announcement.title, "</p>\n                \t\t<p>").concat(announcement.publishDate, " - ").concat(announcement.tags[0], "</p>\n           \t\t\t</div>\n\t\t\t\t</a>"));
+        });
+      }
+    }]);
+
+    return announcementList;
+  }( /*#__PURE__*/_wrapNativeSuper(HTMLElement));
+
+  window.customElements.define('announcements-widget', announcementList);
+}
+
+},{}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.WC_courseoverview = init;
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -506,7 +637,7 @@ function init() {
   customElements.define('course-overview', CourseOverview);
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -639,7 +770,7 @@ function init() {
   window.customElements.define('schedule-widget', schedule);
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -710,7 +841,7 @@ function init() {
 
       _this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-      _this.data = _this.getData().then(function (json) {
+      _this.getData().then(function (json) {
         var _json = _slicedToArray(json, 2),
             results = _json[0],
             progress = _json[1];
@@ -719,6 +850,7 @@ function init() {
 
         _this.progressComponent(progress);
       });
+
       _this.resultsContainer = _this.shadowRoot.querySelector('#recent-results');
       _this.progressContainer = _this.shadowRoot.querySelector('#recent-progress');
       return _this;
@@ -788,7 +920,7 @@ function init() {
   customElements.define('study-progress', StudyProgress);
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

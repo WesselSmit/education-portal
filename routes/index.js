@@ -41,3 +41,4 @@ module.exports = router
     .get('/schedule', async (req, res) => res.json(await schedules()))
     .get('/studyprogress', async (req, res) => res.json([await recentResults(), studyProgress()]))
     .get('/courseoverview', async (req, res) => res.json(courseOverview))
+    .get('/announcementslist', async (req, res) => res.json([await announcements(), getCategories(limit(await announcements(), 5))]))

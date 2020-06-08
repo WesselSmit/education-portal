@@ -144,7 +144,7 @@ function init() {
             this.attachShadow({ mode: 'open' })
             this.shadowRoot.appendChild(template.content.cloneNode(true))
 
-            this.data = this.getData().then(json => {
+            this.getData().then(json => {
                 const [results, progress] = json
 
                 this.resultComponent(results)

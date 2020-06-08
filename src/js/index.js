@@ -5,6 +5,7 @@ import urgentAnnouncement from './web-components/urgent-announcement.mjs'
 import { WC_studyprogress } from './web-components/study-progress.mjs'
 import { WC_scheduleWidget } from './web-components/schedule.mjs'
 import { WC_courseoverview } from './web-components/course-overview.mjs'
+import { WC_announcementsWidget } from './web-components/announcements.mjs'
 
 
 
@@ -12,8 +13,8 @@ const page = document.querySelector('main').id.toLowerCase()
 
 //init dashboard
 if (page === 'dashboard') {
-    const domElements = ['study-progress', 'course-overview', 'schedule']
-    const widgetElements = ['study-progress', 'course-overview', 'schedule-widget']
+    const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
+    const widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']
     appendWidgets(domElements, widgetElements)
 }
 
@@ -21,14 +22,15 @@ if (page === 'account') {
     togglePreferences()
 }
 
-function appendWidgets(dom, widget) {
-    for (let i = 0; i < dom.length; i++) {
-        if (document.getElementById(dom[i])) {
-            document.getElementById(dom[i]).remove()
+function appendWidgets(domEl, widget) {
+    for (let i = 0; i < domEl.length; i++) {
+        if (document.getElementById(domEl[i])) {
+            document.getElementById(domEl[i]).remove()
         }
         document.querySelector('main section').append(document.createElement(widget[i]))
     }
 
+    WC_announcementsWidget(page)
     WC_studyprogress()
     WC_courseoverview()
     WC_scheduleWidget()
