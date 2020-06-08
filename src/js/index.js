@@ -27,6 +27,17 @@ if (page === 'dashboard') {
     appendWidgets(domElements, widgetElements)
 }
 
+if (page === 'account') {
+    togglePreferences()
+}
+
+if (page === 'announcements-overview') {
+    const announcementList = document.getElementById('announcements')
+    announcementList.remove()
+    document.querySelector('main section').append(document.createElement('announcements-widget'))
+    WC_announcementsWidget(page)
+}
+
 function appendWidgets(domEl, widget) {
     // Remove EJS templates
     const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
@@ -78,10 +89,6 @@ function checker(preferences) {
     })
 
     return [domElements, widgetElements]
-}
-
-if (page === 'account') {
-    togglePreferences()
 }
 
 //check if browser is online

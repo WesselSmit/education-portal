@@ -1,3 +1,5 @@
+import * as utils from '../modules/utils.mjs'
+
 export { init as WC_announcementsWidget }
 
 const template = document.createElement('template')
@@ -81,6 +83,9 @@ p {
 .announcements-container .announcement p:first-of-type {
     font-family: "OpenSans-Bold", sans-serif, Arial, Helvetica;
 }
+.announcements-container .read .announcement p:first-of-type {
+    font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
+}
 .announcements-container .announcement p:last-of-type {
 	color: #666666;
 	font-size: 14px;
@@ -149,13 +154,30 @@ function init(pageName) {
         appendAnnouncements(announcements) {
             announcements.forEach(announcement => {
                 this.announcementContainer.insertAdjacentHTML('beforeend', `
-				<a href="/announcements/${announcement.newsItemId}" target="_self">
+				<a href="/announcements/${announcement.newsItemId}" target="_self" uid="${announcement.newsItemId}">
 					<div class="announcement ${announcement.tags[0]}" id="${announcement.newsItemId}">
                 		<p>${announcement.title}</p>
                 		<p>${announcement.publishDate} - ${announcement.tags[0]}</p>
            			</div>
 				</a>`)
+
+                if (utils.storageAvailable('localStorage')) {
+                    const storedHistory = utils.getLocalStorage('read-history')
+                    this.readHistory = storedHistory ? storedHistory : []
+
+                    const link = this.announcementContainer.querySelector('a:last-of-type')
+
+                    if (this.readHistory.includes(link.getAttribute('uid'))) {
+                        link.classList.add('read')
+                    }
+                    link.addEventListener('click', () => this.store(link))
+                }
             })
+        }
+
+        store(announcement) {
+            this.readHistory.push(announcement.getAttribute('uid'))
+            utils.setLocalStorage('read-history', this.readHistory)
         }
     }
 
