@@ -9,40 +9,80 @@ import { WC_announcementsWidget } from './web-components/announcements.mjs'
 
 import { getLocalStorage } from './modules/utils.mjs'
 
-
-
-
 const page = document.querySelector('main').id.toLowerCase()
 
 //init dashboard
 if (page === 'dashboard') {
+    let domElements
+    let widgetElements
 
     const preferences = getLocalStorage('preferences')
-    console.log(preferences)
+    if (preferences) {
+        [domElements, widgetElements] = checker(preferences)
+    } else {
+        domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
+        widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']
+    }
 
-    const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
-    const widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']
     appendWidgets(domElements, widgetElements)
+}
+
+function appendWidgets(domEl, widget) {
+    // Remove EJS templates
+    const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
+    domElements.forEach(element => document.getElementById(element).remove())
+
+    // Adding widgets
+    widget.forEach(item => {
+        document.querySelector('main section').append(document.createElement(item))
+
+        if (item === 'study-progress') {
+            WC_studyprogress()
+        }
+        if (item === 'course-overview') {
+            WC_courseoverview()
+        }
+        if (item === 'schedule-widget') {
+            WC_scheduleWidget()
+        }
+        if (item === 'announcements-widget') {
+            WC_announcementsWidget(page)
+        }
+    })
+}
+
+function checker(preferences) {
+    const domElements = []
+    const widgetElements = []
+
+    // Announcements
+    preferences.forEach(preference => {
+        preference.id = parseInt(preference.id)
+
+        if (preference.state && preference.id === 0) {
+            domElements.push('announcements')
+            widgetElements.push('announcements-widget')
+        }
+        if (preference.state && preference.id === 1) {
+            domElements.push('study-progress')
+            widgetElements.push('study-progress')
+        }
+        if (preference.state && preference.id === 2) {
+            domElements.push('course-overview')
+            widgetElements.push('course-overview')
+        }
+        if (preference.state && preference.id === 3) {
+            domElements.push('schedule')
+            widgetElements.push('schedule-widget')
+        }
+    })
+
+    return [domElements, widgetElements]
 }
 
 if (page === 'account') {
     togglePreferences()
 }
-
-function appendWidgets(domEl, widget) {
-    for (let i = 0; i < domEl.length; i++) {
-        if (document.getElementById(domEl[i])) {
-            document.getElementById(domEl[i]).remove()
-        }
-        document.querySelector('main section').append(document.createElement(widget[i]))
-    }
-
-    WC_announcementsWidget(page)
-    WC_studyprogress()
-    WC_courseoverview()
-    WC_scheduleWidget()
-}
-
 
 //check if browser is online
 if (navigator.onLine) {

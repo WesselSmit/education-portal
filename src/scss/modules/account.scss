@@ -6,8 +6,8 @@
     }
 
     form {
-        display: grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
 
         &.disabled label {
             pointer-events: none;
@@ -15,14 +15,20 @@
         }
 
         label {
-            padding: 2vh 5vw;
+            padding: 4px 0px;
             display: block;
-            text-align: center;
-            background-color: $light-grey;
-            margin-bottom: 10px;
+            border-left: 5px solid $main-purple;
+
+            &:not(:last-of-type) {
+                margin-bottom: 10px;
+            }
 
             &:hover {
                 cursor: move;
+            }
+
+            &.off {
+                border-left: 5px solid $light-grey;
             }
 
             &.dragging {
@@ -30,7 +36,8 @@
             }
 
             input {
-                margin-right: 10px;
+                opacity: 0;
+                margin-right: -10px;
             }
         }
     }

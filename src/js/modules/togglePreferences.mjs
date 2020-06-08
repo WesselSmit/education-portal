@@ -13,7 +13,6 @@ export default function togglePreferences() {
     }
 
     const inputs = [...document.querySelectorAll('#account form label')]
-
     inputs.forEach(label => {
         stateHandler(label)
         dragHandler(label)
@@ -92,6 +91,9 @@ function stateHandler(label) {
         const preference = data.find(preference => preference.id === id)
         preference.state = state
         setLocalStorage('preferences', data)
+
+        // Change look
+        label.classList.toggle('off')
     })
 }
 
@@ -100,6 +102,7 @@ function createLabels(preference) {
     const label = document.createElement('label')
     label.id = preference.id
     label.draggable = true
+    preference.state ? label.className = 'on' : label.className = 'off'
 
     const input = document.createElement('input')
     input.type = 'checkbox'
