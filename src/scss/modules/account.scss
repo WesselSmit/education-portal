@@ -6,6 +6,8 @@
     }
 
     form {
+        display: grid;
+        grid-template-columns: 1fr;
 
         &.disabled label {
             pointer-events: none;
@@ -13,7 +15,19 @@
         }
 
         label {
+            padding: 2vh 5vw;
             display: block;
+            text-align: center;
+            background-color: $light-grey;
+            margin-bottom: 10px;
+
+            &:hover {
+                cursor: move;
+            }
+
+            &.dragging {
+                opacity: .3;
+            }
 
             input {
                 margin-right: 10px;

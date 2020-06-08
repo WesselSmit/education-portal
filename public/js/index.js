@@ -166,9 +166,72 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function togglePreferences() {
-  document.querySelector('#account form').classList.remove('disabled');
+var container = document.querySelector('#account form');
 
+function togglePreferences() {
+  container.classList.remove('disabled');
+  var savedPreferences = (0, _utils.getLocalStorage)('preferences');
+
+  if (savedPreferences) {
+    container.textContent = '';
+    savedPreferences.forEach(function (preference) {
+      return container.append(createLabels(preference));
+    });
+  } else {
+    setPreferencesObject();
+  }
+
+  var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
+
+  inputs.forEach(function (label) {
+    stateHandler(label);
+    dragHandler(label);
+  });
+  orderHandler();
+} // Manipulating the order of the DOM
+
+
+function orderHandler() {
+  container.addEventListener('dragover', function (event) {
+    event.preventDefault();
+    var afterElement = getElementAfterDrag(event.clientY);
+    var draggable = document.querySelector('.dragging');
+    afterElement === null ? container.appendChild(draggable) : container.insertBefore(draggable, afterElement);
+  });
+}
+
+function getElementAfterDrag(y) {
+  var draggableElements = _toConsumableArray(container.querySelectorAll('label:not(.dragging)'));
+
+  return draggableElements.reduce(function (closest, child) {
+    var box = child.getBoundingClientRect();
+    var offset = y - box.top - box.height / 2;
+
+    if (offset < 0 && offset > closest.offset) {
+      return {
+        offset: offset,
+        element: child
+      };
+    } else {
+      return closest;
+    }
+  }, {
+    offset: Number.NEGATIVE_INFINITY
+  }).element;
+}
+
+function dragHandler(label) {
+  label.addEventListener('dragstart', function () {
+    label.classList.add('dragging');
+  });
+  label.addEventListener('dragend', function () {
+    label.classList.remove('dragging');
+    setPreferencesObject();
+  });
+} // Saving and changing preferences 
+
+
+function setPreferencesObject() {
   var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
 
   var preferences = [];
@@ -184,18 +247,37 @@ function togglePreferences() {
       state: state
     };
     preferences.push(object);
-    (0, _utils.setLocalStorage)('preferences', preferences); // Toggle
-
-    label.addEventListener('change', function (event) {
-      // Data
-      var id = label.id;
-      var state = event.target.checked; // Change LocalStorage
-
-      var data = (0, _utils.getLocalStorage)('preferences');
-      data[id].state = state;
-      (0, _utils.setLocalStorage)('preferences', data);
-    });
+    (0, _utils.setLocalStorage)('preferences', preferences);
   });
+  return preferences;
+}
+
+function stateHandler(label) {
+  label.addEventListener('change', function (event) {
+    // Data
+    var id = label.id;
+    var state = event.target.checked; // Change LocalStorage
+
+    var data = (0, _utils.getLocalStorage)('preferences');
+    var preference = data.find(function (preference) {
+      return preference.id === id;
+    });
+    preference.state = state;
+    (0, _utils.setLocalStorage)('preferences', data);
+  });
+} // Rearanging order
+
+
+function createLabels(preference) {
+  var label = document.createElement('label');
+  label.id = preference.id;
+  label.draggable = true;
+  var input = document.createElement('input');
+  input.type = 'checkbox';
+  input.checked = preference.state;
+  label.append(input);
+  label.append(preference.name);
+  return label;
 }
 
 },{"../modules/utils.mjs":4}],4:[function(require,module,exports){
