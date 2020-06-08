@@ -29,7 +29,6 @@ var page = document.querySelector('main').id.toLowerCase(); //init dashboard
 
 if (page === 'dashboard') {
   var preferences = (0, utils.getLocalStorage)('preferences');
-  console.log(preferences);
   var domElements = ['announcements', 'study-progress', 'course-overview', 'schedule'];
   var widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget'];
   appendWidgets(domElements, widgetElements);
@@ -37,6 +36,13 @@ if (page === 'dashboard') {
 
 if (page === 'account') {
   (0, _togglePreferences["default"])();
+}
+
+if (page === 'announcements-overview') {
+  var announcementList = document.getElementById('announcements');
+  announcementList.remove();
+  document.querySelector('main section').append(document.createElement('announcements-widget'));
+  (0, _announcements.WC_announcementsWidget)(page);
 }
 
 function appendWidgets(domEl, widget) {

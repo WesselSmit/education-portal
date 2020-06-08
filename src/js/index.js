@@ -18,7 +18,6 @@ const page = document.querySelector('main').id.toLowerCase()
 if (page === 'dashboard') {
 
     const preferences = getLocalStorage('preferences')
-    console.log(preferences)
 
     const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
     const widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']
@@ -27,6 +26,13 @@ if (page === 'dashboard') {
 
 if (page === 'account') {
     togglePreferences()
+}
+
+if (page === 'announcements-overview') {
+    const announcementList = document.getElementById('announcements')
+    announcementList.remove()
+    document.querySelector('main section').append(document.createElement('announcements-widget'))
+    WC_announcementsWidget(page)
 }
 
 function appendWidgets(domEl, widget) {
