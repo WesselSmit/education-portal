@@ -4003,8 +4003,6 @@ function indicate(item) {
     if (numberUnread > 0) {
       item.classList.add('unread-indicator');
       item.setAttribute('number-unread', numberUnread);
-    } else {
-      item.classList.remove('unread-indicator');
     }
   });
 }
@@ -4038,6 +4036,9 @@ function getUnread() {
           numberOfUnread++;
         }
       });
+    } else {
+      document.querySelector('#menu-primary-links a:last-of-type').classList.add('unread-indicator');
+      document.querySelector('#menu-primary-links a:last-of-type').setAttribute('number-unread', announcements.length);
     }
 
     return numberOfUnread;
