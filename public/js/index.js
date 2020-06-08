@@ -3915,8 +3915,7 @@ function setPreferencesObject() {
 
   var preferences = [];
   inputs.forEach(function (label) {
-    console.log(label); // Data
-
+    // Data
     var id = label.id;
     var text = label.textContent;
     var state = label.querySelector('input').checked; // Set LocalStorage

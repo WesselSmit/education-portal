@@ -35,7 +35,6 @@ function setPreferencesObject() {
     let preferences = []
 
     inputs.forEach(label => {
-        console.log(label)
         // Data
         const id = label.id
         const text = label.textContent
