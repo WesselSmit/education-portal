@@ -13,18 +13,16 @@ const page = document.querySelector('main').id.toLowerCase()
 
 //init dashboard
 if (page === 'dashboard') {
-    let domElements
     let widgetElements
 
     const preferences = getLocalStorage('preferences')
     if (preferences) {
-        [domElements, widgetElements] = checker(preferences)
+        widgetElements = checker(preferences)
     } else {
-        domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
         widgetElements = ['announcements-widget', 'study-progress', 'course-overview', 'schedule-widget']
     }
 
-    appendWidgets(domElements, widgetElements)
+    appendWidgets(widgetElements)
 }
 
 if (page === 'account') {
@@ -38,15 +36,16 @@ if (page === 'announcements-overview') {
     WC_announcementsWidget(page)
 }
 
-function appendWidgets(domEl, widget) {
+function appendWidgets(widget) {
     // Remove EJS templates
     const domElements = ['announcements', 'study-progress', 'course-overview', 'schedule']
     domElements.forEach(element => document.getElementById(element).remove())
 
+    console.log(widget)
+    widget.forEach(item => document.querySelector('main section').append(document.createElement(item)))
+
     // Adding widgets
     widget.forEach(item => {
-        document.querySelector('main section').append(document.createElement(item))
-
         if (item === 'study-progress') {
             WC_studyprogress()
         }
@@ -63,7 +62,6 @@ function appendWidgets(domEl, widget) {
 }
 
 function checker(preferences) {
-    const domElements = []
     const widgetElements = []
 
     // Announcements
@@ -71,24 +69,20 @@ function checker(preferences) {
         preference.id = parseInt(preference.id)
 
         if (preference.state && preference.id === 0) {
-            domElements.push('announcements')
             widgetElements.push('announcements-widget')
         }
         if (preference.state && preference.id === 1) {
-            domElements.push('study-progress')
             widgetElements.push('study-progress')
         }
         if (preference.state && preference.id === 2) {
-            domElements.push('course-overview')
             widgetElements.push('course-overview')
         }
         if (preference.state && preference.id === 3) {
-            domElements.push('schedule')
             widgetElements.push('schedule-widget')
         }
     })
 
-    return [domElements, widgetElements]
+    return widgetElements
 }
 
 //check if browser is online
