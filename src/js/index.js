@@ -3,10 +3,11 @@ import * as search from './modules/search.mjs'
 import togglePreferences from './modules/togglePreferences2.mjs'
 import urgentAnnouncement from './web-components/urgent-announcement.mjs'
 import { WC_announcementsWidget } from './web-components/announcements.mjs'
+import * as unreadAnnouncements from './modules/unreadAnnouncements.mjs'
 
 const page = document.querySelector('main').id.toLowerCase()
 
-//init dashboard
+//init web components
 if (page === 'dashboard') {
     utils.appendWidgets(utils.getPreferences())
 }
@@ -92,4 +93,12 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
                 break
         }
     })
+}
+
+
+//unread announcement indicator in menu
+const announcementMenuItem = document.querySelector('#menu-primary-links a:last-of-type')
+
+if (utils.exists([announcementMenuItem]) && utils.storageAvailable('localStorage')) {
+    unreadAnnouncements.indicate(announcementMenuItem)
 }

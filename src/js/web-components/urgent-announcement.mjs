@@ -62,15 +62,17 @@ class urgentAnnouncement extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue != newValue && newValue != "") {
             const uid = this.getAttribute('uid')
-            const storedHistory = utils.getLocalStorage('read-history')
-            if (storedHistory) {
-                if (!storedHistory.includes(uid)) {
+            if (utils.storageAvailable('localStorage')) {
+                const storedHistory = utils.getLocalStorage('read-history')
+                if (storedHistory) {
+                    if (!storedHistory.includes(uid)) {
+                        this.updateContent()
+                        this.show()
+                    }
+                } else {
                     this.updateContent()
                     this.show()
                 }
-            } else {
-                this.updateContent()
-                this.show()
             }
         }
     }
