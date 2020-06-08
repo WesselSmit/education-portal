@@ -6,12 +6,13 @@ import { WC_studyprogress } from './web-components/study-progress.mjs'
 import { WC_scheduleWidget } from './web-components/schedule.mjs'
 import { WC_courseoverview } from './web-components/course-overview.mjs'
 import { WC_announcementsWidget } from './web-components/announcements.mjs'
+import * as unreadAnnouncements from './modules/unreadAnnouncements.mjs'
 
 import { getLocalStorage } from './modules/utils.mjs'
 
 const page = document.querySelector('main').id.toLowerCase()
 
-//init dashboard
+//init web components
 if (page === 'dashboard') {
     let widgetElements
 
@@ -153,4 +154,12 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
                 break
         }
     })
+}
+
+
+//unread announcement indicator in menu
+const announcementMenuItem = document.querySelector('#menu-primary-links a:last-of-type')
+
+if (utils.exists([announcementMenuItem]) && utils.storageAvailable('localStorage')) {
+    unreadAnnouncements.indicate(announcementMenuItem)
 }

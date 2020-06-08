@@ -7,6 +7,22 @@
         text-decoration: none;
         display: block;
         padding: 5px 20px;
+        position: relative;
+
+
+        &.unread-indicator::after {
+            content: attr(number-unread);
+            background-color: $extra-light-purple;
+            padding: 5px;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            color: $main-white;
+            font-size: 12px;
+            border: 1px solid $extra-light-purple;
+            border-radius: 999px;
+        }
 
 
         &:hover {

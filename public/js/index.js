@@ -19,13 +19,15 @@ var _courseOverview = require("./web-components/course-overview.mjs");
 
 var _announcements = require("./web-components/announcements.mjs");
 
+var unreadAnnouncements = _interopRequireWildcard(require("./modules/unreadAnnouncements.mjs"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var page = document.querySelector('main').id.toLowerCase(); //init dashboard
+var page = document.querySelector('main').id.toLowerCase(); //init web components
 
 if (page === 'dashboard') {
   var widgetElements;
@@ -164,9 +166,16 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
         break;
     }
   });
+} //unread announcement indicator in menu
+
+
+var announcementMenuItem = document.querySelector('#menu-primary-links a:last-of-type');
+
+if (utils.exists([announcementMenuItem]) && utils.storageAvailable('localStorage')) {
+  unreadAnnouncements.indicate(announcementMenuItem);
 }
 
-},{"./modules/search.mjs":2,"./modules/togglePreferences.mjs":3,"./modules/utils.mjs":4,"./web-components/announcements.mjs":5,"./web-components/course-overview.mjs":6,"./web-components/schedule.mjs":7,"./web-components/study-progress.mjs":8,"./web-components/urgent-announcement.mjs":9}],2:[function(require,module,exports){
+},{"./modules/search.mjs":2,"./modules/togglePreferences.mjs":3,"./modules/unreadAnnouncements.mjs":4,"./modules/utils.mjs":5,"./web-components/announcements.mjs":6,"./web-components/course-overview.mjs":7,"./web-components/schedule.mjs":8,"./web-components/study-progress.mjs":9,"./web-components/urgent-announcement.mjs":10}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -338,7 +347,78 @@ function createLabels(preference) {
   return label;
 }
 
-},{"../modules/utils.mjs":4}],4:[function(require,module,exports){
+},{"../modules/utils.mjs":5}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.indicate = indicate;
+
+var utils = _interopRequireDefault(require("../modules/utils.mjs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function indicate(item) {
+  getUnread().then(function (numberUnread) {
+    if (numberUnread > 0) {
+      item.classList.add('unread-indicator');
+      item.setAttribute('number-unread', numberUnread);
+    } else {
+      item.classList.remove('unread-indicator');
+    }
+  });
+}
+
+function getAnnouncements() {
+  var options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  return fetch('/announcementslist', options).then(function (res) {
+    return res.json();
+  });
+}
+
+function getUnread() {
+  var storedHistory = utils.getLocalStorage('read-history');
+  var numberUnread = getAnnouncements().then(function (json) {
+    var _json = _slicedToArray(json, 2),
+        announcements = _json[0],
+        categories = _json[1];
+
+    return announcements;
+  }).then(function (announcements) {
+    var numberOfUnread = 0;
+
+    if (storedHistory) {
+      announcements.forEach(function (announcement) {
+        if (!storedHistory.includes(announcement.newsItemId)) {
+          numberOfUnread++;
+        }
+      });
+    }
+
+    return numberOfUnread;
+  });
+  return numberUnread;
+}
+
+},{"../modules/utils.mjs":5}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -394,7 +474,7 @@ function storageAvailable(type) {
   }
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -547,7 +627,7 @@ function init(pageName) {
   window.customElements.define('announcements-widget', announcementList);
 }
 
-},{"../modules/utils.mjs":4}],6:[function(require,module,exports){
+},{"../modules/utils.mjs":5}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -717,7 +797,7 @@ function init() {
   customElements.define('course-overview', CourseOverview);
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -850,7 +930,7 @@ function init() {
   window.customElements.define('schedule-widget', schedule);
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1000,7 +1080,7 @@ function init() {
   customElements.define('study-progress', StudyProgress);
 }
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1078,16 +1158,19 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
     value: function attributeChangedCallback(name, oldValue, newValue) {
       if (oldValue != newValue && newValue != "") {
         var uid = this.getAttribute('uid');
-        var storedHistory = utils.getLocalStorage('read-history');
 
-        if (storedHistory) {
-          if (!storedHistory.includes(uid)) {
+        if (utils.storageAvailable('localStorage')) {
+          var storedHistory = utils.getLocalStorage('read-history');
+
+          if (storedHistory) {
+            if (!storedHistory.includes(uid)) {
+              this.updateContent();
+              this.show();
+            }
+          } else {
             this.updateContent();
             this.show();
           }
-        } else {
-          this.updateContent();
-          this.show();
         }
       }
     }
@@ -1130,6 +1213,6 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
 
 window.customElements.define('urgent-announcement', urgentAnnouncement);
 
-},{"../modules/utils.mjs":4}]},{},[1])
+},{"../modules/utils.mjs":5}]},{},[1])
 
 //# sourceMappingURL=index.js.map
