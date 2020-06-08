@@ -1,64 +1,38 @@
 import { setLocalStorage, getLocalStorage } from '../modules/utils.mjs'
+import Sortable from 'sortablejs'
 
 const container = document.querySelector('#account form')
 export default function togglePreferences() {
     container.classList.remove('disabled')
 
-    const savedPreferences = getLocalStorage('preferences')
-    if (savedPreferences) {
+    setPreferences()
+    stateHandler()
+    dragHandler()
+}
+
+function setPreferences() {
+    const preferences = getLocalStorage('preferences')
+    if (preferences) {
         container.textContent = ''
-        savedPreferences.forEach(preference => container.append(createLabels(preference)))
+        preferences.forEach(preference => container.append(createLabels(preference)))
     } else {
         setPreferencesObject()
     }
-
-    const inputs = [...document.querySelectorAll('#account form label')]
-    inputs.forEach(label => {
-        stateHandler(label)
-        dragHandler(label)
-    })
-
-    orderHandler()
 }
 
-// Manipulating the order of the DOM
-function orderHandler() {
-    container.addEventListener('dragover', event => {
-        event.preventDefault()
+function dragHandler() {
+    const preferencesContainer = document.querySelector('#preferences')
 
-        const afterElement = getElementAfterDrag(event.clientY)
-        const draggable = document.querySelector('.dragging')
-
-        afterElement === null ? container.appendChild(draggable) : container.insertBefore(draggable, afterElement)
-    })
-}
-
-function getElementAfterDrag(y) {
-    const draggableElements = [...container.querySelectorAll('label:not(.dragging)')]
-
-    return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2
-
-        if (offset < 0 && offset > closest.offset) {
-            return { offset: offset, element: child }
-        } else {
-            return closest
+    const sortable = new Sortable(preferencesContainer, {
+        animation: 150,
+        onEnd: (evt) => {
+            console.log(evt.to)
+            setPreferencesObject()
         }
-    }, { offset: Number.NEGATIVE_INFINITY }).element
-}
-
-function dragHandler(label) {
-    label.addEventListener('dragstart', () => {
-        label.classList.add('dragging')
     })
 
-    label.addEventListener('dragend', () => {
-        label.classList.remove('dragging')
-        setPreferencesObject()
-    })
+    return sortable
 }
-
 
 // Saving and changing preferences 
 function setPreferencesObject() {
@@ -80,21 +54,32 @@ function setPreferencesObject() {
     return preferences
 }
 
-function stateHandler(label) {
-    label.addEventListener('change', event => {
-        // Data
-        const id = label.id
-        const state = event.target.checked
+function stateHandler() {
+    const inputs = [...document.querySelectorAll('#account form label')]
+    const data = getLocalStorage('preferences')
 
-        // Change LocalStorage
-        const data = getLocalStorage('preferences')
-        const preference = data.find(preference => preference.id === id)
-        preference.state = state
-        setLocalStorage('preferences', data)
+    inputs.forEach(label => {
+        updateState(data, label)
 
-        // Change look
-        label.classList.toggle('off')
+        label.addEventListener('change', event => {
+            // Data
+            const id = label.id
+            const state = event.target.checked
+
+            // Change LocalStorage
+            const preference = data.find(preference => preference.id === id)
+            preference.state = state
+            setLocalStorage('preferences', data)
+
+            // Change state visualy
+            preference.state === false ? label.classList.add('off') : label.classList.remove('off')
+        })
     })
+}
+
+function updateState(data, element) {
+    const preference = data.find(preference => preference.id === element.id)
+    preference.state === false ? element.classList.add('off') : element.classList.remove('off')
 }
 
 // Rearanging order

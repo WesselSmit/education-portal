@@ -3718,11 +3718,13 @@ var utils = _interopRequireWildcard(require("./modules/utils.mjs"));
 
 var search = _interopRequireWildcard(require("./modules/search.mjs"));
 
-var _togglePreferences = _interopRequireDefault(require("./modules/togglePreferences2.mjs"));
+var _togglePreferences = _interopRequireDefault(require("./modules/togglePreferences.mjs"));
 
 var _urgentAnnouncement = _interopRequireDefault(require("./web-components/urgent-announcement.mjs"));
 
 var _announcements = require("./web-components/announcements.mjs");
+
+var unreadAnnouncements = _interopRequireWildcard(require("./modules/unreadAnnouncements.mjs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -3730,7 +3732,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var page = document.querySelector('main').id.toLowerCase(); //init dashboard
+var page = document.querySelector('main').id.toLowerCase(); //init web components
 
 if (page === 'dashboard') {
   utils.appendWidgets(utils.getPreferences());
@@ -3807,9 +3809,16 @@ if (utils.exists([searchBar, searchResetIcon, searchIcon])) {
         break;
     }
   });
+} //unread announcement indicator in menu
+
+
+var announcementMenuItem = document.querySelector('#menu-primary-links a:last-of-type');
+
+if (utils.exists([announcementMenuItem]) && utils.storageAvailable('localStorage')) {
+  unreadAnnouncements.indicate(announcementMenuItem);
 }
 
-},{"./modules/search.mjs":3,"./modules/togglePreferences2.mjs":4,"./modules/utils.mjs":5,"./web-components/announcements.mjs":6,"./web-components/urgent-announcement.mjs":10}],3:[function(require,module,exports){
+},{"./modules/search.mjs":3,"./modules/togglePreferences.mjs":4,"./modules/unreadAnnouncements.mjs":5,"./modules/utils.mjs":6,"./web-components/announcements.mjs":7,"./web-components/urgent-announcement.mjs":11}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3872,22 +3881,34 @@ var container = document.querySelector('#account form');
 
 function togglePreferences() {
   container.classList.remove('disabled');
-  setPreferencesObject();
-
-  var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
-
-  inputs.forEach(function (label) {
-    return stateHandler(label);
-  });
+  setPreferences();
+  stateHandler();
   dragHandler();
+}
+
+function setPreferences() {
+  var preferences = (0, _utils.getLocalStorage)('preferences');
+
+  if (preferences) {
+    container.textContent = '';
+    preferences.forEach(function (preference) {
+      return container.append(createLabels(preference));
+    });
+  } else {
+    setPreferencesObject();
+  }
 }
 
 function dragHandler() {
   var preferencesContainer = document.querySelector('#preferences');
-
-  _sortablejs["default"].create(preferencesContainer, {
-    animation: 150
+  var sortable = new _sortablejs["default"](preferencesContainer, {
+    animation: 150,
+    onEnd: function onEnd(evt) {
+      console.log(evt.to);
+      setPreferencesObject();
+    }
   });
+  return sortable;
 } // Saving and changing preferences 
 
 
@@ -3912,23 +3933,121 @@ function setPreferencesObject() {
   return preferences;
 }
 
-function stateHandler(label) {
-  label.addEventListener('click', function (event) {
-    console.log(label); // Data
+function stateHandler() {
+  var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
 
-    var id = label.id;
-    var state = event.target.checked; // Change LocalStorage
+  var data = (0, _utils.getLocalStorage)('preferences');
+  inputs.forEach(function (label) {
+    updateState(data, label);
+    label.addEventListener('change', function (event) {
+      // Data
+      var id = label.id;
+      var state = event.target.checked; // Change LocalStorage
 
-    var data = (0, _utils.getLocalStorage)('preferences');
-    var preference = data.find(function (preference) {
-      return preference.id === id;
+      var preference = data.find(function (preference) {
+        return preference.id === id;
+      });
+      preference.state = state;
+      (0, _utils.setLocalStorage)('preferences', data); // Change state visualy
+
+      preference.state === false ? label.classList.add('off') : label.classList.remove('off');
     });
-    preference.state = state;
-    (0, _utils.setLocalStorage)('preferences', data);
   });
 }
 
-},{"../modules/utils.mjs":5,"sortablejs":1}],5:[function(require,module,exports){
+function updateState(data, element) {
+  var preference = data.find(function (preference) {
+    return preference.id === element.id;
+  });
+  preference.state === false ? element.classList.add('off') : element.classList.remove('off');
+} // Rearanging order
+
+
+function createLabels(preference) {
+  var label = document.createElement('label');
+  label.id = preference.id;
+  label.draggable = true;
+  preference.state ? label.className = 'on' : label.className = 'off';
+  var input = document.createElement('input');
+  input.type = 'checkbox';
+  input.checked = preference.state;
+  label.append(input);
+  label.append(preference.name);
+  return label;
+}
+
+},{"../modules/utils.mjs":6,"sortablejs":1}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.indicate = indicate;
+
+var utils = _interopRequireDefault(require("../modules/utils.mjs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function indicate(item) {
+  getUnread().then(function (numberUnread) {
+    if (numberUnread > 0) {
+      item.classList.add('unread-indicator');
+      item.setAttribute('number-unread', numberUnread);
+    } else {
+      item.classList.remove('unread-indicator');
+    }
+  });
+}
+
+function getAnnouncements() {
+  var options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  return fetch('/announcementslist', options).then(function (res) {
+    return res.json();
+  });
+}
+
+function getUnread() {
+  var storedHistory = utils.getLocalStorage('read-history');
+  var numberUnread = getAnnouncements().then(function (json) {
+    var _json = _slicedToArray(json, 2),
+        announcements = _json[0],
+        categories = _json[1];
+
+    return announcements;
+  }).then(function (announcements) {
+    var numberOfUnread = 0;
+
+    if (storedHistory) {
+      announcements.forEach(function (announcement) {
+        if (!storedHistory.includes(announcement.newsItemId)) {
+          numberOfUnread++;
+        }
+      });
+    }
+
+    return numberOfUnread;
+  });
+  return numberUnread;
+}
+
+},{"../modules/utils.mjs":6}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4066,7 +4185,7 @@ function checker(preferences) {
   return widgetElements;
 }
 
-},{"../web-components/announcements.mjs":6,"../web-components/course-overview.mjs":7,"../web-components/schedule.mjs":8,"../web-components/study-progress.mjs":9}],6:[function(require,module,exports){
+},{"../web-components/announcements.mjs":7,"../web-components/course-overview.mjs":8,"../web-components/schedule.mjs":9,"../web-components/study-progress.mjs":10}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4119,7 +4238,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var template = document.createElement('template');
-template.innerHTML = "\n<style>\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n.announcements-container #announcement-legend {\n\tmargin-bottom: 20px;\n}\n.announcements-container #announcement-legend p {\n\tcolor: black;\n\tfont-size: 14px;\n\tdisplay: inline-block;\n\tmargin-right: 20px;\n}\n.announcements-container #announcement-legend p:last-of-type {\n\tmargin-right: 0;\n}\n.announcements-container #announcement-legend p::before {\n\tcontent: \"\";\n\theight: 15px;\n\tmargin-bottom: -2px;\n\twidth: 15px;\n\tmargin-right: 10px;\n\tdisplay: inline-block;\n}\n.announcements-container #announcement-legend p.Opleiding::before {\n\tbackground-color: #DC143C;\n}\n.announcements-container #announcement-legend p.Faculteit::before {\n\tbackground-color: #DCB614;\n}\n.announcements-container #announcement-legend p.HvA::before {\n\tbackground-color: #149EDC;\n}\n.announcements-container #announcement-legend p.Medezeggenschap::before {\n\tbackground-color: #14DC69;\n}\n.announcements-container a {\n\tmargin: 0 0 15px 0;\n\tdisplay: block;\n\tcolor: black;\n\ttext-decoration: none;\n}\n.announcements-container a:hover {\n\tbackground-color: #F2F2F2;\n}\n.announcements-container a:focus {\n\tbackground-color: #DDDDDD;\n}\n.announcements-container .announcement {\n\tmargin: 0;\n\tpadding: 5px 0 5px 10px;\n\tborder-left: 5px solid;\n}\n.announcements-container .announcement.Opleiding {\n\tborder-color: #DC143C;\n}\n.announcements-container .announcement.Faculteit {\n\tborder-color: #DCB614;\n}\n.announcements-container .announcement.HvA {\n\tborder-color: #149EDC;\n}\n.announcements-container .announcement.Medezeggenschap {\n\tborder-color: #14DC69;\n}\n.announcements-container .announcement p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .read .announcement p:first-of-type {\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .announcement p:last-of-type {\n\tcolor: #666666;\n\tfont-size: 14px;\n}    \n.allAnnouncements {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n\talign-items: center;\n}\n.allAnnouncements:hover,\n.allAnnouncements:focus {\n        text-decoration: underline;\n}\n.allAnnouncements img {\n        height: 12px;\n        margin-left: 20px;\n}\n</style>\n<div id=\"announcements\"></div>\n<h2>Mededelingen</h2>\n<div class=\"announcements-container\">\n\t<div id=\"announcement-legend\"></div>\n</div>\n<a class=\"allAnnouncements\" href=\"/announcements/\" target=\"_self\">Alle mededelingen\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>";
+template.innerHTML = "\n<style>\n*:focus {\n    outline: none;\n}\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n.announcements-container #announcement-legend {\n\tmargin-bottom: 20px;\n}\n.announcements-container #announcement-legend p {\n\tcolor: black;\n\tfont-size: 14px;\n\tdisplay: inline-block;\n\tmargin-right: 20px;\n}\n.announcements-container #announcement-legend p:last-of-type {\n\tmargin-right: 0;\n}\n.announcements-container #announcement-legend p::before {\n\tcontent: \"\";\n\theight: 15px;\n\tmargin-bottom: -2px;\n\twidth: 15px;\n\tmargin-right: 10px;\n\tdisplay: inline-block;\n}\n.announcements-container #announcement-legend p.Opleiding::before {\n\tbackground-color: #DC143C;\n}\n.announcements-container #announcement-legend p.Faculteit::before {\n\tbackground-color: #DCB614;\n}\n.announcements-container #announcement-legend p.HvA::before {\n\tbackground-color: #149EDC;\n}\n.announcements-container #announcement-legend p.Medezeggenschap::before {\n\tbackground-color: #14DC69;\n}\n.announcements-container a {\n\tmargin: 0 0 15px 0;\n\tdisplay: block;\n\tcolor: black;\n\ttext-decoration: none;\n}\n.announcements-container a:hover {\n\tbackground-color: #F2F2F2;\n}\n.announcements-container a:focus {\n\tbackground-color: #DDDDDD;\n}\n.announcements-container .announcement {\n\tmargin: 0;\n\tpadding: 5px 0 5px 10px;\n\tborder-left: 5px solid;\n}\n.announcements-container .announcement.Opleiding {\n\tborder-color: #DC143C;\n}\n.announcements-container .announcement.Faculteit {\n\tborder-color: #DCB614;\n}\n.announcements-container .announcement.HvA {\n\tborder-color: #149EDC;\n}\n.announcements-container .announcement.Medezeggenschap {\n\tborder-color: #14DC69;\n}\n.announcements-container .announcement p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .read .announcement p:first-of-type {\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .announcement p:last-of-type {\n\tcolor: #666666;\n\tfont-size: 14px;\n}    \n.allAnnouncements {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n\talign-items: center;\n}\n.allAnnouncements:hover,\n.allAnnouncements:focus {\n        text-decoration: underline;\n}\n.allAnnouncements img {\n        height: 12px;\n        margin-left: 20px;\n}\n</style>\n<div id=\"announcements\"></div>\n<h2>Mededelingen</h2>\n<div class=\"announcements-container\">\n\t<div id=\"announcement-legend\"></div>\n</div>\n<a class=\"allAnnouncements\" href=\"/announcements/\" target=\"_self\">Alle mededelingen\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>";
 
 function init(pageName) {
   var announcementList = /*#__PURE__*/function (_HTMLElement) {
@@ -4219,7 +4338,7 @@ function init(pageName) {
   window.customElements.define('announcements-widget', announcementList);
 }
 
-},{"../modules/utils.mjs":5}],7:[function(require,module,exports){
+},{"../modules/utils.mjs":6}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4389,7 +4508,7 @@ function init() {
   customElements.define('course-overview', CourseOverview);
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4522,7 +4641,7 @@ function init() {
   window.customElements.define('schedule-widget', schedule);
 }
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4672,7 +4791,7 @@ function init() {
   customElements.define('study-progress', StudyProgress);
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4750,16 +4869,19 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
     value: function attributeChangedCallback(name, oldValue, newValue) {
       if (oldValue != newValue && newValue != "") {
         var uid = this.getAttribute('uid');
-        var storedHistory = utils.getLocalStorage('read-history');
 
-        if (storedHistory) {
-          if (!storedHistory.includes(uid)) {
+        if (utils.storageAvailable('localStorage')) {
+          var storedHistory = utils.getLocalStorage('read-history');
+
+          if (storedHistory) {
+            if (!storedHistory.includes(uid)) {
+              this.updateContent();
+              this.show();
+            }
+          } else {
             this.updateContent();
             this.show();
           }
-        } else {
-          this.updateContent();
-          this.show();
         }
       }
     }
@@ -4802,6 +4924,6 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
 
 window.customElements.define('urgent-announcement', urgentAnnouncement);
 
-},{"../modules/utils.mjs":5}]},{},[2])
+},{"../modules/utils.mjs":6}]},{},[2])
 
 //# sourceMappingURL=index.js.map
