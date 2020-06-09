@@ -41,6 +41,10 @@
                 opacity: 0;
             }
 
+            &.sortable-fallback {
+                display: none;
+            }
+
             &.optional-location {
                 border: 2px solid $main-purple;
                 border-style: dashed;
