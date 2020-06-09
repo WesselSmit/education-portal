@@ -5,12 +5,12 @@ const container = document.querySelector('#account form')
 export default function togglePreferences() {
     container.classList.remove('disabled')
 
-    setPreferences()
+    getPreferences()
     stateHandler()
     dragHandler()
 }
 
-function setPreferences() {
+function getPreferences() {
     const preferences = getLocalStorage('preferences')
     if (preferences) {
         container.textContent = ''
@@ -25,8 +25,23 @@ function dragHandler() {
 
     new Sortable(preferencesContainer, {
         animation: 150,
-        onEnd: () => setPreferencesObject()
+        onStart: (event) => iets(event),
+        onEnd: (event) => {
+            iets2(event)
+            setPreferencesObject()
+        }
     })
+}
+
+function iets(event) {
+    console.log(event)
+    const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
+    dragLocations.forEach(location => location.classList.add('optional-location'))
+}
+
+function iets2(event) {
+    const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
+    dragLocations.forEach(location => location.classList.remove('optional-location'))
 }
 
 // Saving and changing preferences 

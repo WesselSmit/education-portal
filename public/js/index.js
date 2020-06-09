@@ -3881,12 +3881,12 @@ var container = document.querySelector('#account form');
 
 function togglePreferences() {
   container.classList.remove('disabled');
-  setPreferences();
+  getPreferences();
   stateHandler();
   dragHandler();
 }
 
-function setPreferences() {
+function getPreferences() {
   var preferences = (0, _utils.getLocalStorage)('preferences');
 
   if (preferences) {
@@ -3903,9 +3903,31 @@ function dragHandler() {
   var preferencesContainer = document.querySelector('#preferences');
   new _sortablejs["default"](preferencesContainer, {
     animation: 150,
-    onEnd: function onEnd() {
-      return setPreferencesObject();
+    onStart: function onStart(event) {
+      return iets(event);
+    },
+    onEnd: function onEnd(event) {
+      iets2(event);
+      setPreferencesObject();
     }
+  });
+}
+
+function iets(event) {
+  console.log(event);
+
+  var dragLocations = _toConsumableArray(event.target.querySelectorAll('label:not(.sortable-chosen)'));
+
+  dragLocations.forEach(function (location) {
+    return location.classList.add('optional-location');
+  });
+}
+
+function iets2(event) {
+  var dragLocations = _toConsumableArray(event.target.querySelectorAll('label:not(.sortable-chosen)'));
+
+  dragLocations.forEach(function (location) {
+    return location.classList.remove('optional-location');
   });
 } // Saving and changing preferences 
 
