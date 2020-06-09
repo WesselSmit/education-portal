@@ -60,6 +60,27 @@ self.addEventListener('fetch', e => {
     )
 })
 
+
 function isHtmlGetRequest(request) {
     return request.method === 'GET'
 }
+
+
+self.addEventListener('notificationclose', e => {
+    const notification = e.notification
+    const key = notification.data.key
+})
+
+
+self.addEventListener('notificationclick', e => {
+    const notification = e.notification
+    const action = e.action
+
+
+    if (action === 'close') {
+        notification.close()
+    } else {
+        clients.openWindow('https://hva-education-portal.herokuapp.com/')
+        notification.close()
+    }
+})

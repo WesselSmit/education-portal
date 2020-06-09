@@ -4,6 +4,7 @@ import togglePreferences from './modules/togglePreferences.mjs'
 import urgentAnnouncement from './web-components/urgent-announcement.mjs'
 import { WC_announcementsWidget } from './web-components/announcements.mjs'
 import * as unreadAnnouncements from './modules/unreadAnnouncements.mjs'
+import * as notify from './modules/notify.mjs'
 
 const page = document.querySelector('main').id.toLowerCase()
 
@@ -37,8 +38,17 @@ if (navigator.onLine) {
         const urgentAnnouncement = document.querySelector('urgent-announcement')
 
         if (utils.exists([urgentAnnouncement])) {
-            urgentAnnouncement.setAttribute('message', announcement.title)
+            urgentAnnouncement.setAttribute('message', announcement.content)
             urgentAnnouncement.setAttribute('uid', announcement.newsItemId)
+        }
+
+        if ('Notification' in window) {
+            navigator.serviceWorker.ready //wait for sw to be ready
+                .then(registration => {
+                    Notification.requestPermission(status => {
+                        notify.displayNotification(announcement.title, announcement.content)
+                    })
+                })
         }
     })
 }
