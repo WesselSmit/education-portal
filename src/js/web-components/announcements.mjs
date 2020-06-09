@@ -104,6 +104,10 @@ p {
 .allAnnouncements:focus {
         text-decoration: underline;
 }
+.allAnnouncements.hide {
+    position: absolute;
+    left: -9999px;
+}
 .allAnnouncements img {
         height: 12px;
         margin-left: 20px;
@@ -137,6 +141,11 @@ function init(pageName) {
                 })
             this.announcementContainer = this.shadowRoot.querySelector('.announcements-container')
             this.announcementLegend = this.shadowRoot.querySelector('#announcement-legend')
+
+            if (pageName === 'announcements-overview') {
+                console.log('ja')
+                this.shadowRoot.querySelector('.allAnnouncements').classList.add('hide')
+            }
         }
 
         getData() {
