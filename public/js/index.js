@@ -3726,6 +3726,8 @@ var _announcements = require("./web-components/announcements.mjs");
 
 var unreadAnnouncements = _interopRequireWildcard(require("./modules/unreadAnnouncements.mjs"));
 
+var notify = _interopRequireWildcard(require("./modules/notify.mjs"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -3760,8 +3762,17 @@ if (navigator.onLine) {
     var urgentAnnouncement = document.querySelector('urgent-announcement');
 
     if (utils.exists([urgentAnnouncement])) {
-      urgentAnnouncement.setAttribute('message', announcement.title);
+      urgentAnnouncement.setAttribute('message', announcement.content);
       urgentAnnouncement.setAttribute('uid', announcement.newsItemId);
+    }
+
+    if ('Notification' in window) {
+      navigator.serviceWorker.ready //wait for sw to be ready
+      .then(function (registration) {
+        Notification.requestPermission(function (status) {
+          notify.displayNotification(announcement.title, announcement.content);
+        });
+      });
     }
   });
 } //menu 
@@ -3818,7 +3829,40 @@ if (utils.exists([announcementMenuItem]) && utils.storageAvailable('localStorage
   unreadAnnouncements.indicate(announcementMenuItem);
 }
 
-},{"./modules/search.mjs":3,"./modules/togglePreferences.mjs":4,"./modules/unreadAnnouncements.mjs":5,"./modules/utils.mjs":6,"./web-components/announcements.mjs":7,"./web-components/urgent-announcement.mjs":11}],3:[function(require,module,exports){
+},{"./modules/notify.mjs":3,"./modules/search.mjs":4,"./modules/togglePreferences.mjs":5,"./modules/unreadAnnouncements.mjs":6,"./modules/utils.mjs":7,"./web-components/announcements.mjs":8,"./web-components/urgent-announcement.mjs":12}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.displayNotification = displayNotification;
+
+function displayNotification(title, body) {
+  if (Notification.permission === 'granted') {
+    navigator.serviceWorker.getRegistration().then(function (reg) {
+      var options = {
+        body: body,
+        icon: './media/icons/hva-logo-purple.svg',
+        vibrate: [100, 50, 100],
+        data: {
+          timestamp: Date.now()
+        },
+        actions: [{
+          action: 'goto',
+          title: 'Go to HvA Portal',
+          icon: './media/icons/hva-logo-purple.svg'
+        }, {
+          action: 'close',
+          title: 'Close notification',
+          icon: './media/icons/hva-logo-purple.svg'
+        }]
+      };
+      reg.showNotification(title, options);
+    });
+  }
+}
+
+},{}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3851,7 +3895,7 @@ function reset(e) {
   focus(e);
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4003,7 +4047,7 @@ function createLabels(preference) {
   return label;
 }
 
-},{"../modules/utils.mjs":6,"sortablejs":1}],5:[function(require,module,exports){
+},{"../modules/utils.mjs":7,"sortablejs":1}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4075,7 +4119,7 @@ function getUnread() {
   return numberUnread;
 }
 
-},{"../modules/utils.mjs":6}],6:[function(require,module,exports){
+},{"../modules/utils.mjs":7}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4213,7 +4257,7 @@ function checker(preferences) {
   return widgetElements;
 }
 
-},{"../web-components/announcements.mjs":7,"../web-components/course-overview.mjs":8,"../web-components/schedule.mjs":9,"../web-components/study-progress.mjs":10}],7:[function(require,module,exports){
+},{"../web-components/announcements.mjs":8,"../web-components/course-overview.mjs":9,"../web-components/schedule.mjs":10,"../web-components/study-progress.mjs":11}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4373,7 +4417,7 @@ function init(pageName) {
   window.customElements.define('announcements-widget', announcementList);
 }
 
-},{"../modules/utils.mjs":6}],8:[function(require,module,exports){
+},{"../modules/utils.mjs":7}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4543,7 +4587,7 @@ function init() {
   customElements.define('course-overview', CourseOverview);
 }
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4676,7 +4720,7 @@ function init() {
   window.customElements.define('schedule-widget', schedule);
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4826,7 +4870,7 @@ function init() {
   customElements.define('study-progress', StudyProgress);
 }
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4959,6 +5003,6 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
 
 window.customElements.define('urgent-announcement', urgentAnnouncement);
 
-},{"../modules/utils.mjs":6}]},{},[2])
+},{"../modules/utils.mjs":7}]},{},[2])
 
 //# sourceMappingURL=index.js.map

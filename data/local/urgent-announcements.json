@@ -1,32 +1,37 @@
 {
     "announcements": [{
             "newsItemId": "3a502d02-a19a-11ea-bb37-0242ac130002",
-            "title": "Ronald Merkuur is ziek, je Project ISGA les van 14:00 - 15:30 vervalt",
+            "title": "Les uitval",
+            "content": "Ronald Merkuur is ziek, je Project ISGA les van 14:00 - 15:30 vervalt",
             "secondsBeforeShow": "20",
             "urgent": true,
             "tags": []
         },
         {
             "newsItemId": "3a50a48a-a19a-11ea-bb37-0242ac130002",
-            "title": "Lokaal wijziging voor UCD (15:30 - 16:00), het nieuwe lokaal is LWB D3.11",
+            "title": "Lokaal wijziging",
+            "content": "Lokaal wijziging voor UCD (15:30 - 16:00), het nieuwe lokaal is LWB D3.11",
             "secondsBeforeShow": "40",
             "urgent": true,
             "tags": []
         }, {
             "newsItemId": "3a50a106-a19a-11ea-bb37-0242ac130002",
-            "title": "New Product Design tentamen van 17:00 - 18:00 gaat niet door ivm Corona maatregelen",
+            "title": "Tentamen afgezegd",
+            "content": "New Product Design tentamen van 17:00 - 18:00 gaat niet door ivm Corona maatregelen",
             "secondsBeforeShow": "60",
             "urgent": true,
             "tags": []
         }, {
             "newsItemId": "3a50a32c-a19a-11ea-bb37-0242ac130002",
-            "title": "Nieuw cijfer geregistreerd op SIS: 9.5 voor Informatie Design",
+            "title": "Cijfer geregistreerd",
+            "content": "Nieuw cijfer geregistreerd op SIS: 9.5 voor Informatie Design",
             "secondsBeforeShow": "80",
             "urgent": true,
             "tags": []
         }, {
             "newsItemId": "3a50a5de-a19a-11ea-bb37-0242ac130002",
-            "title": "Wegens Corona zijn alle HvA faciliteiten vanaf 18:00 gesloten",
+            "title": "HvA gesloten",
+            "content": "Wegens Corona zijn alle HvA faciliteiten vanaf 18:00 gesloten",
             "secondsBeforeShow": "100",
             "urgent": true,
             "tags": []
