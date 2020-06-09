@@ -106,7 +106,12 @@ span.failed {
     padding-right: 10px;
 }
 
-a {
+#link-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#link-container a {
     margin-top: 30px;
     text-decoration: none;
     color: #25167A;
@@ -114,15 +119,25 @@ a {
     align-items: center;
 }
 
-a:hover,
-a:focus {
+#link-container a:hover,
+#link-container a:focus {
     text-decoration: underline;
     outline: none;
 }
 
-a img {
+#link-container a img {
     height: 12px;
     margin-left: 20px;
+}
+
+@media only screen and (max-width: 450px) {
+    #link-container {
+        flex-direction: column;
+    }
+
+    #link-container a:last-of-type {
+        margin-top: 10px;
+    }
 }
 </style>
 
@@ -131,9 +146,15 @@ a img {
 <div id="recent-results"></div>
 <div id="recent-progress"></div>
 
-<a target="_blank" href="https://sis.hva.nl/">Alle resultaten in SIS
+<div id="link-container">
+<a target="_blank" href="https://sis.hva.nl:8011/psc/S2PRD/EMPLOYEE/SA/c/SNS_MENU_FLD.SNS_SS_STD_RES_FL.GBL">Jouw resultaten
     <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
 </a>
+
+<a target="_blank" href="https://sis.hva.nl:8011/psc/S2PRD/EMPLOYEE/SA/c/SNS_MENU_FLD.SNS_SS_FLD_ADB.GBL">Jouw studievoortgang
+    <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
+</a>
+</div>
 `
 
 function init() {
