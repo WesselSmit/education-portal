@@ -3902,20 +3902,19 @@ function getPreferences() {
 function dragHandler() {
   var preferencesContainer = document.querySelector('#preferences');
   new _sortablejs["default"](preferencesContainer, {
+    draggable: ".on",
     animation: 150,
     onStart: function onStart(event) {
-      return iets(event);
+      return addStylingToDropZones(event);
     },
     onEnd: function onEnd(event) {
-      iets2(event);
+      removeStylingToDropZones(event);
       setPreferencesObject();
     }
   });
 }
 
-function iets(event) {
-  console.log(event);
-
+function addStylingToDropZones(event) {
   var dragLocations = _toConsumableArray(event.target.querySelectorAll('label:not(.sortable-chosen)'));
 
   dragLocations.forEach(function (location) {
@@ -3923,7 +3922,7 @@ function iets(event) {
   });
 }
 
-function iets2(event) {
+function removeStylingToDropZones(event) {
   var dragLocations = _toConsumableArray(event.target.querySelectorAll('label:not(.sortable-chosen)'));
 
   dragLocations.forEach(function (location) {
@@ -3970,7 +3969,15 @@ function stateHandler() {
       preference.state = state;
       (0, _utils.setLocalStorage)('preferences', data); // Change state visualy
 
-      preference.state === false ? label.classList.add('off') : label.classList.remove('off');
+      if (preference.state) {
+        label.classList.add('on');
+        label.classList.remove('off');
+      } else {
+        label.classList.add('off');
+        label.classList.remove('on');
+        container.appendChild(label);
+        setPreferencesObject();
+      }
     });
   });
 }
@@ -3979,7 +3986,7 @@ function updateState(data, element) {
   var preference = data.find(function (preference) {
     return preference.id === element.id;
   });
-  preference.state === false ? element.classList.add('off') : element.classList.remove('off');
+  preference.state ? element.classList.remove('off') : element.classList.add('on');
 } // Rearanging order
 
 
@@ -4259,7 +4266,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var template = document.createElement('template');
-template.innerHTML = "\n<style>\n*:focus {\n    outline: none;\n}\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n.announcements-container #announcement-legend {\n\tmargin-bottom: 20px;\n}\n.announcements-container #announcement-legend p {\n\tcolor: black;\n\tfont-size: 14px;\n\tdisplay: inline-block;\n\tmargin-right: 20px;\n}\n.announcements-container #announcement-legend p:last-of-type {\n\tmargin-right: 0;\n}\n.announcements-container #announcement-legend p::before {\n\tcontent: \"\";\n\theight: 15px;\n\tmargin-bottom: -2px;\n\twidth: 15px;\n\tmargin-right: 10px;\n\tdisplay: inline-block;\n}\n.announcements-container #announcement-legend p.Opleiding::before {\n\tbackground-color: #DC143C;\n}\n.announcements-container #announcement-legend p.Faculteit::before {\n\tbackground-color: #DCB614;\n}\n.announcements-container #announcement-legend p.HvA::before {\n\tbackground-color: #149EDC;\n}\n.announcements-container #announcement-legend p.Medezeggenschap::before {\n\tbackground-color: #14DC69;\n}\n.announcements-container a {\n\tmargin: 0 0 15px 0;\n\tdisplay: block;\n\tcolor: black;\n\ttext-decoration: none;\n}\n.announcements-container a:hover {\n\tbackground-color: #F2F2F2;\n}\n.announcements-container a:focus {\n\tbackground-color: #DDDDDD;\n}\n.announcements-container .announcement {\n\tmargin: 0;\n\tpadding: 5px 0 5px 10px;\n\tborder-left: 5px solid;\n}\n.announcements-container .announcement.Opleiding {\n\tborder-color: #DC143C;\n}\n.announcements-container .announcement.Faculteit {\n\tborder-color: #DCB614;\n}\n.announcements-container .announcement.HvA {\n\tborder-color: #149EDC;\n}\n.announcements-container .announcement.Medezeggenschap {\n\tborder-color: #14DC69;\n}\n.announcements-container .announcement p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .read .announcement p:first-of-type {\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .announcement p:last-of-type {\n\tcolor: #666666;\n\tfont-size: 14px;\n}    \n.allAnnouncements {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n\talign-items: center;\n}\n.allAnnouncements:hover,\n.allAnnouncements:focus {\n        text-decoration: underline;\n}\n.allAnnouncements img {\n        height: 12px;\n        margin-left: 20px;\n}\n</style>\n<div id=\"announcements\"></div>\n<h2>Mededelingen</h2>\n<div class=\"announcements-container\">\n\t<div id=\"announcement-legend\"></div>\n</div>\n<a class=\"allAnnouncements\" href=\"/announcements/\" target=\"_self\">Alle mededelingen\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>";
+template.innerHTML = "\n<style>\n*:focus {\n    outline: none;\n}\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n.announcements-container #announcement-legend {\n\tmargin-bottom: 20px;\n}\n.announcements-container #announcement-legend p {\n\tcolor: black;\n\tfont-size: 14px;\n\tdisplay: inline-block;\n\tmargin-right: 20px;\n}\n.announcements-container #announcement-legend p:last-of-type {\n\tmargin-right: 0;\n}\n.announcements-container #announcement-legend p::before {\n\tcontent: \"\";\n\theight: 15px;\n\tmargin-bottom: -2px;\n\twidth: 15px;\n\tmargin-right: 10px;\n\tdisplay: inline-block;\n}\n.announcements-container #announcement-legend p.Opleiding::before {\n\tbackground-color: #DC143C;\n}\n.announcements-container #announcement-legend p.Faculteit::before {\n\tbackground-color: #DCB614;\n}\n.announcements-container #announcement-legend p.HvA::before {\n\tbackground-color: #149EDC;\n}\n.announcements-container #announcement-legend p.Medezeggenschap::before {\n\tbackground-color: #14DC69;\n}\n.announcements-container a {\n\tmargin: 0 0 15px 0;\n\tdisplay: block;\n\tcolor: black;\n\ttext-decoration: none;\n}\n.announcements-container a:hover {\n\tbackground-color: #F2F2F2;\n}\n.announcements-container a:focus {\n\tbackground-color: #DDDDDD;\n}\n.announcements-container .announcement {\n\tmargin: 0;\n\tpadding: 5px 0 5px 10px;\n\tborder-left: 5px solid;\n}\n.announcements-container .announcement.Opleiding {\n\tborder-color: #DC143C;\n}\n.announcements-container .announcement.Faculteit {\n\tborder-color: #DCB614;\n}\n.announcements-container .announcement.HvA {\n\tborder-color: #149EDC;\n}\n.announcements-container .announcement.Medezeggenschap {\n\tborder-color: #14DC69;\n}\n.announcements-container .announcement p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .read .announcement p:first-of-type {\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .announcement p:last-of-type {\n\tcolor: #666666;\n\tfont-size: 14px;\n}    \n.allAnnouncements {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n\talign-items: center;\n}\n.allAnnouncements:hover,\n.allAnnouncements:focus {\n        text-decoration: underline;\n}\n.allAnnouncements.hide {\n    position: absolute;\n    left: -9999px;\n}\n.allAnnouncements img {\n        height: 12px;\n        margin-left: 20px;\n}\n</style>\n<div id=\"announcements\"></div>\n<h2>Mededelingen</h2>\n<div class=\"announcements-container\">\n\t<div id=\"announcement-legend\"></div>\n</div>\n<a class=\"allAnnouncements\" href=\"/announcements/\" target=\"_self\">Alle mededelingen\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>";
 
 function init(pageName) {
   var announcementList = /*#__PURE__*/function (_HTMLElement) {
@@ -4296,6 +4303,13 @@ function init(pageName) {
 
       _this.announcementContainer = _this.shadowRoot.querySelector('.announcements-container');
       _this.announcementLegend = _this.shadowRoot.querySelector('#announcement-legend');
+
+      if (pageName === 'announcements-overview') {
+        console.log('ja');
+
+        _this.shadowRoot.querySelector('.allAnnouncements').classList.add('hide');
+      }
+
       return _this;
     }
 

@@ -24,22 +24,22 @@ function dragHandler() {
     const preferencesContainer = document.querySelector('#preferences')
 
     new Sortable(preferencesContainer, {
+        draggable: ".on",
         animation: 150,
-        onStart: (event) => iets(event),
+        onStart: (event) => addStylingToDropZones(event),
         onEnd: (event) => {
-            iets2(event)
+            removeStylingToDropZones(event)
             setPreferencesObject()
         }
     })
 }
 
-function iets(event) {
-    console.log(event)
+function addStylingToDropZones(event) {
     const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
     dragLocations.forEach(location => location.classList.add('optional-location'))
 }
 
-function iets2(event) {
+function removeStylingToDropZones(event) {
     const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
     dragLocations.forEach(location => location.classList.remove('optional-location'))
 }
@@ -82,14 +82,22 @@ function stateHandler() {
             setLocalStorage('preferences', data)
 
             // Change state visualy
-            preference.state === false ? label.classList.add('off') : label.classList.remove('off')
+            if (preference.state) {
+                label.classList.add('on')
+                label.classList.remove('off')
+            } else {
+                label.classList.add('off')
+                label.classList.remove('on')
+                container.appendChild(label)
+                setPreferencesObject()
+            }
         })
     })
 }
 
 function updateState(data, element) {
     const preference = data.find(preference => preference.id === element.id)
-    preference.state === false ? element.classList.add('off') : element.classList.remove('off')
+    preference.state ? element.classList.remove('off') : element.classList.add('on')
 }
 
 // Rearanging order
