@@ -8,6 +8,8 @@ The application can be found [here](https://hva-education-portal.herokuapp.com/)
 * [Data](#data)
 * [Credits](#credits)
 
+![image](https://user-images.githubusercontent.com/45405413/84251309-78554480-ab0d-11ea-81f9-2ddb7b5047bd.png)
+
 # Concept
 
 The HvA student portal is supposed to be a central point for all study related infomation, at the momment this information is scattered across many websites and platforms. The current portal functions as a hub, but fails to offer students a complete overview of all available services.
@@ -24,8 +26,6 @@ Since external resources all look and function different we offer detail pages f
 * why it's on a external website 
 * where you can go for extra help
 * a link to the external website
-
-![image](https://user-images.githubusercontent.com/45405413/84251309-78554480-ab0d-11ea-81f9-2ddb7b5047bd.png)
 
 # Install Notes
 
