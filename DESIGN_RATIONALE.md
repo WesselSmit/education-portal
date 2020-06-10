@@ -25,9 +25,24 @@ These are the questions we ask ourselves and keep in mind whilst designing the n
 * What is the best way to navigate through large amounts of data?
 * How do you maintain an intuitive navigation?
 
-## Notes:
+## HvA Style
 
-* The main goal of the redesign is not to
+The redesign should follow the HvA style as described in the provided styleguide.
+
+## Resources
+
+A list of the resources we plan to use:
+
+* Github (to publish code + documentation)
+* Heroku (to deploy app)
+* mijnhva + it's external resources (to find content and inspire design)
+
+## Deliverables
+
+* Design Rational (debriefing, explanation about the problem and the code)
+* A working prototype with real data
+    * prototype is responsive
+    * prototype is accessible
 
 # Solution
 
