@@ -4,6 +4,7 @@ More information can be found in the [design rationale](https://github.com/Wesse
 
 # Table of contents
 * [App](https://hva-education-portal.herokuapp.com/)
+* [Design Rationale](https://github.com/WesselSmit/education-portal/blob/master/DESIGN_RATIONALE.md)
 * [Concept](#concept)
 * [Install Notes](#install-notes)
 * [Features](#features)
