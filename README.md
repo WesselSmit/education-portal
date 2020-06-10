@@ -71,7 +71,7 @@ The widgets are based on the provided research and our own user tests, however w
 
 ### Enhancements 
 
-The application wil be used a lot on the go by students travelling to/from the university, since JS might not load due to tunnels or bad connection etc. we use enhacements. If the JS can't be loaded the app still works, however some extended functionalities and enhancements won't be available without JS. To see a full list of all our enhancements see our [design rationale](https://github.com/WesselSmit/education-portal/blob/master/DESIGN_RATIONALE.md)
+The application wil be used a lot on the go by students travelling to/from the university, since JS might not load due to tunnels or bad connection etc. we use enhacements. If the JS can't be loaded the app still works, however some extended functionalities and enhancements won't be available without JS. To see a full list of all our enhancements see our [design rationale](https://github.com/WesselSmit/education-portal/blob/master/DESIGN_RATIONALE.md#enhancements)
 
 # Data
 
@@ -83,7 +83,7 @@ All data used is either: JSON (provided, created) or data created by the user (p
 
 We don't use any API's.
 
->You can read more about our data in our [design rationale](https://github.com/WesselSmit/education-portal/blob/master/DESIGN_RATIONALE.md)
+>You can read more about our data in our [design rationale](https://github.com/WesselSmit/education-portal/blob/master/DESIGN_RATIONALE.md#data)
 
 # Credits
 
