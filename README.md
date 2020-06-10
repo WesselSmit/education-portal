@@ -1,5 +1,7 @@
 The application can be found [here](https://hva-education-portal.herokuapp.com/)
 
+More information can be found in the [design rationale](https://github.com/WesselSmit/education-portal/blob/master/DESIGN_RATIONALE.md)
+
 # Table of contents
 * [App](https://hva-education-portal.herokuapp.com/)
 * [Concept](#concept)
