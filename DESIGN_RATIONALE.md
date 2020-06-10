@@ -164,4 +164,20 @@ Some developers think you shouldn't use components for an important element in t
 There are several options for styling web components without using a Shadow DOM. You can use the `standard context` or the` closed context`. By using the standard context it is possible to apply external CSS to your web component. <br>
 We ourselves did not use the standard context but the closed context, Shadow DOM. We didn't like this because we first wrote the SCSS for the EJS template and then had to write it to CSS for the web component.
 
+3. "Custom Elements aren't accessible"  
+Currently, Custom Elements V1 are supported on any modern browser. So almost no polyfills are needed to support this. And if there is a browser that does not support the Custom Elements, we return to point 1 where you can always fall back on the server that renders the component.
+
+<!--
+Sources:
+https://gist.github.com/WebReflection/71aed0c811e2e88e3cd3c647213f0e6c 
+https://dev.to/richharris/why-i-don-t-use-web-components-2cia  
+-->
+
+**Our experience with Web components**  
+The above points stood out for us because we also had to deal with this ourselves and we had to think about how we would solve this. Our experience with:
+1. Accessibility  
+For our app we used the server that the components render, however this is the fallback. When the user allows and can use JavaScript, our app uses Web components. This way we have ensured that our app works well without JavaScript. However, the Web components do have the advantage that the user can interact with them, which makes sense since it requires JavaScript.
+
+2. Styling the Web components  
+To style the Web components we have chosen to use the closed context, this means that we add specific styling to the component using the Shadow DOM and don't use the stylesheet. However, we aren't big a fan of this because we have to convert the SCSS to CSS and then put this in the Javascript module, which is actually not the intention.
 <hr>
