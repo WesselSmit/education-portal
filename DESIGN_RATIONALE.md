@@ -1,5 +1,7 @@
 <!-- Toevoegen van Links - Wessel -->
 
+
+# Solution
 ## Data
 Because we would use personal data for our project, the client made small samples for us and supplied them in JSON. We had the idea to use MongoDB because we both have never worked with it before and we thought it would be interesting to do it once. During the development of our version of the HvA portal, we discovered that data was sometimes missing. We have written this data ourselves in JSON files and loaded it locally in our app.
 
@@ -180,4 +182,55 @@ For our app we used the server that the components render, however this is the f
 
 2. Styling the Web components  
 To style the Web components we have chosen to use the closed context, this means that we add specific styling to the component using the Shadow DOM and don't use the stylesheet. However, we aren't big a fan of this because we have to convert the SCSS to CSS and then put this in the Javascript module, which is actually not the intention.
+
 <hr>
+
+## Service Worker
+
+### Offline page and Caching
+...
+
+### Push notifications
+...
+
+<hr>
+
+## Personal preferences
+### Drag and Drop  
+...
+
+### LocalStorage 
+...
+
+<hr>
+
+## Enhancements
+
+### Announcements
+**Filter**  
+...
+
+**Read history**  
+...
+
+**Unread messages indicator**  
+...
+
+### Timetable
+...
+
+### Course overview
+...
+
+### Searchbar
+...
+
+<hr>
+
+# What we would like to add
+...
+
+<hr>
+
+# Which we didn't add in the end
+...
