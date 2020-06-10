@@ -104,8 +104,9 @@ function updateState(data, element) {
 function createLabels(preference) {
     const label = document.createElement('label')
     label.id = preference.id
-    label.draggable = true
-    preference.state ? label.className = 'on' : label.className = 'off'
+    label.className = preference.state ? 'on' : 'off'
+
+    label.setAttribute('represents', preference.id)
 
     const input = document.createElement('input')
     input.type = 'checkbox'

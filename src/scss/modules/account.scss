@@ -27,11 +27,35 @@
             text-align: center;
             border: 2px solid $main-purple;
 
+            &[represents]::before {
+                content: "";
+                display: block;
+                background-repeat: no-repeat;
+                background-position: center;
+                padding: 20px;
+            }
+
+            &[represents="0"]::before {
+                background-image: url(../media/icons/announcements-purple.svg);
+            }
+
+            &[represents="1"]::before {
+                background-image: url(../media/icons/progress-purple.svg);
+            }
+
+            &[represents="2"]::before {
+                background-image: url(../media/icons/course-purple.svg);
+            }
+
+            &[represents="3"]::before {
+                background-image: url(../media/icons/timetable-purple.svg);
+            }
+
             &:hover {
                 cursor: move;
             }
 
-            // Drag and drop styling            
+            // Drag and drop styling
             &.sortable-chosen.sortable-ghost {
                 opacity: 0;
             }
@@ -46,7 +70,7 @@
             &.optional-location {
                 border: 2px solid $main-purple;
                 border-style: dashed;
-                transform: scale(.95);
+                transform: scale(0.95);
             }
 
             &.off {
@@ -55,6 +79,11 @@
 
             &.off.optional-location {
                 border-style: dashed;
+            }
+
+            img {
+                display: block;
+                margin: 0 auto 5px auto;
             }
 
             input {
