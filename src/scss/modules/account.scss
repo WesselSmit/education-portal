@@ -31,24 +31,22 @@
                 cursor: move;
             }
 
-            // Drag and drop styling
-            &.sortable-chosen,
-            .dragged {
-                box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.35);
-            }
-
-            &.sortable-drag {
+            // Drag and drop styling            
+            &.sortable-chosen.sortable-ghost {
                 opacity: 0;
             }
 
-            &.sortable-fallback {
-                display: none;
+            &.sortable-drag,
+            .sortable-ghost {
+                box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.35);
+                background-color: $main-white;
+                opacity: 1;
             }
 
             &.optional-location {
                 border: 2px solid $main-purple;
                 border-style: dashed;
-                transform: scale(.9);
+                transform: scale(.95);
             }
 
             &.off {
