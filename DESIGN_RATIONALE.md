@@ -240,11 +240,75 @@ To style the Web components we have chosen to use the closed context, this means
 <hr>
 
 ## Personal preferences
+As soon as our dashboard was finished, the next user test showed that the user wanted to be able to personalize the dashboard. We did this by creating a section on the account page with the four widgets that the user can toggle on and off and drag to change the order in this way. Together with Koop we discussed how we can tackle this UI and UX best to make it clear that these blocks are interactable.
+
 ### Drag and Drop  
-...
+For the drag and drop, Sjors first made this in Vanilla Javascript. However, the interaction was not very nice and it was difficult to switch from a two-column grid to a one-column grid. Then he researched other possibilities to achieve the same. After doing some research on `Sortable.js` he started working on this.
+
+**Sortable.js**  
+Sortable is a Javascript library for reordering drag and drop lists. This way it is way easier to drag and drop in multiple layouts and it is also compatible with the mobile Javascript events. With Sortable you get a lot of options to manipulate and change the interaction with your drag and drop list. 
+Curious about the full documentation or about my implementation of Sortable.js? View that code or read the [full documentations](https://github.com/SortableJS/Sortable)
+
+<details><summary>Sortable.js - Code</summary>
+
+```js
+function dragHandler() {
+    const preferencesContainer = document.querySelector('#preferences')
+
+    new Sortable(preferencesContainer, {
+        draggable: ".on",
+        animation: 150,
+        onStart: (event) => addStylingToDropZones(event),
+        onEnd: (event) => {
+            removeStylingFromDropZones(event)
+            setPreferencesObject()
+        }
+    })
+}
+
+function addStylingToDropZones(event) {
+    const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
+    dragLocations.forEach(location => location.classList.add('optional-location'))
+}
+
+function removeStylingFromDropZones(event) {
+    const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
+    dragLocations.forEach(location => location.classList.remove('optional-location'))
+}
+```
+</details>
+
 
 ### LocalStorage 
-...
+Om het mogelijk te maken dat de instellingen van de gebruiker worden opgeslagen heeft Sjors gebruik gemaakt van LocalStorage. Zodra de gebruiker op de pagina komt wordt er in de LocalStorage gekeken of er al instellingen zijn van de gebruiker. Zo niet, wordt er een object aangemaakt in de LocalStorage. Als dit wel het geval is worden de blokken in de goede volgorde en op de juiste state gezet. Elke keer wanneer de gebruiker de volgorde of de state aanpast wordt het LocalStorage object aangepast.
+
+De belangrijkste functie is het update/setten van het preferences object. Hierdoor blijft de LocalStorage up to date en kan de gebruiker zijn dashboard personaliseren. Deze functie kun je hieronder bekijken.
+
+<details><summary>setPreferencesObject() - Code</summary>
+
+```js
+function setPreferencesObject() {
+    const inputs = [...document.querySelectorAll('#account form label')]
+    let preferences = []
+
+    inputs.forEach(label => {
+        // Data
+        const id = label.id
+        const text = label.textContent
+        const state = label.querySelector('input').checked
+
+        // Set LocalStorage
+        const object = { id: id, name: text, state: state }
+        preferences.push(object)
+        setLocalStorage('preferences', preferences)
+    })
+
+    return preferences
+}
+```
+</details>
+
+
 
 <hr>
 

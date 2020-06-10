@@ -28,7 +28,7 @@ function dragHandler() {
         animation: 150,
         onStart: (event) => addStylingToDropZones(event),
         onEnd: (event) => {
-            removeStylingToDropZones(event)
+            removeStylingFromDropZones(event)
             setPreferencesObject()
         }
     })
@@ -39,7 +39,7 @@ function addStylingToDropZones(event) {
     dragLocations.forEach(location => location.classList.add('optional-location'))
 }
 
-function removeStylingToDropZones(event) {
+function removeStylingFromDropZones(event) {
     const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
     dragLocations.forEach(location => location.classList.remove('optional-location'))
 }
@@ -104,7 +104,6 @@ function updateState(data, element) {
 function createLabels(preference) {
     const label = document.createElement('label')
     label.id = preference.id
-    label.draggable = true
     preference.state ? label.className = 'on' : label.className = 'off'
 
     const input = document.createElement('input')

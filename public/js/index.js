@@ -3952,7 +3952,7 @@ function dragHandler() {
       return addStylingToDropZones(event);
     },
     onEnd: function onEnd(event) {
-      removeStylingToDropZones(event);
+      removeStylingFromDropZones(event);
       setPreferencesObject();
     }
   });
@@ -3966,7 +3966,7 @@ function addStylingToDropZones(event) {
   });
 }
 
-function removeStylingToDropZones(event) {
+function removeStylingFromDropZones(event) {
   var dragLocations = _toConsumableArray(event.target.querySelectorAll('label:not(.sortable-chosen)'));
 
   dragLocations.forEach(function (location) {
@@ -4037,7 +4037,6 @@ function updateState(data, element) {
 function createLabels(preference) {
   var label = document.createElement('label');
   label.id = preference.id;
-  label.draggable = true;
   preference.state ? label.className = 'on' : label.className = 'off';
   var input = document.createElement('input');
   input.type = 'checkbox';
