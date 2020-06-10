@@ -1,4 +1,3 @@
-<!-- Toevoegen van Links - Wessel -->
 # Problem Definition
 
 The HvA Portal is a hub for all resources and information related to it's studies. These resources and information are scattered across multiple platforms and websites. This causes problems because it isn't always clear to students what information can be found on which resource. Essentially; the HvA portal mostly functions as a hub for all HvA related information. It however fails in introducing students to all the services and resources available to them, this is mainly due to information being hidden behind other pages or not even being shown in the menu & not clarifying what information can be found behind what link.
@@ -9,9 +8,44 @@ The HvA Portal is a hub for all resources and information related to it's studie
 
 The current HvA portal is very divided and it can be hard for students to know what reources are available and what information can be found on these websites. The goal of the redesign of the HvA portal is to deal with large amounts of data. Currently the solution is to redirect users from the portal to external resources. It's crucial we find a better way to show students what services and resources are available to them. The solution should have a intuitive navigation and be easily accessible.
 
+The main goal of the redesign is not to redesign all small components and details of the portal but is more focussed towards the (data-)flow of the portal and the way users navgiate through the data.
+
 Summarised: our task is to cope with the large amounts of data the HvA has and to present the information in a comprehensive way users can navigate through intuitively.
 
+## Main Question
+
+How do you present a large amount of information in a clear way that users can navigate through intuitively?
+
+## Side Questions
+
+These are the questions we ask ourselves and keep in mind whilst designing the new portal:
+
+* How do you maintain an overview with alrge amounts of data?
+* What options can you give users to personalize the app?
+* What is the best way to navigate through large amounts of data?
+* How do you maintain an intuitive navigation?
+
+## HvA Style
+
+The redesign should follow the HvA style as described in the provided styleguide.
+
+## Resources
+
+A list of the resources we plan to use:
+
+* Github (to publish code + documentation)
+* Heroku (to deploy app)
+* mijnhva + it's external resources (to find content and inspire design)
+
+## Deliverables
+
+* Design Rational (debriefing, explanation about the problem and the code)
+* A working prototype with real data
+    * prototype is responsive
+    * prototype is accessible
+
 # Solution
+
 ## Data
 Because we would use personal data for our project, the client made small samples for us and supplied them in JSON. We had the idea to use MongoDB because we both have never worked with it before and we thought it would be interesting to do it once. During the development of our version of the HvA portal, we discovered that data was sometimes missing. We have written this data ourselves in JSON files and loaded it locally in our app.
 
