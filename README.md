@@ -6,7 +6,6 @@ The application can be found [here](https://hva-education-portal.herokuapp.com/)
 * [Install Notes](#install-notes)
 * [Features](#features)
 * [Data](#data)
-* [Ideas for further expansion](#ideas-for-further-expansion)
 * [Credits](#credits)
 
 # Concept
