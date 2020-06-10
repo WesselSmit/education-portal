@@ -1,7 +1,9 @@
+<!-- Toevoegen van Links - Wessel -->
+
 ## Data
 Because we would use personal data for our project, the client made small samples for us and supplied them in JSON. We had the idea to use MongoDB because we both have never worked with it before and we thought it would be interesting to do it once. During the development of our version of the HvA portal, we discovered that data was sometimes missing. We have written this data ourselves in JSON files and loaded it locally in our app.
 
-**MongoDB**  
+### MongoDB 
 We used MongoDB for the data we received from the client. We have moved the data from the JSONs to MongoDB and set up code on the server that makes it possible to retrieve different `collections`. Since we both had no experience with this, it was quite a bit of work to figure this out in the beginning. In the end we wrote a dynamic fetcher where we can indicate as a parameter which collection we want. We then manipulate the data in separate functions in order to use the desired data in our app.
 
 <details><summary>Example: MongoDB Fetcher</summary>
@@ -28,8 +30,9 @@ module.exports = (collectionName) => {
 ```
 </details>
 
+<hr>
 
-**Local JSONs**  
+### Local JSONs 
 Because we discovered during the build of the app that data was missing that was necessary to build the desired features, we wrote this ourselves based on information on several websites of the AUAS such as Brightspace and MijnHvA. Because we wrote this data ourselves, we did not have to manipulate this.
 
 The JSONs we wrote ourselves contain data from:
@@ -51,10 +54,72 @@ function readJSON(fileName) {
 
 <hr>
 
-## Webcomponents
+## Web components
 
-**The structure of a basic Webcomponent**  
-...
+### The structure of a basic Web component
+Creating a web component consists of a number of steps.
+
+
+<!-- 1 -->
+1. Creating a template  
+The template contains all static HTML and CSS of this element. You will only add the dynamic content later by means of functions in your custom element.
+
+<details><summary>Example: Template</summary>
+
+```js
+const template = document.createElement('template')
+template.innerHTML = `
+<style>
+    ...
+</style>
+
+<div>
+    ...
+</div>
+`
+```
+</details>
+
+
+<!-- 2 -->
+2. Defining the template as a Custom Element  
+To make it possible to use the web component in the HTML you need to define this as a Custom Element first. To do this you create a class, which you define as window's customElements property.
+
+<details><summary>Example: Defining a Custom Element</summary>
+
+```js
+class Name extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+
+customElements.define('DOM-name', Name)
+```
+</details>
+
+
+<!-- 3 -->
+3. Initializing the Web component  
+Inside of the constructor() you will have to do a few things. First of all you want to call super() to inherit all properties the class your extending.
+The second thing you want to do is to attach the shadow DOM to your web component and finally you want to clone your template into the shadowRoot.
+
+<details><summary>Example: Initializing the Web Component</summary>
+
+```js
+constructor() {
+    super()
+    this.attachShadow({ mode: 'open' })
+    this.shadowRoot.appendChild(template.content.cloneNode(true))
+}
+```
+</details>
+
+<br>
+
+<!-- 4 -->
+When you've completed all those steps your component is ready to receive data and dynamically update/render the component.
+<details><summary>Example: Full setup of a Web component</summary>
 
 ```js
 const template = document.createElement('template')
@@ -69,20 +134,34 @@ template.innerHTML = `
 `
 
 class Name extends HTMLElement {
-        constructor() {
-            super()
-            this.attachShadow({ mode: 'open' })
-            this.shadowRoot.appendChild(template.content.cloneNode(true))
-        }
+    constructor() {
+        super()
+        this.attachShadow({ mode: 'open' })
+        this.shadowRoot.appendChild(template.content.cloneNode(true))
+    }
+}
 
 customElements.define('DOM-name', Name)
 ```
+</details>
 
-**The Announcement Webcomponent**  
+<hr>
+
+### The Announcement Web component 
 ...
 
+<hr>
 
-**Our research into Webcomponents**  
-...
+### Our research into Web components
+
+**The online opinions about Web components**  
+In this section I will show several statements that I have seen on different websites, with a number of arguments for and against.
+
+1. "Websites should work without JavaScript wherever possible"  
+Some developers think you shouldn't use components for an important element in the application like a navigation bar because it should always work, even without Javascript. But in our opinion it is quite possible to make a fallback on the server. So if Javascript is disabled or cannot be used, the server will still be able to render that element and the user will not even realize that it is or is not a web component.
+
+2. "If you want to use Shadow DOM, you have to include your CSS in a `<style>` element inside of your JavaScript module"  
+There are several options for styling web components without using a Shadow DOM. You can use the `standard context` or the` closed context`. By using the standard context it is possible to apply external CSS to your web component. <br>
+We ourselves did not use the standard context but the closed context, Shadow DOM. We didn't like this because we first wrote the SCSS for the EJS template and then had to write it to CSS for the web component.
 
 <hr>
