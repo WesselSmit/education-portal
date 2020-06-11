@@ -394,11 +394,160 @@ To style the Web components we have chosen to use the closed context, this means
 
 ## Service Worker
 
+We know from experience that the portal is often used on the go, students need to travel to school and often use public transport. When travelling the connection can fail for a second. It's important our portal is still usable even when offline. To achieve offline support and faster load times we Service Workers. We also want to be able to notify a student for urgent announcements, this is also done with a Service Worker.
+
 ### Offline page and Caching
-...
+
+When using a service worker to cache pages you need to choose a caching strategy; we want to show the most recent pages which is only possible when fetching pages over a connection. We try to fetch the page over the network first, this ensures we always try to get the up to date page. If that fails (slow internet of no connection) we show a cached version of the page, if we don't have that we show an offline page.
+
+This makes sure we always have a page to show users even if they don't have a connection.
+
+>Out caching strategy is: try requesting over the network, if that fails we serve a cached page, if we don't have the page cached we serve an offline page.
+
+**Installing SW**
+
+When installing the SW we immediately cache the most important assets of our app. These are the assets we want to make sure we can always serve, these are the homepage, offline page, styling, scripts and some assets like fonts and important icons. They are the base of our application.
+
+<details></summary>Example: Installing SW</summary>
+
+```js
+const cacheAssets = [
+    '/',
+    '/offline',
+    '/css/master.css',
+    '/js/index.js',
+    '/media/fonts/OpenSans-Bold.woff',
+    '/media/fonts/OpenSans-Regular.woff',
+    '/media/icons/favicon.png'
+]
+
+self.addEventListener('install', e => {
+    e.waitUntil(caches.open(cacheName)
+        .then(cache => cache.addAll(cacheAssets))
+        .then(() => self.skipWaiting())
+    )
+})
+```
+
+</details>
+
+**Activating SW**
+
+When activating out SW we check if there are multiple caches, we always only want to keep our up to date cache, to achieve this we loop through all caches. Every cache that isn't the most recent cache we delete.
+
+<details></summary>Example: Activating SW</summary>
+
+```js
+self.addEventListener('activate', e => {
+    e.waitUntil(
+        clients.claim() //Sync serviceWorkers across all active clients
+        .then(() => caches.keys() //Remove outdated caches
+            .then(cacheNames => {
+                return Promise.all(
+                    cacheNames.map(cache => {
+                        //If there are multiple caches; remove all outdated caches
+                        if (cache !== cacheName) {
+                            return caches.delete(cache)
+                        }
+                    })
+                )
+            })
+        ))
+})
+```
+
+</details>
+
+**Fetching and serving with SW**
+
+Whenever the browser fetches something the SW intervenes, it first tries to GET the request over the network. If the request is succesfull we serve the requested resource and we put the resource in our cache. This way we build up a cache of all resources used by the app. If the user later comes back to the page witha  bad connection the resources can be served from the cache.
+
+If the network request fails we check our cache. Do we have a cached version of the requested resource, ff so serve the cached version. If we don't have the resource cached we serve the offline page.
+
+<details></summary>Example: Fetching & Serving Cached</summary>
+
+```js
+self.addEventListener('fetch', e => {
+    e.respondWith(
+        fetch(e.request)
+        //If a network connection is available => use fetched data
+        .then(res => { //Network succesful
+            const resClone = res.clone() //Clone the response
+            caches.open(cacheName)
+                .then(cache => {
+                    if (isHtmlGetRequest(e.request)) {
+                        cache.put(e.request, resClone)
+                    }
+                })
+            return res
+        })
+        //Network failed 
+        .catch(err => {
+            //Check if request is in cache
+            return caches.match(e.request).then(res => {
+                if (res === undefined) { //If not in cache => serve '/offline'
+                    return caches.match('/offline').then(response => response)
+                } else { //Otherwise serve cached page
+                    return caches.match(e.request).then(response => response)
+                }
+            })
+        })
+    )
+})
+```
+
+</details>
+
+Using a SW we can make sure the user has the best experience possible with a bad/no connection.
 
 ### Push notifications
-...
+
+When an urgent announcement is delivered from the server we want to show users this in app and outside of the app. Using SW we can send push notifications to the user even when the browser is closed.
+
+Notifying users in app is done through interface pop-ups. The server sends a custom event using socket.io to the client, the client listens for the event and handles it by updating the interface. In the same event handler we can call out `displayNotification` function.
+
+This function first checks if the user has given permission for push notifications. This is important to check because users can change their settings whenever your website is not open (meaning your application doesn't immediately register the change). If the user has blocked you app you can't send notifications, if the user has never anwsered the permission prompt it will automatically pop-up.
+
+If allowed we create a notification; doing this you can customize a few options;
+* the server sends a title and payload, we use these as the title and message for the notification
+* we can give a custom vibrate pattern
+* we can set custom icons to show in the notification
+* we can create a payload storing custom data 
+* we can set custom actions, these are shown in the notification under a drop-down list. The custom actions can be handled on the clientside JS but the support for this isn't great (even with modern browsers)
+
+<details><summary>Example: Sending Push Notifications</summary>
+
+```js
+function displayNotification(title, body) {
+    if (Notification.permission === 'granted') {
+        navigator.serviceWorker.getRegistration().then(reg => {
+            const options = {
+                body,
+                icon: './media/icons/hva-logo-purple.svg',
+                vibrate: [100, 50, 100],
+                data: {
+                    timestamp: Date.now()
+                },
+                actions: [{
+                        action: 'goto',
+                        title: 'Go to HvA Portal',
+                        icon: './media/icons/hva-logo-purple.svg'
+                    },
+                    {
+                        action: 'close',
+                        title: 'Close notification',
+                        icon: './media/icons/hva-logo-purple.svg'
+                    },
+                ]
+            }
+            reg.showNotification(title, options)
+        })
+    }
+}
+```
+
+</details>
+
 
 <hr>
 
