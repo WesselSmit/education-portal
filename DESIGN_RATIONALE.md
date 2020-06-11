@@ -408,7 +408,7 @@ This makes sure we always have a page to show users even if they don't have a co
 
 When installing the SW we immediately cache the most important assets of our app. These are the assets we want to make sure we can always serve, these are the homepage, offline page, styling, scripts and some assets like fonts and important icons. They are the base of our application.
 
-<details></summary>Example: Installing SW</summary>
+<details><summary>Example: Installing SW</summary>
 
 ```js
 const cacheAssets = [
@@ -435,7 +435,7 @@ self.addEventListener('install', e => {
 
 When activating out SW we check if there are multiple caches, we always only want to keep our up to date cache, to achieve this we loop through all caches. Every cache that isn't the most recent cache we delete.
 
-<details></summary>Example: Activating SW</summary>
+<details><summary>Example: Activating SW</summary>
 
 ```js
 self.addEventListener('activate', e => {
@@ -464,7 +464,7 @@ Whenever the browser fetches something the SW intervenes, it first tries to GET 
 
 If the network request fails we check our cache. Do we have a cached version of the requested resource, ff so serve the cached version. If we don't have the resource cached we serve the offline page.
 
-<details></summary>Example: Fetching & Serving Cached</summary>
+<details><summary>Example: Fetching & Serving Cached</summary>
 
 ```js
 self.addEventListener('fetch', e => {
@@ -653,7 +653,13 @@ To make it possible for the student to see which courses he/she has had this blo
 <img width="500" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84381339-2c77cd80-abe9-11ea-858e-aac51e1b5460.gif">
 
 ### Searchbar
-...
+When users press the `/` key on their keyboard (and the focussed element isn't a input) the focus will automatically be given to the searchbar. This shortcut is for users who use shortcuts to navigate websites. It's a small enhancement but can cause be a source of frustration for users who are used to it and more and more websites are starting to implement it.
+
+The search icon is also enhanced, whenever it's clicked the clientSide JS evaluates wehat should happen:
+* if the search-input is empty the searchbar gets focus
+* if the search-input is not empty the search-query is send to the server
+
+There is also a custom made reset icon in the search bar whenever it has focus and isn't empty. When clicked it removes the search-input from the searchbar.
 
 <hr>
 
