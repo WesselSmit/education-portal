@@ -129,7 +129,7 @@ template.innerHTML = `
 
 <!-- 2 -->
 2. Defining the template as a Custom Element  
-To make it possible to use the web component in the HTML you need to define this as a Custom Element first. To do this you create a class, which you define as window's customElements property.
+To make it possible to use the web component in the HTML you need to define this as a Custom Element first. To do this you create a class, which you define as window's customElements property. If you don't do this the browser won't recognize your custom element and it'll inherit the properties (behaviour + styling) of a `span`.
 
 <details><summary>Example: Defining a Custom Element</summary>
 
@@ -194,7 +194,66 @@ customElements.define('DOM-name', Name)
 <hr>
 
 ### The Announcement Web component 
-...
+
+Before we create our web component we already have the 'component' working, we always first make the HTML, CSS & JS for a widget. This is what gets rendered initially on a page visit. With JS we replace the widget with our web component. This way we can enhance the widget with JS, the component has extra features but if JS doesn't work we always have the fallback of our static EJS template widget.
+
+1. Creating the template (markup + styles)
+In the template we define all styles and the base markup, all container elements are in the template. However some markup will be generated dynamically; all the rows and legend items are dynamically generated. 
+
+<details><summary>Example: Template</summary>
+
+<p>NOTE: this is not the complete styling but only a small part</p>
+
+```js
+const template = document.createElement('template')
+template.innerHTML = `
+<style>
+h2 {
+    font-size: 24px;
+    color: #25167A;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #DDDDDD;
+    margin: 0 0 15px 0;
+	font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
+	font-weight: lighter;
+	line-height: 1.1;
+}
+p {
+	margin: 0;
+}
+    ...
+</style>
+<div id="announcements"></div>
+<h2>Mededelingen</h2>
+<div class="announcements-container">
+	<div id="announcement-legend"></div>
+</div>
+<a class="allAnnouncements" href="/announcements/" target="_self">Alle mededelingen
+	<img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
+</a>`
+```
+</details>
+
+2. Defining the Custom Element
+A custom element is a JS class that extends the HTMLElement property, you must extend a HTMLElement class to inherit the methods which allow you to manipulate it in JS (such as: innerHTML, classList etc.).
+To be able to use the web component in our HTML/DOM we need to register it in the `customElements` list. When you define your custom element you have to choose a name for it. All custom element names must contain a `-`, this indicates to the browser the element is a custom element.
+
+```js
+ class announcementList extends HTMLElement {
+        constructor() {
+            super()
+
+        }
+
+    window.customElements.define('announcements-widget', announcementList)
+```
+
+</details>
+<!-- TODO -->
+My custom element is defined as the `announcements-widget`
+
+3. 
 
 <hr>
 
