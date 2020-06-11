@@ -4038,6 +4038,7 @@ function createLabels(preference) {
   var label = document.createElement('label');
   label.id = preference.id;
   preference.state ? label.className = 'on' : label.className = 'off';
+  label.setAttribute('represents', preference.id);
   var input = document.createElement('input');
   input.type = 'checkbox';
   input.checked = preference.state;
