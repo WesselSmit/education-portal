@@ -304,6 +304,8 @@ As soon as our dashboard was finished, the next user test showed that the user w
 ### Drag and Drop  
 For the drag and drop, Sjors first made this in Vanilla Javascript. However, the interaction was not very nice and it was difficult to switch from a two-column grid to a one-column grid. Then he researched other possibilities to achieve the same. After doing some research on `Sortable.js` he started working on this.
 
+![drag_and_drop_example](https://user-images.githubusercontent.com/45365598/84365503-d9dee700-abd1-11ea-8830-7b889528e4e4.gif)
+
 **Sortable.js**  
 Sortable is a Javascript library for reordering drag and drop lists. This way it is way easier to drag and drop in multiple layouts and it is also compatible with the mobile Javascript events. With Sortable you get a lot of options to manipulate and change the interaction with your drag and drop list. 
 Curious about the full documentation or about my implementation of Sortable.js? View that code or read the [full documentations](https://github.com/SortableJS/Sortable)
