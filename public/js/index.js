@@ -4711,7 +4711,7 @@ function init() {
       value: function updateSchedule(data) {
         var schedulesContainer = this.shadowRoot.getElementById('schedules-container');
         schedulesContainer.textContent = "";
-        this.navigator.querySelector('span').textContent = "".concat(data.day, "-").concat(data.month, "-").concat(data.year);
+        this.navigator.querySelector('span').textContent = "".concat(data.day, " - ").concat(data.month, " - ").concat(data.year);
         data.schedules.forEach(function (schedule) {
           var classRoom = schedule._embedded ? schedule._embedded.rooms[0].abbreviation : "Geen lokaal";
           var div = document.createElement('div');

@@ -195,6 +195,8 @@ customElements.define('DOM-name', Name)
 
 ### The Announcement Web component 
 
+![image](https://user-images.githubusercontent.com/45405413/84373633-24199580-abdd-11ea-8368-ac92a9379410.png)
+
 Before we create our web component we already have the 'component' working, we always first make the HTML, CSS & JS for a widget. This is what gets rendered initially on a page visit. With JS we replace the widget with our web component. This way we can enhance the widget with JS, the component has extra features but if JS doesn't work we always have the fallback of our static EJS template widget.
 
 1. Creating the template (markup + styles)
@@ -239,6 +241,8 @@ p {
 A custom element is a JS class that extends the HTMLElement property, you must extend a HTMLElement class to inherit the methods which allow you to manipulate it in JS (such as: innerHTML, classList etc.).
 To be able to use the web component in our HTML/DOM we need to register it in the `customElements` list. When you define your custom element you have to choose a name for it. All custom element names must contain a `-`, this indicates to the browser the element is a custom element.
 
+<details><summary>Example: Defining Custom Element</summary>
+
 ```js
  class announcementList extends HTMLElement {
         constructor() {
@@ -250,10 +254,110 @@ To be able to use the web component in our HTML/DOM we need to register it in th
 ```
 
 </details>
-<!-- TODO -->
-My custom element is defined as the `announcements-widget`
 
-3. 
+My custom element is defined as the `announcements-widget` element, after defining the element you can append it to the DOM. Appending your custom element will execute the associated class. The class contains a `constructor()` method, this method only gets executed once when the class is initialized. 
+
+3. Initializing the web component
+Whenever the class is executed the constructor is called first, in the constructor you must call `super()` to inherit the methods/properties of the class you're extending. The constructor is only executed once making it the perfect place to fetch data, dynamically create content and add eventListeners.
+
+<details><summary>Example: Initializing the web component</summary>
+
+```js
+constructor() {
+    super() //Inherit all HTMLElement properties of extended class
+
+    this.attachShadow({ mode: 'open' }) //Attach shadowDOM to custom element
+    this.shadowRoot.appendChild(template.content.cloneNode(true)) //Insert template content in custome element
+
+    this.getData() //Fetch data
+        .then(json => {
+            const [announcements, categories] = json
+
+            //invoke methods
+            this.createLegenda(categories)
+            announcements.splice(5, announcements.length)
+            this.appendAnnouncements(announcements)
+        })
+
+    //Store elements in variables
+    this.announcementContainer = this.shadowRoot.querySelector('.announcements-container')
+    this.announcementLegend = this.shadowRoot.querySelector('#announcement-legend')
+}
+```
+
+</details>
+
+
+In the announcements web component I first attach a shadowDOM and insert the template content in the custom element. The second task is to fetch the data, it's best practice with web components to do this in the constructor, this way you can store the fetched data as a property in the class, this prevents fetching the same data multiple times!
+
+Lastly I store some references to elements, these are used later in the methods and will make the code more easily readable.
+
+4. Dynamically creating content
+In the constructor we invoke methods, methods are basically functions nested in the class. The first method creates the legend for the categories in the data, the second method creates announcement cards which link to detail pages. Constructors are nested on the same level as the `constructor()`, the `constructor()` is actually a good default method which is necessary for the class to exist.
+
+<details><summary>Example: Dynamically Creating Content</summary>
+
+**Legend**
+
+```js
+createLegenda(categories) {
+    categories.forEach(cat => {
+        //For each category a <p> is created, the category is inserted as textContent and class; CSS manages the color coding (based on class)
+        this.announcementLegend.insertAdjacentHTML('beforeend', `<p class="${cat}">${cat}</p>`)
+    })
+}
+```
+
+**Announcements**
+
+```js
+//This monstrosity creates the announcement card, it's stored in a <a> to link to a detail page
+appendAnnouncements(announcements) {
+    announcements.forEach(announcement => {
+        this.announcementContainer.insertAdjacentHTML('beforeend', `
+        <a href="/announcements/${announcement.newsItemId}" target="_self" uid="${announcement.newsItemId}">
+            <div class="announcement ${announcement.tags[0]}" id="${announcement.newsItemId}">
+                <p>${announcement.title}</p>
+                <p>${announcement.publishDate} - ${announcement.tags[0]}</p>
+            </div>
+        </a>`)
+    })
+}
+```
+
+</details>
+
+5. Now that we have the content ready we still need to make sure the web component interactions work. The web component at the moment has one enhancement/interaction; it keeps track of the announcements you've read (in localStorage). Whenever the user has visited a detail page the `uid` of the announcement is stored in localStorage. In the component it reflects if a announcement is read by the user or not.
+
+![image](https://user-images.githubusercontent.com/45405413/84373633-24199580-abdd-11ea-8368-ac92a9379410.png)
+
+>read announcements have a lighter font-style than unread announcements
+
+To know when someone visits a page we need to watch for the click event on the announcement cards, we can do this by adding a addEventListener to the announcement cards. This is done in the `appendAnnouncements` method where the cards are created. Whenever the user clicks a announcement the `store` method is invoked. 
+
+<details><summary>Example: Keeping track of Read History</summary>
+
+**Handle click event** | Whenever the user clicks a announcement (and thus visits the page) we want to store the `uid` property of the announcement.
+
+```js
+appendAnnouncements(announcements) {
+    const link = this.announcementContainer.querySelector('a')
+    link.addEventListener('click', () => this.store(link))
+}
+```
+
+**Store method** | stores the passed announcement in the localStorage readHistory property.
+
+```js
+store(announcement) {
+    this.readHistory.push(announcement.getAttribute('uid'))
+    utils.setLocalStorage('read-history', this.readHistory)
+}
+```
+
+</details>
+
+When the component is initialized the localStorage readHistory is evaluated and all read announcements get a class which give the title a heavier font style.
 
 <hr>
 

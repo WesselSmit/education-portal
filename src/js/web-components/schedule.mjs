@@ -127,7 +127,7 @@ function init() {
             const schedulesContainer = this.shadowRoot.getElementById('schedules-container')
             schedulesContainer.textContent = ""
 
-            this.navigator.querySelector('span').textContent = `${data.day}-${data.month}-${data.year}`
+            this.navigator.querySelector('span').textContent = `${data.day} - ${data.month} - ${data.year}`
 
             data.schedules.forEach(schedule => {
                 const classRoom = schedule._embedded ? schedule._embedded.rooms[0].abbreviation : "Geen lokaal"
