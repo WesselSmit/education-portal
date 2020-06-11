@@ -3728,6 +3728,8 @@ var unreadAnnouncements = _interopRequireWildcard(require("./modules/unreadAnnou
 
 var notify = _interopRequireWildcard(require("./modules/notify.mjs"));
 
+var _dragAndDrop = _interopRequireDefault(require("./modules/drag-and-drop.mjs"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -3737,7 +3739,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var page = document.querySelector('main').id.toLowerCase(); //init web components
 
 if (page === 'dashboard') {
-  utils.appendWidgets(utils.getPreferences());
+  utils.appendWidgets(utils.getPreferences()); // dragAndDrop()
 }
 
 if (page === 'account') {
@@ -3829,7 +3831,32 @@ if (utils.exists([announcementMenuItem]) && utils.storageAvailable('localStorage
   unreadAnnouncements.indicate(announcementMenuItem);
 }
 
-},{"./modules/notify.mjs":3,"./modules/search.mjs":4,"./modules/togglePreferences.mjs":5,"./modules/unreadAnnouncements.mjs":6,"./modules/utils.mjs":7,"./web-components/announcements.mjs":8,"./web-components/urgent-announcement.mjs":12}],3:[function(require,module,exports){
+},{"./modules/drag-and-drop.mjs":3,"./modules/notify.mjs":4,"./modules/search.mjs":5,"./modules/togglePreferences.mjs":6,"./modules/unreadAnnouncements.mjs":7,"./modules/utils.mjs":8,"./web-components/announcements.mjs":9,"./web-components/urgent-announcement.mjs":13}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = dragAndDrop;
+
+var _sortablejs = _interopRequireDefault(require("sortablejs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function dragAndDrop() {
+  var widgetContainer = document.querySelector('#widget-container');
+  new _sortablejs["default"](widgetContainer, {
+    animation: 150,
+    onStart: function onStart(event) {
+      return console.log(event);
+    },
+    onEnd: function onEnd(event) {
+      return console.log(event);
+    }
+  });
+}
+
+},{"sortablejs":1}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3862,7 +3889,7 @@ function displayNotification(title, body) {
   }
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3895,7 +3922,7 @@ function reset(e) {
   focus(e);
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4047,7 +4074,7 @@ function createLabels(preference) {
   return label;
 }
 
-},{"../modules/utils.mjs":7,"sortablejs":1}],6:[function(require,module,exports){
+},{"../modules/utils.mjs":8,"sortablejs":1}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4119,7 +4146,7 @@ function getUnread() {
   return numberUnread;
 }
 
-},{"../modules/utils.mjs":7}],7:[function(require,module,exports){
+},{"../modules/utils.mjs":8}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4212,7 +4239,7 @@ function appendWidgets(widget) {
   }); // Adding widgets
 
   widget.forEach(function (item) {
-    document.querySelector('main section').append(document.createElement(item));
+    document.querySelector('#widget-container').append(document.createElement(item));
 
     if (item === 'study-progress') {
       (0, _studyProgress.WC_studyprogress)();
@@ -4257,7 +4284,7 @@ function checker(preferences) {
   return widgetElements;
 }
 
-},{"../web-components/announcements.mjs":8,"../web-components/course-overview.mjs":9,"../web-components/schedule.mjs":10,"../web-components/study-progress.mjs":11}],8:[function(require,module,exports){
+},{"../web-components/announcements.mjs":9,"../web-components/course-overview.mjs":10,"../web-components/schedule.mjs":11,"../web-components/study-progress.mjs":12}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4417,7 +4444,7 @@ function init(pageName) {
   window.customElements.define('announcements-widget', announcementList);
 }
 
-},{"../modules/utils.mjs":7}],9:[function(require,module,exports){
+},{"../modules/utils.mjs":8}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4587,7 +4614,7 @@ function init() {
   customElements.define('course-overview', CourseOverview);
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4720,7 +4747,7 @@ function init() {
   window.customElements.define('schedule-widget', schedule);
 }
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4870,7 +4897,7 @@ function init() {
   customElements.define('study-progress', StudyProgress);
 }
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4912,7 +4939,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 var template = document.createElement('template');
 exports.WC_urgentAnnouncement = template;
-template.innerHTML = "\n<style>\n    div {\n        display: grid;\n        grid-template-columns: 1fr 50px;\n        grid-template-rows: 50px;\n        align-items: center;\n        background-color: #ECE7FA;\n    }\n    div.hide {\n        position: absolute;\n        left: -9999px;\n    }\n    p {\n        margin: 0;\n        padding-left: 30px;\n        color: black;\n        justify-self: start;\n    }\n    @media only screen and (max-width: 425px) {\n        p {\n            padding-left: 10px;\n        }\n    }\n    img {\n        padding-right: 20px;\n        grid-column: 2 / 3;\n        justify-self: end;\n        cursor: pointer;\n    }\n</style>\n<div class=\"hide\">\n    <p></p>\n    <img src=\"./media/icons/notification-exit.svg\" alt=\"hide notification\">\n</div>";
+template.innerHTML = "\n<style>\n    div {\n        display: flex;\n        align-items: center;\n        justify-content: space-between;\n        padding: 16px;\n        background-color: #ECE7FA;\n        position: sticky;\n        top: 0;\n    }\n\n    div.hide {\n        position: absolute;\n        left: -9999px;\n    }\n\n    p {\n        margin: 0;\n        padding-right: 10px;\n    }\n\n    @media only screen and (max-width: 768px) {\n        div {\n            top: 60px;\n        }\n    }\n\n    img {\n        cursor: pointer;\n    }\n</style>\n<div class=\"hide\">\n    <p></p>\n    <img src=\"./media/icons/notification-exit.svg\" alt=\"hide notification\">\n</div>";
 
 var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
   _inherits(urgentAnnouncement, _HTMLElement);
@@ -5003,6 +5030,6 @@ var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
 
 window.customElements.define('urgent-announcement', urgentAnnouncement);
 
-},{"../modules/utils.mjs":7}]},{},[2])
+},{"../modules/utils.mjs":8}]},{},[2])
 
 //# sourceMappingURL=index.js.map

@@ -6,31 +6,32 @@ const template = document.createElement('template')
 template.innerHTML = `
 <style>
     div {
-        display: grid;
-        grid-template-columns: 1fr 50px;
-        grid-template-rows: 50px;
+        display: flex;
         align-items: center;
+        justify-content: space-between;
+        padding: 16px;
         background-color: #ECE7FA;
+        position: sticky;
+        top: 0;
     }
+
     div.hide {
         position: absolute;
         left: -9999px;
     }
+
     p {
         margin: 0;
-        padding-left: 30px;
-        color: black;
-        justify-self: start;
+        padding-right: 10px;
     }
-    @media only screen and (max-width: 425px) {
-        p {
-            padding-left: 10px;
+
+    @media only screen and (max-width: 768px) {
+        div {
+            top: 60px;
         }
     }
+
     img {
-        padding-right: 20px;
-        grid-column: 2 / 3;
-        justify-self: end;
         cursor: pointer;
     }
 </style>
