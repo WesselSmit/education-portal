@@ -668,16 +668,16 @@ There is also a custom made reset icon in the search bar whenever it has focus a
 
 <hr>
 
-# Which we didn't implement in the end
+# Feedback we didn't implement
 During the user tests, code- and designreviews we received a lot of feedback. In the end, we didn't include all feedback in our application, namely:
 * Using Nuxt to handle the routing  
-Ultimately, we didn't do this because after doing some research, we chose to continue doing our routing with Express, but to invest more time in clear modules.
+Ultimately, we didn't do this because after doing some research, we chose to continue doing our routing with Express, but to invest more time in clear modules. We also thought Nuxt and Vue would be a bit much considering the size of our app and how static most pages are. We simply felt we wouldn't need most features of Vue.
 * Using Vue to render components on the dashboard  
-In the end we didn't do this because Wessel had researched Javascript Vanilla Web Components for his Weekly Nerd. We preferred to work on this so that it would remain a Vanilla Javascript project and we would like to dive into this.
+In the end we didn't do this because Wessel had researched Javascript Vanilla Web Components for his Weekly Nerd. We preferred to work on this so that it would remain a Vanilla Javascript project and we would like to dive into this. We also thought Vue to be overkill for this project, although a good practice and skill to be exercising but overkill for our mostly static app.
 
 <hr>
 
-# Feedback we did implemented
+# Feedback we implemented
 This feedback comes from: students, teachers and stakeholders.
 
 * Personalize the dashboard
