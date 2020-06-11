@@ -663,4 +663,24 @@ To make it possible for the student to see which courses he/she has had this blo
 <hr>
 
 # Which we didn't add in the end
-...
+During the user tests, code- and designreviews we received a lot of feedback. In the end, we didn't include all feedback in our application, namely:
+* Using Nuxt to handle the routing  
+Ultimately, we didn't do this because after doing some research, we chose to continue doing our routing with Express, but to invest more time in clear modules.
+* Using Vue to render components on the dashboard  
+In the end we didn't do this because Wessel had researched Javascript Vanilla Web Components for his Weekly Nerd. We preferred to work on this so that it would remain a Vanilla Javascript project and we would like to dive into this.
+
+<hr>
+
+# Feedback we did implement 
+* Personalize the dashboard
+* Categorizing announcements
+* Legend for announcements in the dashboard
+* Indicating the number of unread announcements
+* Indicate which announcements have been read or not
+* Possibility to go to the explanation page or to the external website
+* Using Web components
+* Use EJS as fallback for the Web components
+* Use Socket.io to display urgent announcements
+* Implementing a Service Worker
+* Send users to an offline page when they have no internet
+* Send a push notification for urgent announcements.
