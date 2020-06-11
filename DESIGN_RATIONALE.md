@@ -408,7 +408,7 @@ As soon as our dashboard was finished, the next user test showed that the user w
 ### Drag and Drop  
 For the drag and drop, Sjors first made this in Vanilla Javascript. However, the interaction was not very nice and it was difficult to switch from a two-column grid to a one-column grid. Then he researched other possibilities to achieve the same. After doing some research on `Sortable.js` he started working on this.
 
-![drag_and_drop_example](https://user-images.githubusercontent.com/45365598/84365503-d9dee700-abd1-11ea-8830-7b889528e4e4.gif)
+<img alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84365503-d9dee700-abd1-11ea-8830-7b889528e4e4.gif">
 
 **Sortable.js**  
 Sortable is a Javascript library for reordering drag and drop lists. This way it is way easier to drag and drop in multiple layouts and it is also compatible with the mobile Javascript events. With Sortable you get a lot of options to manipulate and change the interaction with your drag and drop list. 
@@ -445,9 +445,9 @@ function removeStylingFromDropZones(event) {
 
 
 ### LocalStorage 
-Om het mogelijk te maken dat de instellingen van de gebruiker worden opgeslagen heeft Sjors gebruik gemaakt van LocalStorage. Zodra de gebruiker op de pagina komt wordt er in de LocalStorage gekeken of er al instellingen zijn van de gebruiker. Zo niet, wordt er een object aangemaakt in de LocalStorage. Als dit wel het geval is worden de blokken in de goede volgorde en op de juiste state gezet. Elke keer wanneer de gebruiker de volgorde of de state aanpast wordt het LocalStorage object aangepast.
+In order to allow the usersettings to be saved, Sjors used LocalStorage. As soon as the user comes to the page, the LocalStorage checks whether the usersettings have already been set. If not, an object is created in the LocalStorage. If this is the case, the blocks are placed in the correct order and at the correct state. The LocalStorage object is modified every time the user changes the order or state.
 
-De belangrijkste functie is het update/setten van het preferences object. Hierdoor blijft de LocalStorage up to date en kan de gebruiker zijn dashboard personaliseren. Deze functie kun je hieronder bekijken.
+The main function is to update/set the preferences object. This keeps the LocalStorage up to date and allows the user to personalize his dashboard. You can view this function below.
 
 <details><summary>setPreferencesObject() - Code</summary>
 
@@ -478,22 +478,30 @@ function setPreferencesObject() {
 <hr>
 
 ## Enhancements
+We have implemented enhancements to make our application as accessible as possible for all users and to make users who use a more modern browser happier. So we did this by using: web components and rendered pages from the server.
+
+If for some reason the user can't use Javascript on our website, the web components which contain the most important information of the website can't be rendered and the user can't use the website properly. This covers the server that still loads static components. However, the user cannot interact with these static components, such as: filtering messages or viewing the schedule for the coming week.
+
+Below is a list of our enhancements and how they have been applied in our website.
 
 ### Announcements
 **Filter**  
 ...
 
-**Read history**  
-...
+**Read History and Unread Messages Indicator**  
+During the user test it became clear that students wanted clarity about which announcements have or haven't been read. To make this clear, the students themselves indicated that they liked the pattern of email, in which the unread messages are bolder than the unread messages. We have also applied this in our website.
 
-**Unread messages indicator**  
-...
+In the LocalStorage, an object is kept of read messages. When the user has read an announcement, it is added to the object. The menu shows an indicator of the amount of unread messages. In this way, the user can keep track of whether he has read all messages and whether new messages have been added. This indicator is also determined by the object in the LocalStorage.
 
 ### Timetable
-...
+Because students should be able to view not only today's schedule, but also the schedule for the rest of the week, we have enhanced this component. In this way the student can navigate between the days with the arrows. When the student doesn't have Javascript available the server will render the schedule of today.
+
+<img width="500" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84381343-30a3eb00-abe9-11ea-8c03-1dcaeeda5618.gif">
 
 ### Course overview
-...
+To make it possible for the student to see which courses he/she has had this block or past blocks, it is also necessary to enhance this component. To keep the interactions recognizable, we have also added the arrows here to navigate to a previous or next block. When the student doesn't have Javascript available the server will render the courses of your current block.
+
+<img width="500" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84381339-2c77cd80-abe9-11ea-858e-aac51e1b5460.gif">
 
 ### Searchbar
 ...
