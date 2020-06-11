@@ -60,7 +60,7 @@ export function appendWidgets(widget) {
 
     // Adding widgets
     widget.forEach(item => {
-        document.querySelector('main section').append(document.createElement(item))
+        document.querySelector('#widget-container').append(document.createElement(item))
 
         if (item === 'study-progress') {
             WC_studyprogress()

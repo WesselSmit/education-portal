@@ -4212,7 +4212,7 @@ function appendWidgets(widget) {
   }); // Adding widgets
 
   widget.forEach(function (item) {
-    document.querySelector('main section').append(document.createElement(item));
+    document.querySelector('#widget-container').append(document.createElement(item));
 
     if (item === 'study-progress') {
       (0, _studyProgress.WC_studyprogress)();
@@ -4912,7 +4912,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 var template = document.createElement('template');
 exports.WC_urgentAnnouncement = template;
-template.innerHTML = "\n<style>\n    div {\n        display: grid;\n        grid-template-columns: 1fr 50px;\n        grid-template-rows: 50px;\n        align-items: center;\n        background-color: #ECE7FA;\n    }\n    div.hide {\n        position: absolute;\n        left: -9999px;\n    }\n    p {\n        margin: 0;\n        padding-left: 30px;\n        color: black;\n        justify-self: start;\n    }\n    @media only screen and (max-width: 425px) {\n        p {\n            padding-left: 10px;\n        }\n    }\n    img {\n        padding-right: 20px;\n        grid-column: 2 / 3;\n        justify-self: end;\n        cursor: pointer;\n    }\n</style>\n<div class=\"hide\">\n    <p></p>\n    <img src=\"./media/icons/notification-exit.svg\" alt=\"hide notification\">\n</div>";
+template.innerHTML = "\n<style>\n    div {\n        display: flex;\n        align-items: center;\n        justify-content: space-between;\n        padding: 16px;\n        background-color: #ECE7FA;\n        position: sticky;\n        top: 0;\n    }\n\n    div.hide {\n        position: absolute;\n        left: -9999px;\n    }\n\n    p {\n        margin: 0;\n        padding-right: 10px;\n    }\n\n    @media only screen and (max-width: 768px) {\n        div {\n            top: 60px;\n        }\n    }\n\n    img {\n        cursor: pointer;\n    }\n</style>\n<div class=\"hide\">\n    <p></p>\n    <img src=\"./media/icons/notification-exit.svg\" alt=\"hide notification\">\n</div>";
 
 var urgentAnnouncement = /*#__PURE__*/function (_HTMLElement) {
   _inherits(urgentAnnouncement, _HTMLElement);
