@@ -6,7 +6,7 @@
 
     &::before {
         @include font-Bold;
-        content: "Externe Websites";
+        content: "Resources";
         text-transform: uppercase;
         color: $main-white;
         padding-left: 20px;

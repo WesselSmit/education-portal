@@ -27,28 +27,50 @@
             text-align: center;
             border: 2px solid $main-purple;
 
+            &[represents]::before {
+                content: "";
+                display: block;
+                background-repeat: no-repeat;
+                background-position: center;
+                padding: 20px;
+            }
+
+            &[represents="0"]::before {
+                background-image: url(../media/icons/announcements-purple.svg);
+            }
+
+            &[represents="1"]::before {
+                background-image: url(../media/icons/progress-purple.svg);
+            }
+
+            &[represents="2"]::before {
+                background-image: url(../media/icons/course-purple.svg);
+            }
+
+            &[represents="3"]::before {
+                background-image: url(../media/icons/timetable-purple.svg);
+            }
+
             &:hover {
                 cursor: move;
             }
 
             // Drag and drop styling
-            &.sortable-chosen,
-            .dragged {
-                box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.35);
-            }
-
-            &.sortable-drag {
+            &.sortable-chosen.sortable-ghost {
                 opacity: 0;
             }
 
-            &.sortable-fallback {
-                display: none;
+            &.sortable-drag,
+            .sortable-ghost {
+                box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.35);
+                background-color: $main-white;
+                opacity: 1;
             }
 
             &.optional-location {
                 border: 2px solid $main-purple;
                 border-style: dashed;
-                transform: scale(.9);
+                transform: scale(0.95);
             }
 
             &.off {
@@ -56,7 +78,12 @@
             }
 
             &.off.optional-location {
-                border-style: dashed;
+                transform: scale(1);
+            }
+
+            img {
+                display: block;
+                margin: 0 auto 5px auto;
             }
 
             input {
