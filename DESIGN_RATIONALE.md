@@ -668,7 +668,7 @@ There is also a custom made reset icon in the search bar whenever it has focus a
 
 <hr>
 
-# Which we didn't add in the end
+# Which we didn't implement in the end
 During the user tests, code- and designreviews we received a lot of feedback. In the end, we didn't include all feedback in our application, namely:
 * Using Nuxt to handle the routing  
 Ultimately, we didn't do this because after doing some research, we chose to continue doing our routing with Express, but to invest more time in clear modules.
@@ -677,7 +677,9 @@ In the end we didn't do this because Wessel had researched Javascript Vanilla We
 
 <hr>
 
-# Feedback we did implement 
+# Feedback we did implemented
+This feedback comes from: students, teachers and stakeholders.
+
 * Personalize the dashboard
 * Categorizing announcements
 * Legend for announcements in the dashboard
