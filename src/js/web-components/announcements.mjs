@@ -112,6 +112,15 @@ p {
         height: 12px;
         margin-left: 20px;
 }
+
+#announcement-legend:empty {
+    height: 150px;
+    width: 100%;
+    background: url(media/icons/loader.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 200px 200px;
+}
 </style>
 <div id="announcements"></div>
 <h2>Mededelingen</h2>
@@ -139,6 +148,7 @@ function init(pageName) {
                     }
                     this.appendAnnouncements(announcements)
                 })
+
             this.announcementContainer = this.shadowRoot.querySelector('.announcements-container')
             this.announcementLegend = this.shadowRoot.querySelector('#announcement-legend')
 

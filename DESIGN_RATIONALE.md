@@ -665,6 +665,10 @@ There is also a custom made reset icon in the search bar whenever it has focus a
 
 # What we would like to add
 ...
+<!-- 
+HTML Entities eruithalen
+Verbeteren van het toevoegen van de Web components en het verwijderen van de EJS template
+ -->
 
 <hr>
 

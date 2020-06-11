@@ -78,6 +78,15 @@ a img {
     height: 12px;
     margin-left: 20px;
 }
+
+#schedule-container:empty {
+    height: 150px;
+    width: 100%;
+    background: url(media/icons/loader.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 200px 200px;
+}
 </style>
 <h2>Dagrooster</h2>
 <div class="navigator">
