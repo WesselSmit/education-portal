@@ -159,11 +159,29 @@ function init(pageName) {
                         announcements.splice(5, announcements.length)
                     }
                     this.appendAnnouncements(announcements)
+
+                    if (this.filteredCats && this.filteredCats.length > 0) {
+                        this.filteredCats.forEach(cat => {
+                            this.shadowRoot.querySelectorAll(`.announcements-container > a`).forEach(item => {
+                                if (item.classList.contains(cat)) {
+                                    item.classList.add('hide')
+                                }
+                            })
+
+
+                            const catFilter = this.shadowRoot.querySelector(`.${cat}`)
+                            catFilter.classList.add('unactive')
+                        })
+                    }
                 })
 
             this.announcementContainer = this.shadowRoot.querySelector('.announcements-container')
             this.announcementLegend = this.shadowRoot.querySelector('#announcement-legend')
-            this.filteredCats = []
+
+            if (utils.storageAvailable('localStorage')) {
+                const storedFilters = utils.getLocalStorage('filters')
+                this.filteredCats = storedFilters ? storedFilters : []
+            }
 
             if (pageName === 'announcements-overview') {
                 this.shadowRoot.querySelector('.allAnnouncements').classList.add('hide')
@@ -226,6 +244,8 @@ function init(pageName) {
             }
 
             el.classList.toggle('unactive')
+
+            utils.setLocalStorage('filters', this.filteredCats)
 
             const announcementsInFilteredCat = []
             this.filteredCats.forEach(cat => {

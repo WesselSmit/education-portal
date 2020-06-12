@@ -4378,11 +4378,29 @@ function init(pageName) {
         }
 
         _this.appendAnnouncements(announcements);
+
+        if (_this.filteredCats && _this.filteredCats.length > 0) {
+          _this.filteredCats.forEach(function (cat) {
+            _this.shadowRoot.querySelectorAll(".announcements-container > a").forEach(function (item) {
+              if (item.classList.contains(cat)) {
+                item.classList.add('hide');
+              }
+            });
+
+            var catFilter = _this.shadowRoot.querySelector(".".concat(cat));
+
+            catFilter.classList.add('unactive');
+          });
+        }
       });
 
       _this.announcementContainer = _this.shadowRoot.querySelector('.announcements-container');
       _this.announcementLegend = _this.shadowRoot.querySelector('#announcement-legend');
-      _this.filteredCats = [];
+
+      if (utils.storageAvailable('localStorage')) {
+        var storedFilters = utils.getLocalStorage('filters');
+        _this.filteredCats = storedFilters ? storedFilters : [];
+      }
 
       if (pageName === 'announcements-overview') {
         _this.shadowRoot.querySelector('.allAnnouncements').classList.add('hide');
@@ -4462,6 +4480,7 @@ function init(pageName) {
         }
 
         el.classList.toggle('unactive');
+        utils.setLocalStorage('filters', this.filteredCats);
         var announcementsInFilteredCat = [];
         this.filteredCats.forEach(function (cat) {
           var announcementsInCat = _this4.shadowRoot.querySelectorAll(".announcements-container > a.".concat(cat));
