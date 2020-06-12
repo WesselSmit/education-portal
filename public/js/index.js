@@ -3718,7 +3718,9 @@ var utils = _interopRequireWildcard(require("./modules/utils.mjs"));
 
 var search = _interopRequireWildcard(require("./modules/search.mjs"));
 
-var _togglePreferences = _interopRequireDefault(require("./modules/togglePreferences.mjs"));
+var _dashboard = _interopRequireDefault(require("./modules/preferences/dashboard.mjs"));
+
+var _menu = _interopRequireDefault(require("./modules/preferences/menu.mjs"));
 
 var _urgentAnnouncement = _interopRequireDefault(require("./web-components/urgent-announcement.mjs"));
 
@@ -3728,22 +3730,26 @@ var unreadAnnouncements = _interopRequireWildcard(require("./modules/unreadAnnou
 
 var notify = _interopRequireWildcard(require("./modules/notify.mjs"));
 
-var _dragAndDrop = _interopRequireDefault(require("./modules/drag-and-drop.mjs"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var page = document.querySelector('main').id.toLowerCase(); //init web components
+var page = document.querySelector('main').id.toLowerCase();
+
+if (page !== 'account') {
+  (0, utils.cloneAndUpdateMenu)();
+} //init web components
+
 
 if (page === 'dashboard') {
-  utils.appendWidgets(utils.getPreferences()); // dragAndDrop()
+  utils.appendWidgets(utils.getPreferences());
 }
 
 if (page === 'account') {
-  (0, _togglePreferences["default"])();
+  (0, _dashboard["default"])();
+  (0, _menu["default"])();
 }
 
 if (page === 'announcements-overview') {
@@ -3831,32 +3837,7 @@ if (utils.exists([announcementMenuItem]) && utils.storageAvailable('localStorage
   unreadAnnouncements.indicate(announcementMenuItem);
 }
 
-},{"./modules/drag-and-drop.mjs":3,"./modules/notify.mjs":4,"./modules/search.mjs":5,"./modules/togglePreferences.mjs":6,"./modules/unreadAnnouncements.mjs":7,"./modules/utils.mjs":8,"./web-components/announcements.mjs":9,"./web-components/urgent-announcement.mjs":13}],3:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = dragAndDrop;
-
-var _sortablejs = _interopRequireDefault(require("sortablejs"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function dragAndDrop() {
-  var widgetContainer = document.querySelector('#widget-container');
-  new _sortablejs["default"](widgetContainer, {
-    animation: 150,
-    onStart: function onStart(event) {
-      return console.log(event);
-    },
-    onEnd: function onEnd(event) {
-      return console.log(event);
-    }
-  });
-}
-
-},{"sortablejs":1}],4:[function(require,module,exports){
+},{"./modules/notify.mjs":3,"./modules/preferences/dashboard.mjs":4,"./modules/preferences/menu.mjs":5,"./modules/search.mjs":6,"./modules/unreadAnnouncements.mjs":7,"./modules/utils.mjs":8,"./web-components/announcements.mjs":9,"./web-components/urgent-announcement.mjs":13}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3889,48 +3870,15 @@ function displayNotification(title, body) {
   }
 }
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.focus = focus;
-exports.showReset = showReset;
-exports.hideReset = hideReset;
-exports.reset = reset;
-var searchBar = document.getElementById('search-bar');
-var searchResetIcon = document.getElementById('search-reset');
+exports["default"] = setDashboardPreferences;
 
-function focus(e) {
-  e.preventDefault();
-  searchBar.focus();
-}
-
-function showReset() {
-  searchResetIcon.classList.remove('hide');
-}
-
-function hideReset() {
-  if (searchBar.value === "") {
-    searchResetIcon.classList.add('hide');
-  }
-}
-
-function reset(e) {
-  searchBar.value = "";
-  focus(e);
-}
-
-},{}],6:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = togglePreferences;
-
-var _utils = require("../modules/utils.mjs");
+var _utils = require("../../modules/utils.mjs");
 
 var _sortablejs = _interopRequireDefault(require("sortablejs"));
 
@@ -3948,9 +3896,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-var container = document.querySelector('#account form');
+var container = document.querySelector('#preferences');
 
-function togglePreferences() {
+function setDashboardPreferences() {
   container.classList.remove('disabled');
   getPreferences();
   stateHandler();
@@ -4003,7 +3951,7 @@ function removeStylingFromDropZones(event) {
 
 
 function setPreferencesObject() {
-  var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
+  var inputs = _toConsumableArray(document.querySelectorAll('#preferences label'));
 
   var preferences = [];
   inputs.forEach(function (label) {
@@ -4024,7 +3972,7 @@ function setPreferencesObject() {
 }
 
 function stateHandler() {
-  var inputs = _toConsumableArray(document.querySelectorAll('#account form label'));
+  var inputs = _toConsumableArray(document.querySelectorAll('#preferences label'));
 
   var data = (0, _utils.getLocalStorage)('preferences');
   inputs.forEach(function (label) {
@@ -4074,7 +4022,180 @@ function createLabels(preference) {
   return label;
 }
 
-},{"../modules/utils.mjs":8,"sortablejs":1}],7:[function(require,module,exports){
+},{"../../modules/utils.mjs":8,"sortablejs":1}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = setMenuPreferences;
+
+var _utils = require("../../modules/utils.mjs");
+
+var _sortablejs = _interopRequireDefault(require("sortablejs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var container = document.querySelector('#menu-preferences');
+var secondaryLinks = document.querySelector('#menu-secondary-links');
+
+var clonedLinks = _toConsumableArray(secondaryLinks.cloneNode(true).children);
+
+function setMenuPreferences() {
+  container.classList.remove('disabled');
+  checker() ? renderPreferences() : setPreferences();
+  stateHandler();
+  dragHandler();
+  cloneAndUpdateMenu();
+}
+
+function cloneAndUpdateMenu() {
+  var selectedMenuItems = []; // LocalStorage
+
+  var preferences = (0, _utils.getLocalStorage)('menu-preferences');
+  preferences.forEach(function (preference) {
+    clonedLinks.forEach(function (link) {
+      var name = link.querySelector('p:first-of-type').textContent;
+
+      if (preference.name === name && preference.state) {
+        selectedMenuItems.push(link);
+      }
+    });
+  });
+  secondaryLinks.textContent = '';
+  selectedMenuItems.forEach(function (item) {
+    return secondaryLinks.append(item);
+  });
+}
+
+function stateHandler() {
+  var labels = _toConsumableArray(container.querySelectorAll('label'));
+
+  labels.forEach(function (label) {
+    label.addEventListener('change', function () {
+      setPreferences();
+
+      if (label.className === 'off') {
+        container.append(label);
+        setPreferences();
+      }
+
+      if (label.className === 'on') {
+        var firstOff = document.querySelector('#menu-preferences .off');
+        container.insertBefore(label, firstOff);
+      }
+    });
+  });
+}
+
+function renderPreferences() {
+  var elements = createElements();
+  appendElements(elements);
+}
+
+function appendElements(elements) {
+  container.textContent = '';
+  elements.forEach(function (element) {
+    return container.append(element);
+  });
+}
+
+function createElements() {
+  var preferences = (0, _utils.getLocalStorage)('menu-preferences');
+  var elements = [];
+  preferences.forEach(function (preference) {
+    var label = document.createElement('label');
+    preference.state ? label.className = 'on' : label.className = 'off';
+    var input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = preference.state;
+    label.append(input);
+    label.append(preference.name);
+    elements.push(label);
+  });
+  return elements;
+}
+
+function checker() {
+  return (0, _utils.storageAvailable)('localStorage') && (0, _utils.getLocalStorage)('menu-preferences') ? true : false;
+}
+
+function dragHandler() {
+  new _sortablejs["default"](container, {
+    animation: 150,
+    onStart: function onStart(event) {
+      return console.log(event);
+    },
+    onEnd: function onEnd() {
+      return setPreferences();
+    }
+  });
+}
+
+function setPreferences() {
+  var labels = _toConsumableArray(container.querySelectorAll('label'));
+
+  var preferences = [];
+  labels.forEach(function (label) {
+    var text = label.textContent;
+    var state = label.querySelector('input').checked;
+    state ? label.className = 'on' : label.className = 'off';
+    var object = {
+      name: text,
+      state: state
+    };
+    preferences.push(object);
+  });
+  (0, _utils.setLocalStorage)('menu-preferences', preferences);
+  cloneAndUpdateMenu();
+}
+
+},{"../../modules/utils.mjs":8,"sortablejs":1}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.focus = focus;
+exports.showReset = showReset;
+exports.hideReset = hideReset;
+exports.reset = reset;
+var searchBar = document.getElementById('search-bar');
+var searchResetIcon = document.getElementById('search-reset');
+
+function focus(e) {
+  e.preventDefault();
+  searchBar.focus();
+}
+
+function showReset() {
+  searchResetIcon.classList.remove('hide');
+}
+
+function hideReset() {
+  if (searchBar.value === "") {
+    searchResetIcon.classList.add('hide');
+  }
+}
+
+function reset(e) {
+  searchBar.value = "";
+  focus(e);
+}
+
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4159,6 +4280,7 @@ exports.storageAvailable = storageAvailable;
 exports.getPreferences = getPreferences;
 exports.appendWidgets = appendWidgets;
 exports.checker = checker;
+exports.cloneAndUpdateMenu = cloneAndUpdateMenu;
 
 var _studyProgress = require("../web-components/study-progress.mjs");
 
@@ -4167,6 +4289,12 @@ var _schedule = require("../web-components/schedule.mjs");
 var _courseOverview = require("../web-components/course-overview.mjs");
 
 var _announcements = require("../web-components/announcements.mjs");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest(); }
 
@@ -4282,6 +4410,29 @@ function checker(preferences) {
     }
   });
   return widgetElements;
+}
+
+function cloneAndUpdateMenu() {
+  var secondaryLinks = document.querySelector('#menu-secondary-links');
+
+  var clonedLinks = _toConsumableArray(secondaryLinks.cloneNode(true).children);
+
+  var selectedMenuItems = []; // LocalStorage
+
+  var preferences = getLocalStorage('menu-preferences');
+  preferences.forEach(function (preference) {
+    clonedLinks.forEach(function (link) {
+      var name = link.querySelector('p:first-of-type').textContent;
+
+      if (preference.name === name && preference.state) {
+        selectedMenuItems.push(link);
+      }
+    });
+  });
+  secondaryLinks.textContent = '';
+  selectedMenuItems.forEach(function (item) {
+    return secondaryLinks.append(item);
+  });
 }
 
 },{"../web-components/announcements.mjs":9,"../web-components/course-overview.mjs":10,"../web-components/schedule.mjs":11,"../web-components/study-progress.mjs":12}],9:[function(require,module,exports){
