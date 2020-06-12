@@ -29,7 +29,8 @@ p {
 	color: black;
 	font-size: 14px;
 	display: inline-block;
-	margin-right: 20px;
+    margin-right: 20px;
+    cursor: pointer;
 }
 .announcements-container #announcement-legend p:last-of-type {
 	margin-right: 0;
@@ -40,7 +41,8 @@ p {
 	margin-bottom: -2px;
 	width: 15px;
 	margin-right: 10px;
-	display: inline-block;
+    display: inline-block;
+    cursor: pointer;
 }
 .announcements-container #announcement-legend p.Opleiding::before {
 	background-color: #DC143C;
@@ -54,11 +56,21 @@ p {
 .announcements-container #announcement-legend p.Medezeggenschap::before {
 	background-color: #14DC69;
 }
+.announcements-container #announcement-legend p.unactive {
+    color: #666666;
+}
+.announcements-container #announcement-legend p.unactive::before {
+    background-color: #DDDDDD;
+}
 .announcements-container a {
 	margin: 0 0 15px 0;
 	display: block;
 	color: black;
 	text-decoration: none;
+}
+.announcements-container a.hide {
+    position: absolute;
+    left: -9999px;
 }
 .announcements-container a:hover {
 	background-color: #F2F2F2;
@@ -151,9 +163,9 @@ function init(pageName) {
 
             this.announcementContainer = this.shadowRoot.querySelector('.announcements-container')
             this.announcementLegend = this.shadowRoot.querySelector('#announcement-legend')
+            this.filteredCats = []
 
             if (pageName === 'announcements-overview') {
-                console.log('ja')
                 this.shadowRoot.querySelector('.allAnnouncements').classList.add('hide')
             }
         }
@@ -170,13 +182,16 @@ function init(pageName) {
         createLegenda(categories) {
             categories.forEach(cat => {
                 this.announcementLegend.insertAdjacentHTML('beforeend', `<p class="${cat}">${cat}</p>`)
+
+                const legendItem = this.shadowRoot.querySelector(`.${cat}`)
+                legendItem.addEventListener('click', e => this.filter(e.target))
             })
         }
 
         appendAnnouncements(announcements) {
             announcements.forEach(announcement => {
                 this.announcementContainer.insertAdjacentHTML('beforeend', `
-				<a href="/announcements/${announcement.newsItemId}" target="_self" uid="${announcement.newsItemId}">
+				<a href="/announcements/${announcement.newsItemId}" target="_self" uid="${announcement.newsItemId}" class="${announcement.tags[0]}">
 					<div class="announcement ${announcement.tags[0]}" id="${announcement.newsItemId}">
                 		<p>${announcement.title}</p>
                 		<p>${announcement.publishDate} - ${announcement.tags[0]}</p>
@@ -200,6 +215,31 @@ function init(pageName) {
         store(announcement) {
             this.readHistory.push(announcement.getAttribute('uid'))
             utils.setLocalStorage('read-history', this.readHistory)
+        }
+
+        filter(el) {
+            if (!this.filteredCats.includes(el.textContent)) {
+                this.filteredCats.push(el.textContent)
+            } else {
+                const index = this.filteredCats.indexOf(el.textContent)
+                this.filteredCats.splice(index, 1)
+            }
+
+            el.classList.toggle('unactive')
+
+            const announcementsInFilteredCat = []
+            this.filteredCats.forEach(cat => {
+                const announcementsInCat = this.shadowRoot.querySelectorAll(`.announcements-container > a.${cat}`)
+                announcementsInFilteredCat.push(...announcementsInCat)
+            })
+
+            this.shadowRoot.querySelectorAll(`.announcements-container > a`).forEach(item => {
+                if (announcementsInFilteredCat.includes(item)) {
+                    item.classList.add('hide')
+                } else {
+                    item.classList.remove('hide')
+                }
+            })
         }
     }
 

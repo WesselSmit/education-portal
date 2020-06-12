@@ -4298,6 +4298,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -4337,7 +4345,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var template = document.createElement('template');
-template.innerHTML = "\n<style>\n*:focus {\n    outline: none;\n}\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n.announcements-container #announcement-legend {\n\tmargin-bottom: 20px;\n}\n.announcements-container #announcement-legend p {\n\tcolor: black;\n\tfont-size: 14px;\n\tdisplay: inline-block;\n\tmargin-right: 20px;\n}\n.announcements-container #announcement-legend p:last-of-type {\n\tmargin-right: 0;\n}\n.announcements-container #announcement-legend p::before {\n\tcontent: \"\";\n\theight: 15px;\n\tmargin-bottom: -2px;\n\twidth: 15px;\n\tmargin-right: 10px;\n\tdisplay: inline-block;\n}\n.announcements-container #announcement-legend p.Opleiding::before {\n\tbackground-color: #DC143C;\n}\n.announcements-container #announcement-legend p.Faculteit::before {\n\tbackground-color: #DCB614;\n}\n.announcements-container #announcement-legend p.HvA::before {\n\tbackground-color: #149EDC;\n}\n.announcements-container #announcement-legend p.Medezeggenschap::before {\n\tbackground-color: #14DC69;\n}\n.announcements-container a {\n\tmargin: 0 0 15px 0;\n\tdisplay: block;\n\tcolor: black;\n\ttext-decoration: none;\n}\n.announcements-container a:hover {\n\tbackground-color: #F2F2F2;\n}\n.announcements-container a:focus {\n\tbackground-color: #DDDDDD;\n}\n.announcements-container .announcement {\n\tmargin: 0;\n\tpadding: 5px 0 5px 10px;\n\tborder-left: 5px solid;\n}\n.announcements-container .announcement.Opleiding {\n\tborder-color: #DC143C;\n}\n.announcements-container .announcement.Faculteit {\n\tborder-color: #DCB614;\n}\n.announcements-container .announcement.HvA {\n\tborder-color: #149EDC;\n}\n.announcements-container .announcement.Medezeggenschap {\n\tborder-color: #14DC69;\n}\n.announcements-container .announcement p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .read .announcement p:first-of-type {\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .announcement p:last-of-type {\n\tcolor: #666666;\n\tfont-size: 14px;\n}    \n.allAnnouncements {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n\talign-items: center;\n}\n.allAnnouncements:hover,\n.allAnnouncements:focus {\n        text-decoration: underline;\n}\n.allAnnouncements.hide {\n    position: absolute;\n    left: -9999px;\n}\n.allAnnouncements img {\n        height: 12px;\n        margin-left: 20px;\n}\n\n#announcement-legend:empty {\n    height: 150px;\n    width: 100%;\n    background: url(media/icons/loader.gif);\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: 200px 200px;\n}\n</style>\n<div id=\"announcements\"></div>\n<h2>Mededelingen</h2>\n<div class=\"announcements-container\">\n\t<div id=\"announcement-legend\"></div>\n</div>\n<a class=\"allAnnouncements\" href=\"/announcements/\" target=\"_self\">Alle mededelingen\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>";
+template.innerHTML = "\n<style>\n*:focus {\n    outline: none;\n}\nh2 {\n    font-size: 24px;\n    color: #25167A;\n    text-transform: uppercase;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #DDDDDD;\n    margin: 0 0 15px 0;\n\tfont-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n\tfont-weight: lighter;\n\tline-height: 1.1;\n}\np {\n\tmargin: 0;\n}\n.announcements-container #announcement-legend {\n\tmargin-bottom: 20px;\n}\n.announcements-container #announcement-legend p {\n\tcolor: black;\n\tfont-size: 14px;\n\tdisplay: inline-block;\n    margin-right: 20px;\n    cursor: pointer;\n}\n.announcements-container #announcement-legend p:last-of-type {\n\tmargin-right: 0;\n}\n.announcements-container #announcement-legend p::before {\n\tcontent: \"\";\n\theight: 15px;\n\tmargin-bottom: -2px;\n\twidth: 15px;\n\tmargin-right: 10px;\n    display: inline-block;\n    cursor: pointer;\n}\n.announcements-container #announcement-legend p.Opleiding::before {\n\tbackground-color: #DC143C;\n}\n.announcements-container #announcement-legend p.Faculteit::before {\n\tbackground-color: #DCB614;\n}\n.announcements-container #announcement-legend p.HvA::before {\n\tbackground-color: #149EDC;\n}\n.announcements-container #announcement-legend p.Medezeggenschap::before {\n\tbackground-color: #14DC69;\n}\n.announcements-container #announcement-legend p.unactive {\n    color: #666666;\n}\n.announcements-container #announcement-legend p.unactive::before {\n    background-color: #DDDDDD;\n}\n.announcements-container a {\n\tmargin: 0 0 15px 0;\n\tdisplay: block;\n\tcolor: black;\n\ttext-decoration: none;\n}\n.announcements-container a.hide {\n    position: absolute;\n    left: -9999px;\n}\n.announcements-container a:hover {\n\tbackground-color: #F2F2F2;\n}\n.announcements-container a:focus {\n\tbackground-color: #DDDDDD;\n}\n.announcements-container .announcement {\n\tmargin: 0;\n\tpadding: 5px 0 5px 10px;\n\tborder-left: 5px solid;\n}\n.announcements-container .announcement.Opleiding {\n\tborder-color: #DC143C;\n}\n.announcements-container .announcement.Faculteit {\n\tborder-color: #DCB614;\n}\n.announcements-container .announcement.HvA {\n\tborder-color: #149EDC;\n}\n.announcements-container .announcement.Medezeggenschap {\n\tborder-color: #14DC69;\n}\n.announcements-container .announcement p:first-of-type {\n    font-family: \"OpenSans-Bold\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .read .announcement p:first-of-type {\n    font-family: \"OpenSans-Regular\", sans-serif, Arial, Helvetica;\n}\n.announcements-container .announcement p:last-of-type {\n\tcolor: #666666;\n\tfont-size: 14px;\n}    \n.allAnnouncements {\n    margin-top: 30px;\n    text-decoration: none;\n    color: #25167A;\n    display: flex;\n\talign-items: center;\n}\n.allAnnouncements:hover,\n.allAnnouncements:focus {\n        text-decoration: underline;\n}\n.allAnnouncements.hide {\n    position: absolute;\n    left: -9999px;\n}\n.allAnnouncements img {\n        height: 12px;\n        margin-left: 20px;\n}\n\n#announcement-legend:empty {\n    height: 150px;\n    width: 100%;\n    background: url(media/icons/loader.gif);\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: 200px 200px;\n}\n</style>\n<div id=\"announcements\"></div>\n<h2>Mededelingen</h2>\n<div class=\"announcements-container\">\n\t<div id=\"announcement-legend\"></div>\n</div>\n<a class=\"allAnnouncements\" href=\"/announcements/\" target=\"_self\">Alle mededelingen\n\t<img src=\"/media/icons/arrow-right.svg\" alt=\"arrow-right\"></img>\n</a>";
 
 function init(pageName) {
   var announcementList = /*#__PURE__*/function (_HTMLElement) {
@@ -4374,10 +4382,9 @@ function init(pageName) {
 
       _this.announcementContainer = _this.shadowRoot.querySelector('.announcements-container');
       _this.announcementLegend = _this.shadowRoot.querySelector('#announcement-legend');
+      _this.filteredCats = [];
 
       if (pageName === 'announcements-overview') {
-        console.log('ja');
-
         _this.shadowRoot.querySelector('.allAnnouncements').classList.add('hide');
       }
 
@@ -4404,6 +4411,12 @@ function init(pageName) {
 
         categories.forEach(function (cat) {
           _this2.announcementLegend.insertAdjacentHTML('beforeend', "<p class=\"".concat(cat, "\">").concat(cat, "</p>"));
+
+          var legendItem = _this2.shadowRoot.querySelector(".".concat(cat));
+
+          legendItem.addEventListener('click', function (e) {
+            return _this2.filter(e.target);
+          });
         });
       }
     }, {
@@ -4412,7 +4425,7 @@ function init(pageName) {
         var _this3 = this;
 
         announcements.forEach(function (announcement) {
-          _this3.announcementContainer.insertAdjacentHTML('beforeend', "\n\t\t\t\t<a href=\"/announcements/".concat(announcement.newsItemId, "\" target=\"_self\" uid=\"").concat(announcement.newsItemId, "\">\n\t\t\t\t\t<div class=\"announcement ").concat(announcement.tags[0], "\" id=\"").concat(announcement.newsItemId, "\">\n                \t\t<p>").concat(announcement.title, "</p>\n                \t\t<p>").concat(announcement.publishDate, " - ").concat(announcement.tags[0], "</p>\n           \t\t\t</div>\n\t\t\t\t</a>"));
+          _this3.announcementContainer.insertAdjacentHTML('beforeend', "\n\t\t\t\t<a href=\"/announcements/".concat(announcement.newsItemId, "\" target=\"_self\" uid=\"").concat(announcement.newsItemId, "\" class=\"").concat(announcement.tags[0], "\">\n\t\t\t\t\t<div class=\"announcement ").concat(announcement.tags[0], "\" id=\"").concat(announcement.newsItemId, "\">\n                \t\t<p>").concat(announcement.title, "</p>\n                \t\t<p>").concat(announcement.publishDate, " - ").concat(announcement.tags[0], "</p>\n           \t\t\t</div>\n\t\t\t\t</a>"));
 
           if (utils.storageAvailable('localStorage')) {
             var storedHistory = utils.getLocalStorage('read-history');
@@ -4435,6 +4448,33 @@ function init(pageName) {
       value: function store(announcement) {
         this.readHistory.push(announcement.getAttribute('uid'));
         utils.setLocalStorage('read-history', this.readHistory);
+      }
+    }, {
+      key: "filter",
+      value: function filter(el) {
+        var _this4 = this;
+
+        if (!this.filteredCats.includes(el.textContent)) {
+          this.filteredCats.push(el.textContent);
+        } else {
+          var index = this.filteredCats.indexOf(el.textContent);
+          this.filteredCats.splice(index, 1);
+        }
+
+        el.classList.toggle('unactive');
+        var announcementsInFilteredCat = [];
+        this.filteredCats.forEach(function (cat) {
+          var announcementsInCat = _this4.shadowRoot.querySelectorAll(".announcements-container > a.".concat(cat));
+
+          announcementsInFilteredCat.push.apply(announcementsInFilteredCat, _toConsumableArray(announcementsInCat));
+        });
+        this.shadowRoot.querySelectorAll(".announcements-container > a").forEach(function (item) {
+          if (announcementsInFilteredCat.includes(item)) {
+            item.classList.add('hide');
+          } else {
+            item.classList.remove('hide');
+          }
+        });
       }
     }]);
 
