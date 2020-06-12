@@ -100,3 +100,24 @@ export function checker(preferences) {
 
     return widgetElements
 }
+
+export function cloneAndUpdateMenu() {
+    const secondaryLinks = document.querySelector('#menu-secondary-links')
+    const clonedLinks = [...secondaryLinks.cloneNode(true).children]
+    let selectedMenuItems = []
+
+    // LocalStorage
+    const preferences = getLocalStorage('menu-preferences')
+    preferences.forEach(preference => {
+        clonedLinks.forEach(link => {
+            const name = link.querySelector('p:first-of-type').textContent
+
+            if (preference.name === name && preference.state) {
+                selectedMenuItems.push(link)
+            }
+        })
+    })
+
+    secondaryLinks.textContent = ''
+    selectedMenuItems.forEach(item => secondaryLinks.append(item))
+}

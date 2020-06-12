@@ -1,8 +1,8 @@
-import { setLocalStorage, getLocalStorage } from '../modules/utils.mjs'
+import { setLocalStorage, getLocalStorage } from '../../modules/utils.mjs'
 import Sortable from 'sortablejs'
 
-const container = document.querySelector('#account form')
-export default function togglePreferences() {
+const container = document.querySelector('#preferences')
+export default function setDashboardPreferences() {
     container.classList.remove('disabled')
 
     getPreferences()
@@ -46,7 +46,7 @@ function removeStylingFromDropZones(event) {
 
 // Saving and changing preferences 
 function setPreferencesObject() {
-    const inputs = [...document.querySelectorAll('#account form label')]
+    const inputs = [...document.querySelectorAll('#preferences label')]
     let preferences = []
 
     inputs.forEach(label => {
@@ -65,7 +65,7 @@ function setPreferencesObject() {
 }
 
 function stateHandler() {
-    const inputs = [...document.querySelectorAll('#account form label')]
+    const inputs = [...document.querySelectorAll('#preferences label')]
     const data = getLocalStorage('preferences')
 
     inputs.forEach(label => {

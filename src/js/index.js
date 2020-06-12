@@ -1,23 +1,27 @@
 import * as utils from './modules/utils.mjs'
 import * as search from './modules/search.mjs'
-import togglePreferences from './modules/togglePreferences.mjs'
+import setDashboardPreferences from './modules/preferences/dashboard.mjs'
+import { cloneAndUpdateMenu } from './modules/utils.mjs'
+import setMenuPreferences from './modules/preferences/menu.mjs'
 import urgentAnnouncement from './web-components/urgent-announcement.mjs'
 import { WC_announcementsWidget } from './web-components/announcements.mjs'
 import * as unreadAnnouncements from './modules/unreadAnnouncements.mjs'
 import * as notify from './modules/notify.mjs'
-import dragAndDrop from './modules/drag-and-drop.mjs'
 
 const page = document.querySelector('main').id.toLowerCase()
+
+if (page !== 'account') {
+    cloneAndUpdateMenu()
+}
 
 //init web components
 if (page === 'dashboard') {
     utils.appendWidgets(utils.getPreferences())
-
-    // dragAndDrop()
 }
 
 if (page === 'account') {
-    togglePreferences()
+    setDashboardPreferences()
+    setMenuPreferences()
 }
 
 if (page === 'announcements-overview') {

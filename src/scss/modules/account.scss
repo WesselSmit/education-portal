@@ -11,15 +11,22 @@
     }
 
     form {
-        margin: 20px 0;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 10px;
 
         &.disabled label {
             pointer-events: none;
             opacity: 0.7;
         }
+
+        input {
+            display: none;
+        }
+    }
+
+    #preferences {
+        margin: 20px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
 
         label {
             padding: 8vh 0px;
@@ -85,10 +92,6 @@
                 display: block;
                 margin: 0 auto 5px auto;
             }
-
-            input {
-                display: none;
-            }
         }
 
         @media only screen and (max-width: 1300px) {
@@ -97,6 +100,42 @@
 
             label:not(:last-of-type) {
                 margin-bottom: 10px;
+            }
+        }
+    }
+
+    #main-container {
+        margin: 20px 0px;
+
+        p {
+            @include font-Bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+    }
+
+    #menu-preferences {
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+
+        label {
+            padding: 4px 0px;
+            text-transform: uppercase;
+
+            &.on {}
+
+            &.off {
+                opacity: .5;
+            }
+
+            &.sortable-chosen.sortable-ghost {
+                opacity: 0;
+            }
+
+            &.sortable-drag,
+            .sortable-ghost {
+                opacity: 1;
             }
         }
     }
