@@ -27,6 +27,10 @@
             text-align: center;
             border: 2px solid $main-purple;
 
+            &.off {
+                color: $light-grey;
+            }
+
             &[represents]::before {
                 content: "";
                 display: block;
@@ -39,16 +43,32 @@
                 background-image: url(../media/icons/announcements-purple.svg);
             }
 
+            &[represents="0"].off::before {
+                background-image: url(../media/icons/announcements-grey.svg);
+            }
+
             &[represents="1"]::before {
                 background-image: url(../media/icons/progress-purple.svg);
+            }
+
+            &[represents="1"].off::before {
+                background-image: url(../media/icons/progress-grey.svg);
             }
 
             &[represents="2"]::before {
                 background-image: url(../media/icons/course-purple.svg);
             }
 
+            &[represents="2"].off::before {
+                background-image: url(../media/icons/course-grey.svg);
+            }
+
             &[represents="3"]::before {
                 background-image: url(../media/icons/timetable-purple.svg);
+            }
+
+            &[represents="3"].off::before {
+                background-image: url(../media/icons/timetable-grey.svg);
             }
 
             &:hover {
