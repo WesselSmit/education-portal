@@ -107,7 +107,7 @@ export function cloneAndUpdateMenu() {
     let selectedMenuItems = []
 
     // LocalStorage
-    const preferences = getLocalStorage('menu-preferences')
+    const preferences = getLocalStorage('menu-preferences') ? getLocalStorage('menu-preferences') : []
     preferences.forEach(preference => {
         clonedLinks.forEach(link => {
             const name = link.querySelector('p:first-of-type').textContent
