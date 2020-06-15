@@ -4442,19 +4442,22 @@ function cloneAndUpdateMenu() {
   var selectedMenuItems = []; // LocalStorage
 
   var preferences = getLocalStorage('menu-preferences');
-  preferences.forEach(function (preference) {
-    clonedLinks.forEach(function (link) {
-      var name = link.querySelector('p:first-of-type').textContent;
 
-      if (preference.name === name && preference.state) {
-        selectedMenuItems.push(link);
-      }
+  if (preferences) {
+    preferences.forEach(function (preference) {
+      clonedLinks.forEach(function (link) {
+        var name = link.querySelector('p:first-of-type').textContent;
+
+        if (preference.name === name && preference.state) {
+          selectedMenuItems.push(link);
+        }
+      });
     });
-  });
-  secondaryLinks.textContent = '';
-  selectedMenuItems.forEach(function (item) {
-    return secondaryLinks.append(item);
-  });
+    secondaryLinks.textContent = '';
+    selectedMenuItems.forEach(function (item) {
+      return secondaryLinks.append(item);
+    });
+  }
 }
 
 },{"../web-components/announcements.mjs":9,"../web-components/course-overview.mjs":10,"../web-components/schedule.mjs":11,"../web-components/study-progress.mjs":12}],9:[function(require,module,exports){

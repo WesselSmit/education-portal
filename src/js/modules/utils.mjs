@@ -107,17 +107,19 @@ export function cloneAndUpdateMenu() {
     let selectedMenuItems = []
 
     // LocalStorage
-    const preferences = getLocalStorage('menu-preferences') ? getLocalStorage('menu-preferences') : []
-    preferences.forEach(preference => {
-        clonedLinks.forEach(link => {
-            const name = link.querySelector('p:first-of-type').textContent
+    const preferences = getLocalStorage('menu-preferences')
+    if (preferences) {
+        preferences.forEach(preference => {
+            clonedLinks.forEach(link => {
+                const name = link.querySelector('p:first-of-type').textContent
 
-            if (preference.name === name && preference.state) {
-                selectedMenuItems.push(link)
-            }
+                if (preference.name === name && preference.state) {
+                    selectedMenuItems.push(link)
+                }
+            })
         })
-    })
 
-    secondaryLinks.textContent = ''
-    selectedMenuItems.forEach(item => secondaryLinks.append(item))
+        secondaryLinks.textContent = ''
+        selectedMenuItems.forEach(item => secondaryLinks.append(item))
+    }
 }
