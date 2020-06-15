@@ -1,4 +1,6 @@
 #fallback {
+    @include text;
+
     @media only screen and (min-width: $max-tablet-width) {
         @include hide;
     }
@@ -27,6 +29,43 @@
 
         #information-link {
             @include more-information;
+        }
+
+        #social-media {
+            display: flex;
+            justify-content: flex-start;
+            padding: 5px 20px;
+
+            a {
+                display: block;
+                height: 30px;
+                width: 30px;
+                position: relative;
+                padding: 10px 10px;
+                border: 1px solid $main-purple;
+                border-radius: 999px;
+
+                &:hover {
+                    background-color: $light-purple;
+                    border-color: $light-purple;
+                }
+
+                &:focus {
+                    background-color: $extra-light-purple;
+                    border-color: $extra-light-purple;
+                }
+
+                img {
+                    height: 22px;
+                    display: block;
+                    margin: auto;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-right: -50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
         }
     }
 }
