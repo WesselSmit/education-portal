@@ -71,10 +71,14 @@ function createElements() {
         const label = document.createElement('label')
         preference.state ? label.className = 'on' : label.className = 'off'
 
+        const handle = document.createElement('span')
+        handle.classList.add('handle')
+
         const input = document.createElement('input')
         input.type = 'checkbox'
         input.checked = preference.state
 
+        label.append(handle)
         label.append(input)
         label.append(preference.name)
 
@@ -92,9 +96,22 @@ function checker() {
 function dragHandler() {
     new Sortable(container, {
         animation: 150,
-        onStart: (event) => console.log(event),
-        onEnd: () => setPreferences()
+        onStart: (event) => addStylingToDropZones(event),
+        onEnd: () => {
+            removeStylingFromDropZones(event)
+            setPreferences()
+        }
     })
+}
+
+function addStylingToDropZones(event) {
+    const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
+    dragLocations.forEach(location => location.classList.add('optional-location'))
+}
+
+function removeStylingFromDropZones(event) {
+    const dragLocations = [...event.target.querySelectorAll('label:not(.sortable-chosen)')]
+    dragLocations.forEach(location => location.classList.remove('optional-location'))
 }
 
 function setPreferences() {

@@ -4120,9 +4120,12 @@ function createElements() {
   preferences.forEach(function (preference) {
     var label = document.createElement('label');
     preference.state ? label.className = 'on' : label.className = 'off';
+    var handle = document.createElement('span');
+    handle.classList.add('handle');
     var input = document.createElement('input');
     input.type = 'checkbox';
     input.checked = preference.state;
+    label.append(handle);
     label.append(input);
     label.append(preference.name);
     elements.push(label);
@@ -4138,11 +4141,28 @@ function dragHandler() {
   new _sortablejs["default"](container, {
     animation: 150,
     onStart: function onStart(event) {
-      return console.log(event);
+      return addStylingToDropZones(event);
     },
     onEnd: function onEnd() {
-      return setPreferences();
+      removeStylingFromDropZones(event);
+      setPreferences();
     }
+  });
+}
+
+function addStylingToDropZones(event) {
+  var dragLocations = _toConsumableArray(event.target.querySelectorAll('label:not(.sortable-chosen)'));
+
+  dragLocations.forEach(function (location) {
+    return location.classList.add('optional-location');
+  });
+}
+
+function removeStylingFromDropZones(event) {
+  var dragLocations = _toConsumableArray(event.target.querySelectorAll('label:not(.sortable-chosen)'));
+
+  dragLocations.forEach(function (location) {
+    return location.classList.remove('optional-location');
   });
 }
 
