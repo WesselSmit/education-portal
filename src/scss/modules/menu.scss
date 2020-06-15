@@ -102,6 +102,12 @@
         border: 1px solid transparent;
         border-radius: 999px;
 
+        &:active,
+        &:visited {
+            background-color: $main-white;
+            border-color: $main-white;
+        }
+
         @media only screen and (max-width: $max-tablet-width) {
             @include hide;
         }
@@ -153,10 +159,10 @@
 
             a {
                 display: block;
-                height: 30px;
-                width: 30px;
+                height: 25px;
+                width: 25px;
                 position: relative;
-                padding: 10px 10px;
+                padding: 5px 5px;
                 border: 1px solid $main-purple;
                 border-radius: 999px;
 
@@ -170,8 +176,14 @@
                     border-color: $extra-light-purple;
                 }
 
+                &:active,
+                &:visited {
+                    background-color: $main-purple;
+                    border-color: $main-purple;
+                }
+
                 img {
-                    height: 22px;
+                    height: 18px;
                     display: block;
                     margin: auto;
                     position: absolute;
