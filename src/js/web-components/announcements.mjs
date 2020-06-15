@@ -76,12 +76,20 @@ p {
 	background-color: #F2F2F2;
 }
 .announcements-container a:focus {
-	background-color: #DDDDDD;
+    background-color: #DDDDDD;
+}
+.announcements-container a:focus .read-indicator {
+    left: unset;
+}
+.announcements-container a:focus .read-indicator:hover {
+    background-color: #F2F2F2;
+    border: 1px solid #F2F2F2;
 }
 .announcements-container .announcement {
 	margin: 0;
 	padding: 5px 0 5px 10px;
-	border-left: 5px solid;
+    border-left: 5px solid;
+    position: relative;
 }
 .announcements-container .announcement.Opleiding {
 	border-color: #DC143C;
@@ -105,6 +113,9 @@ p {
 	color: #666666;
 	font-size: 14px;
 }    
+.announcements-container .announcement:hover .read-indicator {
+    left: unset;
+}
 .allAnnouncements {
     margin-top: 30px;
     text-decoration: none;
@@ -132,6 +143,32 @@ p {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 200px 200px;
+}
+.read-indicator {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    padding: 13px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background-image: url(../media/icons/mark-as-read.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: center;
+    position: absolute;
+    left: -9999px;
+}
+.read-indicator:hover {
+    background-color: #DDDDDD;
+    border: 1px solid #DDDDDD;
+}
+.read-indicator:focus {
+    background-color: #F2F2F2;
+    border: 1px solid #F2F2F2;
+}
+.read-indicator.marked {
+    background-image: url(../media/icons/mark-as-unread.svg);
 }
 </style>
 <div id="announcements"></div>
@@ -212,7 +249,8 @@ function init(pageName) {
 				<a href="/announcements/${announcement.newsItemId}" target="_self" uid="${announcement.newsItemId}" class="${announcement.tags[0]}">
 					<div class="announcement ${announcement.tags[0]}" id="${announcement.newsItemId}">
                 		<p>${announcement.title}</p>
-                		<p>${announcement.publishDate} - ${announcement.tags[0]}</p>
+                        <p>${announcement.publishDate} - ${announcement.tags[0]}</p>
+                        <span class="read-indicator"></span>
            			</div>
 				</a>`)
 

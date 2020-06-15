@@ -55,7 +55,6 @@
             color: $main-black;
             text-decoration: none;
 
-
             &:hover {
                 background-color: $main-grey;
             }
@@ -85,7 +84,6 @@
             &.Medezeggenschap {
                 border-color: $code-green;
             }
-
 
             p:first-of-type {
                 @include font-Bold;
