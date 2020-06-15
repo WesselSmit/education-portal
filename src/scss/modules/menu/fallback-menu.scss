@@ -1,0 +1,32 @@
+#fallback {
+    @media only screen and (min-width: $max-tablet-width) {
+        @include hide;
+    }
+
+    background-color: $main-purple;
+
+    #menu-scroll-container {
+        display: flex;
+        flex-direction: column;
+
+        #search-container {
+            @include search;
+
+            fieldset {
+                margin: 0px;
+            }
+        }
+
+        #menu-primary-links {
+            @include primary-links;
+        }
+
+        #menu-secondary-links {
+            @include secondary-links;
+        }
+
+        #information-link {
+            @include more-information;
+        }
+    }
+}

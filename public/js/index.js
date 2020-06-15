@@ -3790,8 +3790,10 @@ var menuIcon = document.getElementById('menu-icon');
 var menu = document.getElementById('menu');
 
 if (utils.exists([menuIcon, menu])) {
-  //toggle menu (on mobile)
-  menuIcon.addEventListener('click', function () {
+  document.querySelector('#fallback').remove(); //toggle menu (on mobile)
+
+  menuIcon.addEventListener('click', function (event) {
+    event.preventDefault();
     menu.classList.toggle('hide');
   });
 } //search 

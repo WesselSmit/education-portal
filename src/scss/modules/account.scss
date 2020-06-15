@@ -10,7 +10,8 @@
         @include h3;
     }
 
-    form {
+    #preferences,
+    #main-container {
 
         &.disabled label {
             pointer-events: none;
@@ -142,8 +143,6 @@
         label {
             padding: 4px 0px;
             text-transform: uppercase;
-
-            &.on {}
 
             &.off {
                 opacity: .5;
