@@ -68,9 +68,12 @@ const menuIcon = document.getElementById('menu-icon')
 const menu = document.getElementById('menu')
 
 if (utils.exists([menuIcon, menu])) {
+    document.querySelector('#fallback').remove()
 
     //toggle menu (on mobile)
-    menuIcon.addEventListener('click', () => {
+    menuIcon.addEventListener('click', event => {
+        event.preventDefault()
+
         menu.classList.toggle('hide')
     })
 }

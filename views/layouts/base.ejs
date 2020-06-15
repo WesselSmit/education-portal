@@ -12,9 +12,12 @@
 
 <body>
 
-    <%- include('../partials/menu/menu') %>
+    <%- include('../partials/menu/menu', {id: 'menu', name: 'hide'}) %>
 
     <%- body %>
+    <%- include('../partials/menu/menu', {id: 'fallback', name: ''}) %>
+
+    </main>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/index.js" type="module"></script>
