@@ -125,6 +125,11 @@ p {
     position: absolute;
     left: -9999px;
 }
+.announcements-container.collapsed, 
+.announcements-container.collapsed + a {
+    position: absolute;
+    left: -9999px;
+}
 .allAnnouncements {
     margin-top: 30px;
     text-decoration: none;
@@ -217,6 +222,9 @@ function init(pageName) {
 
             this.announcementContainer = this.shadowRoot.querySelector('.announcements-container')
             this.announcementLegend = this.shadowRoot.querySelector('#announcement-legend')
+
+            const widgetTitle = this.shadowRoot.querySelector('h2')
+            widgetTitle.addEventListener('click', () => this.announcementContainer.classList.toggle('collapsed'))
 
             if (utils.storageAvailable('localStorage')) {
                 const storedFilters = utils.getLocalStorage('filters')

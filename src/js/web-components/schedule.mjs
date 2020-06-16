@@ -87,6 +87,13 @@ a img {
     background-position: center center;
     background-size: 200px 200px;
 }
+
+.navigator.collapsed,
+#schedules-container.collapsed,
+#schedules-container.collapsed + a {
+    position: absolute;
+    left: -9999px;
+}
 </style>
 <h2>Dagrooster</h2>
 <div class="navigator">
@@ -121,6 +128,12 @@ function init() {
             this.arrowNext.addEventListener('click', () => this.navigate('next'))
             this.arrowPrevious.addEventListener('click', () => this.navigate('previous'))
             this.index = 0
+
+            const widgetTitle = this.shadowRoot.querySelector('h2')
+            widgetTitle.addEventListener('click', () => {
+                this.shadowRoot.querySelector('.navigator').classList.toggle('collapsed')
+                this.shadowRoot.getElementById('schedules-container').classList.toggle('collapsed')
+            })
         }
 
         getData() {

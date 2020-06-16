@@ -148,6 +148,14 @@ span.failed {
     background-position: center center;
     background-size: 200px 200px;
 }
+#recent-results.collapsed,
+#recent-results.collapsed + #recent-progress,
+#link-container.collapsed,
+a:first-of-type.collapsed,
+a:first-of-type.collapsed + a {
+    position: absolute;
+    left: -9999px;
+}
 </style>
 
 <h2>Studieresultaten en -voortgang</h2>
@@ -183,6 +191,13 @@ function init() {
 
             this.resultsContainer = this.shadowRoot.querySelector('#recent-results')
             this.progressContainer = this.shadowRoot.querySelector('#recent-progress')
+
+            const widgetTitle = this.shadowRoot.querySelector('h2')
+            widgetTitle.addEventListener('click', () => {
+                this.shadowRoot.getElementById('recent-results').classList.toggle('collapsed')
+                this.shadowRoot.getElementById('link-container').classList.toggle('collapsed')
+                this.shadowRoot.querySelector('a:first-of-type').classList.toggle('collapsed')
+            })
         }
 
         progressComponent(results) {

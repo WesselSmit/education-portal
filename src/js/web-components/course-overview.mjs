@@ -102,6 +102,12 @@ a img {
     background-position: center center;
     background-size: 200px 200px;
 }
+.navigator.collapsed,
+#course-overview.collapsed,
+#course-overview.collapsed + a {
+    position: absolute;
+    left: -9999px;
+}
 </style>
 
 <h2>Vakkenoverzicht</h2>
@@ -122,12 +128,11 @@ a img {
 function init() {
     class CourseOverview extends HTMLElement {
         constructor() {
-            // Setup
             super()
+
             this.attachShadow({ mode: 'open' })
             this.shadowRoot.appendChild(template.content.cloneNode(true))
 
-            // Variables
             this.courseContainer = this.shadowRoot.querySelector('#course-overview')
             this.courseMoment = this.shadowRoot.querySelector('.navigator span')
             this.arrowPrevious = this.shadowRoot.querySelector('.navigator img:first-of-type')
@@ -135,7 +140,6 @@ function init() {
             this.yearIndex = 2
             this.quarterIndex = 3
 
-            // Data
             this.data = this.getData().then(json => {
                 this.navigateHandler()
 
@@ -145,9 +149,14 @@ function init() {
                 this.data = json
             })
 
-            // EventListeners
             this.arrowPrevious.addEventListener('click', () => this.navigate('previous'))
             this.arrowNext.addEventListener('click', () => this.navigate('next'))
+
+            const widgetTitle = this.shadowRoot.querySelector('h2')
+            widgetTitle.addEventListener('click', () => {
+                this.shadowRoot.querySelector('.navigator').classList.toggle('collapsed')
+                this.courseContainer.classList.toggle('collapsed')
+            })
         }
 
         updateNavigator() {
