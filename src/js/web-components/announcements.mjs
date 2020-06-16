@@ -78,8 +78,9 @@ p {
 .announcements-container a:focus {
     background-color: #DDDDDD;
 }
-.announcements-container a:focus .read-indicator {
+.announcements-container a:not(.read):focus .read-indicator {
     left: unset;
+    right: 15px;
 }
 .announcements-container a:focus .read-indicator:hover {
     background-color: #F2F2F2;
@@ -112,9 +113,17 @@ p {
 .announcements-container .announcement p:last-of-type {
 	color: #666666;
 	font-size: 14px;
+}
+.announcements-container .read .announcement {
+    position: static;
 }    
-.announcements-container .announcement:hover .read-indicator {
+.announcements-container a:not(.read) .announcement:hover .read-indicator {
     left: unset;
+    right: 15px;
+}
+.announcements-container .read .announcement .read-indicator {
+    position: absolute;
+    left: -9999px;
 }
 .allAnnouncements {
     margin-top: 30px;
@@ -135,7 +144,6 @@ p {
         height: 12px;
         margin-left: 20px;
 }
-
 #announcement-legend:empty {
     height: 150px;
     width: 100%;
@@ -147,7 +155,7 @@ p {
 .read-indicator {
     position: absolute;
     top: 50%;
-    right: 15px;
+    left: -9999px;
     transform: translateY(-50%);
     padding: 13px;
     border: 1px solid transparent;
@@ -156,8 +164,6 @@ p {
     background-repeat: no-repeat;
     background-size: 20px;
     background-position: center;
-    position: absolute;
-    left: -9999px;
 }
 .read-indicator:hover {
     background-color: #DDDDDD;
@@ -166,9 +172,6 @@ p {
 .read-indicator:focus {
     background-color: #F2F2F2;
     border: 1px solid #F2F2F2;
-}
-.read-indicator.marked {
-    background-image: url(../media/icons/mark-as-unread.svg);
 }
 </style>
 <div id="announcements"></div>
@@ -264,6 +267,9 @@ function init(pageName) {
                         link.classList.add('read')
                     }
                     link.addEventListener('click', () => this.store(link))
+
+                    const readIndicator = link.querySelector('.read-indicator')
+                    readIndicator.addEventListener('click', e => this.mark(e, link))
                 }
             })
         }
@@ -298,6 +304,12 @@ function init(pageName) {
                     item.classList.remove('hide')
                 }
             })
+        }
+
+        mark(e, link) {
+            e.preventDefault()
+            link.classList.add('read')
+            link.blur()
         }
     }
 
