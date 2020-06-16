@@ -1,3 +1,5 @@
+import * as utils from '../modules/utils.mjs'
+
 export { init as WC_courseoverview }
 
 const template = document.createElement('template')
@@ -182,7 +184,22 @@ function init() {
                 } else {
                     widgetTitle.querySelector('span').textContent = "-"
                 }
+
+                if (utils.storageAvailable('localStorage')) {
+                    const collapsed = utils.getLocalStorage('collapsed')
+                    collapsed.courses = !collapsed.courses
+                    utils.setLocalStorage('collapsed', collapsed)
+                }
             })
+
+            if (utils.storageAvailable('localStorage')) {
+                const collapsed = utils.getLocalStorage('collapsed')
+                if (!collapsed.courses) {
+                    this.shadowRoot.querySelector('.navigator').classList.toggle('collapsed')
+                    this.courseContainer.classList.toggle('collapsed')
+                    widgetTitle.querySelector('span').textContent = "+"
+                }
+            }
         }
 
         updateNavigator() {

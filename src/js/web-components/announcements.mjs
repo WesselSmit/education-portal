@@ -251,11 +251,23 @@ function init(pageName) {
                 } else {
                     widgetTitle.querySelector('span').textContent = "-"
                 }
+
+                if (utils.storageAvailable('localStorage')) {
+                    const collapsed = utils.getLocalStorage('collapsed')
+                    collapsed.announcements = !collapsed.announcements
+                    utils.setLocalStorage('collapsed', collapsed)
+                }
             })
 
             if (utils.storageAvailable('localStorage')) {
                 const storedFilters = utils.getLocalStorage('filters')
                 this.filteredCats = storedFilters ? storedFilters : []
+
+                const collapsed = utils.getLocalStorage('collapsed')
+                if (!collapsed.announcements) {
+                    this.announcementContainer.classList.toggle('collapsed')
+                    widgetTitle.querySelector('span').textContent = "+"
+                }
             }
 
             if (pageName === 'announcements-overview') {

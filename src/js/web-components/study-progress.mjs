@@ -1,3 +1,5 @@
+import * as utils from '../modules/utils.mjs'
+
 export { init as WC_studyprogress }
 
 const template = document.createElement('template')
@@ -222,7 +224,23 @@ function init() {
                 } else {
                     widgetTitle.querySelector('span').textContent = "-"
                 }
+
+                if (utils.storageAvailable('localStorage')) {
+                    const collapsed = utils.getLocalStorage('collapsed')
+                    collapsed.progress = !collapsed.progress
+                    utils.setLocalStorage('collapsed', collapsed)
+                }
             })
+
+            if (utils.storageAvailable('localStorage')) {
+                const collapsed = utils.getLocalStorage('collapsed')
+                if (!collapsed.progress) {
+                    this.shadowRoot.getElementById('recent-results').classList.toggle('collapsed')
+                    this.shadowRoot.getElementById('link-container').classList.toggle('collapsed')
+                    this.shadowRoot.querySelector('a:first-of-type').classList.toggle('collapsed')
+                    widgetTitle.querySelector('span').textContent = "+"
+                }
+            }
         }
 
         progressComponent(results) {
@@ -236,9 +254,6 @@ function init() {
                 <span></span>
                 <p>Leerjaar ${result.studyYear}</p>
                 <p>${result.studypoints.achieved}/${result.studypoints.available} studiepunten</p>`
-
-                // InsertAdjacentHtml
-                // Template engine uitzoeken voor Webcomponents
 
                 div.innerHTML = template
                 this.progressContainer.append(div)

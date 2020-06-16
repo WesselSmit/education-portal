@@ -17,6 +17,19 @@ if (page !== 'account') {
 //init web components
 if (page === 'dashboard') {
     utils.appendWidgets(utils.getPreferences())
+
+    if (utils.storageAvailable('localStorage')) {
+        const collapsedLS = utils.getLocalStorage('collapsed')
+        if (!collapsedLS) {
+            const obj = {
+                announcements: true,
+                courses: true,
+                schedule: true,
+                progress: true
+            }
+            utils.setLocalStorage('collapsed', obj)
+        }
+    }
 }
 
 if (page === 'account') {

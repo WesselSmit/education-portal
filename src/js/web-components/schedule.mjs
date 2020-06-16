@@ -1,3 +1,5 @@
+import * as utils from '../modules/utils.mjs'
+
 export { init as WC_scheduleWidget }
 
 const template = document.createElement('template')
@@ -162,7 +164,22 @@ function init() {
                 } else {
                     widgetTitle.querySelector('span').textContent = "-"
                 }
+
+                if (utils.storageAvailable('localStorage')) {
+                    const collapsed = utils.getLocalStorage('collapsed')
+                    collapsed.schedule = !collapsed.schedule
+                    utils.setLocalStorage('collapsed', collapsed)
+                }
             })
+
+            if (utils.storageAvailable('localStorage')) {
+                const collapsed = utils.getLocalStorage('collapsed')
+                if (!collapsed.schedule) {
+                    this.shadowRoot.querySelector('.navigator').classList.toggle('collapsed')
+                    this.shadowRoot.getElementById('schedules-container').classList.toggle('collapsed')
+                    widgetTitle.querySelector('span').textContent = "+"
+                }
+            }
         }
 
         getData() {

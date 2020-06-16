@@ -3745,6 +3745,20 @@ if (page !== 'account') {
 
 if (page === 'dashboard') {
   utils.appendWidgets(utils.getPreferences());
+
+  if (utils.storageAvailable('localStorage')) {
+    var collapsedLS = utils.getLocalStorage('collapsed');
+
+    if (!collapsedLS) {
+      var obj = {
+        announcements: true,
+        courses: true,
+        schedule: true,
+        progress: true
+      };
+      utils.setLocalStorage('collapsed', obj);
+    }
+  }
 }
 
 if (page === 'account') {
@@ -4583,11 +4597,24 @@ function init(pageName) {
         } else {
           widgetTitle.querySelector('span').textContent = "-";
         }
+
+        if (utils.storageAvailable('localStorage')) {
+          var collapsed = utils.getLocalStorage('collapsed');
+          collapsed.announcements = !collapsed.announcements;
+          utils.setLocalStorage('collapsed', collapsed);
+        }
       });
 
       if (utils.storageAvailable('localStorage')) {
         var storedFilters = utils.getLocalStorage('filters');
         _this.filteredCats = storedFilters ? storedFilters : [];
+        var collapsed = utils.getLocalStorage('collapsed');
+
+        if (!collapsed.announcements) {
+          _this.announcementContainer.classList.toggle('collapsed');
+
+          widgetTitle.querySelector('span').textContent = "+";
+        }
       }
 
       if (pageName === 'announcements-overview') {
@@ -4710,6 +4737,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.WC_courseoverview = init;
 
+var utils = _interopRequireDefault(require("../modules/utils.mjs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4796,7 +4827,26 @@ function init() {
         } else {
           widgetTitle.querySelector('span').textContent = "-";
         }
+
+        if (utils.storageAvailable('localStorage')) {
+          var collapsed = utils.getLocalStorage('collapsed');
+          collapsed.courses = !collapsed.courses;
+          utils.setLocalStorage('collapsed', collapsed);
+        }
       });
+
+      if (utils.storageAvailable('localStorage')) {
+        var collapsed = utils.getLocalStorage('collapsed');
+
+        if (!collapsed.courses) {
+          _this.shadowRoot.querySelector('.navigator').classList.toggle('collapsed');
+
+          _this.courseContainer.classList.toggle('collapsed');
+
+          widgetTitle.querySelector('span').textContent = "+";
+        }
+      }
+
       return _this;
     }
 
@@ -4882,13 +4932,17 @@ function init() {
   customElements.define('course-overview', CourseOverview);
 }
 
-},{}],11:[function(require,module,exports){
+},{"../modules/utils.mjs":8}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.WC_scheduleWidget = init;
+
+var utils = _interopRequireDefault(require("../modules/utils.mjs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4971,7 +5025,26 @@ function init() {
         } else {
           widgetTitle.querySelector('span').textContent = "-";
         }
+
+        if (utils.storageAvailable('localStorage')) {
+          var collapsed = utils.getLocalStorage('collapsed');
+          collapsed.schedule = !collapsed.schedule;
+          utils.setLocalStorage('collapsed', collapsed);
+        }
       });
+
+      if (utils.storageAvailable('localStorage')) {
+        var collapsed = utils.getLocalStorage('collapsed');
+
+        if (!collapsed.schedule) {
+          _this.shadowRoot.querySelector('.navigator').classList.toggle('collapsed');
+
+          _this.shadowRoot.getElementById('schedules-container').classList.toggle('collapsed');
+
+          widgetTitle.querySelector('span').textContent = "+";
+        }
+      }
+
       return _this;
     }
 
@@ -5029,13 +5102,17 @@ function init() {
   window.customElements.define('schedule-widget', schedule);
 }
 
-},{}],12:[function(require,module,exports){
+},{"../modules/utils.mjs":8}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.WC_studyprogress = init;
+
+var utils = _interopRequireDefault(require("../modules/utils.mjs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -5126,7 +5203,28 @@ function init() {
         } else {
           widgetTitle.querySelector('span').textContent = "-";
         }
+
+        if (utils.storageAvailable('localStorage')) {
+          var collapsed = utils.getLocalStorage('collapsed');
+          collapsed.progress = !collapsed.progress;
+          utils.setLocalStorage('collapsed', collapsed);
+        }
       });
+
+      if (utils.storageAvailable('localStorage')) {
+        var collapsed = utils.getLocalStorage('collapsed');
+
+        if (!collapsed.progress) {
+          _this.shadowRoot.getElementById('recent-results').classList.toggle('collapsed');
+
+          _this.shadowRoot.getElementById('link-container').classList.toggle('collapsed');
+
+          _this.shadowRoot.querySelector('a:first-of-type').classList.toggle('collapsed');
+
+          widgetTitle.querySelector('span').textContent = "+";
+        }
+      }
+
       return _this;
     }
 
@@ -5142,9 +5240,7 @@ function init() {
             div.classList.add('current-year');
           }
 
-          var template = "\n                <span></span>\n                <p>Leerjaar ".concat(result.studyYear, "</p>\n                <p>").concat(result.studypoints.achieved, "/").concat(result.studypoints.available, " studiepunten</p>"); // InsertAdjacentHtml
-          // Template engine uitzoeken voor Webcomponents
-
+          var template = "\n                <span></span>\n                <p>Leerjaar ".concat(result.studyYear, "</p>\n                <p>").concat(result.studypoints.achieved, "/").concat(result.studypoints.available, " studiepunten</p>");
           div.innerHTML = template;
 
           _this2.progressContainer.append(div);
@@ -5194,7 +5290,7 @@ function init() {
   customElements.define('study-progress', StudyProgress);
 }
 
-},{}],13:[function(require,module,exports){
+},{"../modules/utils.mjs":8}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
