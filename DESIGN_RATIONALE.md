@@ -710,11 +710,15 @@ Our widgets can take up a lot of space on smaller screens. Although we allow use
 <hr>
 
 # What we would like to add
-...
-<!-- 
-HTML Entities eruithalen
-Verbeteren van het toevoegen van de Web components en het verwijderen van de EJS template
- -->
+
+* Announcement detail pages contain ASCII characters which should be removed
+* Search bar has no express route and thus results in a `cannot GET /search`
+* The extra information pages for the resources don't have any content
+* All mentions of: teachers, courses and grades should link to the individual pages
+* Urgent-announcments should also be shown in the announcements widget
+* Make the process of replacing the EJS with web-component widgets more efficient
+
+>See our [github project](https://github.com/WesselSmit/education-portal/projects/1) `if we had more time` column for all items we dropped because of deadlines
 
 <hr>
 
