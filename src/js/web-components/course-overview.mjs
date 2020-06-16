@@ -3,16 +3,32 @@ export { init as WC_courseoverview }
 const template = document.createElement('template')
 template.innerHTML = `
 <style>
-h2 {
+.widget-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 15px;
+}
+
+.widget-title h2 {
     font-size: 24px;
     color: #25167A;
     text-transform: uppercase;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #DDDDDD;
-    margin: 0 0 15px 0;
 	font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
 	font-weight: lighter;
-	line-height: 1.1;
+    line-height: 1.1;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.widget-title span {
+    font-size: 24px;
+    color: #25167A;
+    text-transform: uppercase;
+	font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
+    font-weight: lighter;
+    padding: 10px;
 }
 
 p {
@@ -104,7 +120,10 @@ a img {
 }
 </style>
 
-<h2>Vakkenoverzicht</h2>
+<div class="widget-title">
+    <h2>Vakkenoverzicht</h2>
+    <span>-</span>
+</div>
 
 <div class="navigator">
     <img src="/media/icons/arrow-left.svg" alt="arrow-left"></img>
