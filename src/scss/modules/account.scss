@@ -11,7 +11,7 @@
     }
 
     #preferences,
-    #main-container {
+    #menu-preferences {
 
         &.disabled label {
             pointer-events: none;
@@ -177,6 +177,10 @@
             &.off {
                 border: 2px solid $light-grey;
                 color: $light-grey
+            }
+
+            &:hover {
+                cursor: move;
             }
         }
     }

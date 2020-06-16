@@ -5,6 +5,16 @@
     left: -9999px;
 }
 
+@mixin h1 {
+    @include font-Regular;
+    font-size: 32px;
+    text-transform: uppercase;
+    color: $main-purple;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid $light-grey;
+}
+
 @mixin h2 {
     @include font-Regular;
     font-size: 24px;

@@ -1,0 +1,11 @@
+#offline {
+    @include text;
+
+    h1 {
+        @include h1;
+    }
+
+    a {
+        @include widgetLink;
+    }
+}
