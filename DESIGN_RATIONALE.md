@@ -689,12 +689,14 @@ Students indicated the biggest problem with the announcements in the current por
 
 Categories with associated colors are displayed in a legend which also fiuntions as filter. If users click on a legend item the announcement-list is filtered. All active filters are saved in localStorage meaning the user actions persist across page refreshes etc.
 
-![filtering](https://user-images.githubusercontent.com/45405413/84768719-fc5b7080-afd4-11ea-9d70-e4d3d5130e7e.gif)
+<img width="800" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45405413/84768719-fc5b7080-afd4-11ea-9d70-e4d3d5130e7e.gif">
 
 **Read History and Unread Messages Indicator**  
 During the user test it became clear that students wanted clarity about which announcements have or haven't been read. To make this clear, the students themselves indicated that they liked the pattern of email, in which the unread messages are bolder than the unread messages. We have also applied this in our website.
 
 In the LocalStorage, an object is kept of read messages. When the user has read an announcement, it is added to the object. The menu shows an indicator of the amount of unread messages. In this way, the user can keep track of whether he has read all messages and whether new messages have been added. This indicator is also determined by the object in the LocalStorage.
+
+<img width="800" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84777532-fe77fc00-afe1-11ea-9d11-53719cf801aa.gif">
 
 ### Timetable
 Because students should be able to view not only today's schedule, but also the schedule for the rest of the week, we have enhanced this component. In this way the student can navigate between the days with the arrows. When the student doesn't have Javascript available the server will render the schedule of today.
@@ -718,7 +720,7 @@ There is also a custom made reset icon in the search bar whenever it has focus a
 ### Collapsable widgets
 Our widgets can take up a lot of space on smaller screens. Although we allow users the options to reorder + hide widgets on their dashboard there will always be users who prefer to have all widgets on their dashboard but don't want the widgets to take up too much space. For these users we have the collapse feature; widgets can be collapsed if you click on their title. This means the widgets are still easily accessible but can make scrolling and prioritizing for mobile users much easier.
 
-![collapse](https://user-images.githubusercontent.com/45405413/84770106-46ddec80-afd7-11ea-9cad-757fd6532eb3.gif)
+<img width="800" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45405413/84770106-46ddec80-afd7-11ea-9cad-757fd6532eb3.gif">
 
 ### Menu for mobile and tablet
 Since we use a hamburger menu on the mobile and tablet versions of our app and this requires JavaScript to access the menu, we have had to write a fallback for this to always give the user access to the menu.
@@ -729,7 +731,14 @@ The user clicks on the hamburger menu which contains a `<a>` to link to the menu
 * The student **does** have access to Javascript  
 The `<a>` gets a preventDefault in Javascript so that it no longer goes anywhere in the HTML but simply opens the menu using Javascript.
 
+<img width="250" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84778147-d937bd80-afe2-11ea-9ff6-77edd46fa29e.gif">
+
 <hr>
+
+## Responsiveness
+We expect that this app will also be used on the phone, for example when students come from public transport and quickly want to find the ckassroom where they have their first lesson of the day. We use a two-column layout on desktop that changes to a single-column layout when the screen narrows.
+
+<img width="800" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84777522-fb7d0b80-afe1-11ea-8062-67925c0b0fd5.gif">
 
 # What we would like to add
 
