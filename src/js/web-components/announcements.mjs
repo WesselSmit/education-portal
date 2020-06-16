@@ -15,6 +15,7 @@ template.innerHTML = `
     align-items: center;
     border-bottom: 1px solid #DDDDDD;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .widget-title h2 {
@@ -241,8 +242,16 @@ function init(pageName) {
             this.announcementContainer = this.shadowRoot.querySelector('.announcements-container')
             this.announcementLegend = this.shadowRoot.querySelector('#announcement-legend')
 
-            const widgetTitle = this.shadowRoot.querySelector('h2')
-            widgetTitle.addEventListener('click', () => this.announcementContainer.classList.toggle('collapsed'))
+            const widgetTitle = this.shadowRoot.querySelector('.widget-title')
+            widgetTitle.addEventListener('click', () => {
+                this.announcementContainer.classList.toggle('collapsed')
+
+                if (this.announcementContainer.classList.contains('collapsed')) {
+                    widgetTitle.querySelector('span').textContent = "+"
+                } else {
+                    widgetTitle.querySelector('span').textContent = "-"
+                }
+            })
 
             if (utils.storageAvailable('localStorage')) {
                 const storedFilters = utils.getLocalStorage('filters')

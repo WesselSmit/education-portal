@@ -9,6 +9,7 @@ template.innerHTML = `
     align-items: center;
     border-bottom: 1px solid #DDDDDD;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .widget-title h2 {
@@ -171,10 +172,16 @@ function init() {
             this.arrowPrevious.addEventListener('click', () => this.navigate('previous'))
             this.arrowNext.addEventListener('click', () => this.navigate('next'))
 
-            const widgetTitle = this.shadowRoot.querySelector('h2')
+            const widgetTitle = this.shadowRoot.querySelector('.widget-title')
             widgetTitle.addEventListener('click', () => {
                 this.shadowRoot.querySelector('.navigator').classList.toggle('collapsed')
                 this.courseContainer.classList.toggle('collapsed')
+
+                if (this.shadowRoot.querySelector('.navigator').classList.contains('collapsed')) {
+                    widgetTitle.querySelector('span').textContent = "+"
+                } else {
+                    widgetTitle.querySelector('span').textContent = "-"
+                }
             })
         }
 

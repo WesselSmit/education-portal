@@ -9,6 +9,7 @@ template.innerHTML = `
     align-items: center;
     border-bottom: 1px solid #DDDDDD;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .widget-title h2 {
@@ -196,7 +197,6 @@ a:first-of-type.collapsed + a {
 function init() {
     class StudyProgress extends HTMLElement {
         constructor() {
-            // Setup
             super()
             this.attachShadow({ mode: 'open' })
             this.shadowRoot.appendChild(template.content.cloneNode(true))
@@ -211,11 +211,17 @@ function init() {
             this.resultsContainer = this.shadowRoot.querySelector('#recent-results')
             this.progressContainer = this.shadowRoot.querySelector('#recent-progress')
 
-            const widgetTitle = this.shadowRoot.querySelector('h2')
+            const widgetTitle = this.shadowRoot.querySelector('.widget-title')
             widgetTitle.addEventListener('click', () => {
                 this.shadowRoot.getElementById('recent-results').classList.toggle('collapsed')
                 this.shadowRoot.getElementById('link-container').classList.toggle('collapsed')
                 this.shadowRoot.querySelector('a:first-of-type').classList.toggle('collapsed')
+
+                if (this.shadowRoot.getElementById('recent-results').classList.contains('collapsed')) {
+                    widgetTitle.querySelector('span').textContent = "+"
+                } else {
+                    widgetTitle.querySelector('span').textContent = "-"
+                }
             })
         }
 
