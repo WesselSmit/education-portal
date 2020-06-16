@@ -111,6 +111,13 @@ p {
     border-left: 5px solid;
     position: relative;
 }
+
+@media only screen and (max-width: 768px) {
+    .announcements-container .announcement {
+        position: unset;
+    }
+}
+
 .announcements-container .announcement.Opleiding {
 	border-color: #DC143C;
 }

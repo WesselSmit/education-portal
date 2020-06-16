@@ -13,6 +13,13 @@ template.innerHTML = `
         background-color: #ECE7FA;
         position: sticky;
         top: 0;
+        z-index: 999;
+    }
+
+    @media only screen and (max-width: 768px) {
+        div {
+            z-index: 0;
+        }
     }
 
     div.hide {

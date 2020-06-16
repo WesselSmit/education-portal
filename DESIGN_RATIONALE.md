@@ -552,16 +552,18 @@ function displayNotification(title, body) {
 <hr>
 
 ## Personal preferences
-As soon as our dashboard was finished, the next user test showed that the user wanted to be able to personalize the dashboard. We did this by creating a section on the account page with the four widgets that the user can toggle on and off and drag to change the order in this way. Together with Koop we discussed how we can tackle this UI and UX best to make it clear that these blocks are interactable.
+After several user tests, we decided to give the student the option to personalize the app. We have made room for this on the account page so that all personal adjustments can be found in one place. The student can personalize:
+* The widgets on the dashboard
+* The secondary menu items, the external resources
 
-### Drag and Drop  
-For the drag and drop, Sjors first made this in Vanilla Javascript. However, the interaction was not very nice and it was difficult to switch from a two-column grid to a one-column grid. Then he researched other possibilities to achieve the same. After doing some research on `Sortable.js` he started working on this.
+To make this clear to the user it was important to come up with a good UI / UX. Here we discussed with Koop how we could approach this the best. Most importantly was the recognizability and the way how to interact.
 
-<img alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84365503-d9dee700-abd1-11ea-8830-7b889528e4e4.gif">
+### Drag and Drop
+To create the drag and drop we used `Sortable.js` to achieve a responsive and easily customizable drag and drop. This way we were able to use a dynamic grid and still build a well-functioning drag and drop. After doing some research on Sortable.js we chose to use this because it also handled the events for mobile and reponsive worked well.
 
 **Sortable.js**  
 Sortable is a Javascript library for reordering drag and drop lists. This way it is way easier to drag and drop in multiple layouts and it is also compatible with the mobile Javascript events. With Sortable you get a lot of options to manipulate and change the interaction with your drag and drop list. 
-Curious about the full documentation or about my implementation of Sortable.js? View that code or read the [full documentations](https://github.com/SortableJS/Sortable)
+Curious about the full documentation or about my implementation of Sortable.js?  
 
 <details><summary>Sortable.js - Code</summary>
 
@@ -592,37 +594,48 @@ function removeStylingFromDropZones(event) {
 ```
 </details>
 
+[Sortable.js - Documentation](https://github.com/SortableJS/Sortable)
 
-### LocalStorage 
-In order to allow the usersettings to be saved, Sjors used LocalStorage. As soon as the user comes to the page, the LocalStorage checks whether the usersettings have already been set. If not, an object is created in the LocalStorage. If this is the case, the blocks are placed in the correct order and at the correct state. The LocalStorage object is modified every time the user changes the order or state.
+Widgets  
+<img width="800" src="https://user-images.githubusercontent.com/45365598/84769590-658fb380-afd6-11ea-9ad9-0751a3ffd1a9.gif">  
 
-The main function is to update/set the preferences object. This keeps the LocalStorage up to date and allows the user to personalize his dashboard. You can view this function below.
+Secondary menu items  
+<img width="800" src="https://user-images.githubusercontent.com/45365598/84769579-5f013c00-afd6-11ea-804d-58f41ed7354c.gif">
 
-<details><summary>setPreferencesObject() - Code</summary>
+### LocalStorage
+In order to allow the student to save the settings, we've used LocalStorage. When the user goes to the account page, the LocalStorage gets checked whether previous settings have already been indicated. If not, this object is created and placed in the LocalStorage. If this is the case, these settings are retrieved and displayed in the interface. Whenever the user modifies something, the LocalStorage is saved again so that the user doesn't lose his settings.
+
+<details><summary>Example: Secondairy menu items preferences - Code</summary>
 
 ```js
-function setPreferencesObject() {
-    const inputs = [...document.querySelectorAll('#account form label')]
+export default function setMenuPreferences() {
+    container.classList.remove('disabled') // If Javascript is available the user can interact
+
+    checker() ? renderPreferences() : setPreferences() // LocalStorage is allowed and are there there previously indicated preferences
+    stateHandler() // Track whether the user wants to see the menu items or not
+    dragHandler() // Track order and update
+    cloneAndUpdateMenu() // Update the menu in the DOM
+}
+
+// Most important function to update LocalStorage and menu in the DOM
+function setPreferences() {
+    const labels = [...container.querySelectorAll('label')]
     let preferences = []
 
-    inputs.forEach(label => {
-        // Data
-        const id = label.id
+    labels.forEach(label => {
         const text = label.textContent
         const state = label.querySelector('input').checked
+        state ? label.className = 'on' : label.className = 'off'
 
-        // Set LocalStorage
-        const object = { id: id, name: text, state: state }
+        const object = { name: text, state: state }
         preferences.push(object)
-        setLocalStorage('preferences', preferences)
     })
 
-    return preferences
+    setLocalStorage('menu-preferences', preferences)
+    cloneAndUpdateMenu()
 }
 ```
 </details>
-
-
 
 <hr>
 
@@ -660,6 +673,15 @@ The search icon is also enhanced, whenever it's clicked the clientSide JS evalua
 * if the search-input is not empty the search-query is send to the server
 
 There is also a custom made reset icon in the search bar whenever it has focus and isn't empty. When clicked it removes the search-input from the searchbar.
+
+### Menu for mobile and tablet
+Since we use a hamburger menu on the mobile and tablet versions of our app and this requires JavaScript to access the menu, we have had to write a fallback for this to always give the user access to the menu.
+
+* The student has **no** access to Javascript  
+The user clicks on the hamburger menu which contains a `<a>` to link to the menu at the bottom of the DOM. In this way the student can simply navigate through the app without Javascript.
+
+* The student **does** have access to Javascript  
+The `<a>` gets a preventDefault in Javascript so that it no longer goes anywhere in the HTML but simply opens the menu using Javascript.
 
 <hr>
 

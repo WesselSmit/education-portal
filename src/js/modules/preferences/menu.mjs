@@ -48,6 +48,7 @@ function stateHandler() {
             if (label.className === 'on') {
                 const firstOff = document.querySelector('#menu-preferences .off')
                 container.insertBefore(label, firstOff)
+                setPreferences()
             }
         })
     })
@@ -71,14 +72,10 @@ function createElements() {
         const label = document.createElement('label')
         preference.state ? label.className = 'on' : label.className = 'off'
 
-        const handle = document.createElement('span')
-        handle.classList.add('handle')
-
         const input = document.createElement('input')
         input.type = 'checkbox'
         input.checked = preference.state
 
-        label.append(handle)
         label.append(input)
         label.append(preference.name)
 
