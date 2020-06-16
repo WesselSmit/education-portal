@@ -20,10 +20,46 @@ How do you present a large amount of information in a clear way that users can n
 
 These are the questions we ask ourselves and keep in mind whilst designing the new portal:
 
-* How do you maintain an overview with alrge amounts of data?
-* What options can you give users to personalize the app?
-* What is the best way to navigate through large amounts of data?
-* How do you maintain an intuitive navigation?
+### How do you maintain an overview with large amounts of data?
+
+We used a few principles to maintain an overview when dealing with the large amounts of data in our app;
+
+To make sure users aren't overwhelmed with your content you have to spread it out over multiple pages, for every resource/user-goal we made a page. We chose to make a lot of pages and offer users clear navigation to find the pages, this combination is important because dividing your content can cause users to miss or even be aware of it's existence within the app (this is actually the main problem in the current portal).
+
+So we divide the content into smaller components/pages and we make sure users can find the pages, besides that we prioritize our data. The menu is divided into primary and secondary links. The primary links always have a subtext and show an icon, secondary links are smaller, don't show subtext and don't have icons. This is once again part of making sure users know of the content you're offering but also makes finding the most important content easier. 
+
+>Our priorities are based on the provided research.
+
+Lastly we provide users with personalisation options such as hiding, reordering and collapsing widgets/content. These features help users customize the app to their own needs, it can create a better flow and helps users in creating their own overview which may make more sense to them.
+
+### What options can you give users to personalize the app?
+
+As said in the previous question we allow users to customize the app. The customizations we implemented are:
+* Hiding and showing (menu-items/widgets)
+* Reordering (menu-items/widgets)
+* Collapsing and expanding (widgets)
+* Filtering (announcements)
+
+By offering these features we give users control over the interface, but more importantly they help users in creating overview, ordering content however it works best for them & hiding content they don't want to see.
+
+All these personalisations are based on feedback we received in test sessions.
+
+Other personalisations we could've offered but didn't are:
+* sorting
+* customize what notifications you want to see
+* change (push notification/app) permissions
+* language
+* list vs grid layout
+
+### What is the best way to navigate through large amounts of data?
+
+Creating a effective and intuitive navigation is hard, we believe the biggest problem we had to tackle was show users what content the portal and it's associated resources offer. To make sure users know of the resources we included all of them in our menu. This can bloat a menu and in total we have 18 menu items. That's a lot for a menu but according to our users we still manage to keep a clear overview.
+
+How did we achieve overview with 18 menu items? We prioritized, since most resources are only used sporadically and won't even be touched by a large portion of the userbase, we decided we'd make things a lot easier by seperating the most important menu items from the less important.
+
+Once again we also allow users to hide/reorder the secondary (less important) menu items, this can also create additional space and overview for users.
+
+If we had more time we also would've implemented the search feature, this would allow users to search for keywords if they can't find something. 
 
 ## HvA Style
 
@@ -635,7 +671,12 @@ Below is a list of our enhancements and how they have been applied in our websit
 
 ### Announcements
 **Filter**  
-...
+
+Students indicated the biggest problem with the announcements in the current portal is lack of overview, to create a better overview with more distinction between different types of announcements, we decided to create categories. The categories are: HvA, Medezeggenschap, Faculteit & Opleiding. Categories are indicated with colors, each color has it's own designated color.
+
+Categories with associated colors are displayed in a legend which also fiuntions as filter. If users click on a legend item the announcement-list is filtered. All active filters are saved in localStorage meaning the user actions persist across page refreshes etc.
+
+![filtering](https://user-images.githubusercontent.com/45405413/84768719-fc5b7080-afd4-11ea-9d70-e4d3d5130e7e.gif)
 
 **Read History and Unread Messages Indicator**  
 During the user test it became clear that students wanted clarity about which announcements have or haven't been read. To make this clear, the students themselves indicated that they liked the pattern of email, in which the unread messages are bolder than the unread messages. We have also applied this in our website.
@@ -660,6 +701,11 @@ The search icon is also enhanced, whenever it's clicked the clientSide JS evalua
 * if the search-input is not empty the search-query is send to the server
 
 There is also a custom made reset icon in the search bar whenever it has focus and isn't empty. When clicked it removes the search-input from the searchbar.
+
+### Collapsable widgets
+Our widgets can take up a lot of space on smaller screens. Although we allow users the options to reorder + hide widgets on their dashboard there will always be users who prefer to have all widgets on their dashboard but don't want the widgets to take up too much space. For these users we have the collapse feature; widgets can be collapsed if you click on their title. This means the widgets are still easily accessible but can make scrolling and prioritizing for mobile users much easier.
+
+![collapse](https://user-images.githubusercontent.com/45405413/84770106-46ddec80-afd7-11ea-9cad-757fd6532eb3.gif)
 
 <hr>
 
