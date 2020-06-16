@@ -33,7 +33,7 @@
         * [Menu for mobile and tablet](#Menu-for-mobile-and-tablet)
      * [Responsiveness](#Responsiveness)
 * [What we would like to add](#What-we-would-like-to-add)
-* [Feedback we didn't implement](#Feedback-we-didn't-implement)
+* [Feedback we didn't implement](#Feedback-we-didnt-implement)
 * [Feedback we implemented](#Feedback-we-implemented)
 
 # Problem Definition
