@@ -3,16 +3,32 @@ export { init as WC_studyprogress }
 const template = document.createElement('template')
 template.innerHTML = `
 <style>
-h2 {
+.widget-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 15px;
+}
+
+.widget-title h2 {
     font-size: 24px;
     color: #25167A;
     text-transform: uppercase;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #DDDDDD;
-    margin: 0 0 15px 0;
-    font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
-    font-weight: lighter;
+	font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
+	font-weight: lighter;
     line-height: 1.1;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.widget-title span {
+    font-size: 24px;
+    color: #25167A;
+    text-transform: uppercase;
+	font-family: "OpenSans-Regular", sans-serif, Arial, Helvetica;
+    font-weight: lighter;
+    padding: 10px;
 }
 
 p {
@@ -158,13 +174,16 @@ a:first-of-type.collapsed + a {
 }
 </style>
 
-<h2>Studieresultaten en -voortgang</h2>
+<div class="widget-title">
+    <h2>Studieresultaten en -voortgang</h2>
+    <span>-</span>
+</div>
 
 <div id="recent-results"></div>
 <div id="recent-progress"></div>
 
 <div id="link-container">
-<a target="_blank" href="https://sis.hva.nl:8011/psc/S2PRD/EMPLOYEE/SA/c/SNS_MENU_FLD.SNS_SS_STD_RES_FL.GBL">Jouw resultaten
+    <a target="_blank" href="https://sis.hva.nl:8011/psc/S2PRD/EMPLOYEE/SA/c/SNS_MENU_FLD.SNS_SS_STD_RES_FL.GBL">Jouw resultaten
     <img src="/media/icons/arrow-right.svg" alt="arrow-right"></img>
 </a>
 
