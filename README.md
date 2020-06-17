@@ -15,7 +15,7 @@ More information about the final product can be found in the [design rationale](
 
 # Concept
 
-The HvA student portal is supposed to be a central point for all study related infomation, at the momment this information is scattered across many websites and platforms. The current portal functions as a hub, but fails to offer students a complete overview of all available services.
+The HvA student portal is supposed to be a central point for all study related infomation, at the moment this information is scattered across many websites and platforms. The current portal functions as a hub, but fails to offer students a complete overview of all available services.
 
 With our redesign we try to achieve 2 things:
 * clearly communicate the available resources
@@ -66,15 +66,15 @@ To show users what resources are available we have a menu, it's categorized in m
 
 ## Dashboard
 
-Provided research shows students have a core set of functionalities which are most used, theses pages/resources are the biggest reason students visit the portal. These resources are however external websites at the moment, so in reality students visit the portal to be redirected to the external resource. In our redesign the homepage contains a dashboard with 4 widgets. These widgets are the most used external resources, by showing the most recent data from these external resources we cut down the need to visit the external websites significantly.
+Provided research shows students have a core set of functionalities which are most used, these pages/resources are the biggest reason students visit the portal. These resources are however external websites at the moment, so in reality students visit the portal to be redirected to the external resource. In our redesign the homepage contains a dashboard with 4 widgets. These widgets are the most used external resources, by showing the most recent data from these external resources we eliminate the need to visit the external websites significantly.
 
 ### Preferences
 
-The widgets are based on the provided research and our own user tests, however we understand not all students have the same needs and wishes. To accomodate students we allow for personalization of the dashboard. On the menu 'ACCOUNT' page of the portal students can reorder and hide widgets (they can also undo their previous actions). 
+The widgets are based on the provided research and our own [user tests](https://github.com/WesselSmit/education-portal/wiki), however we understand not all students have the same needs and wishes. To accomodate students we allow for personalization of the dashboard. On the menu 'ACCOUNT' page of the portal students can reorder and hide widgets (they can also undo their previous actions). 
 
 ### Enhancements 
 
-The application wil be used a lot on the go by students travelling to/from the university, since JS might not load due to tunnels or bad connection etc. we use enhacements. If the JS can't be loaded the app still works, however some extended functionalities and enhancements won't be available without JS. To see a full list of all our enhancements see our [design rationale](https://github.com/WesselSmit/education-portal/blob/master/DESIGN_RATIONALE.md#enhancements)
+The application wil be used a lot on the go by students travelling to/from the university, since JS might not load due to tunnels or bad connection etc. we use enhancements. If the JS can't be loaded the app still works, however some extended functionalities and enhancements won't be available without JS. To see a full list of all our enhancements see our [design rationale](https://github.com/WesselSmit/education-portal/blob/master/DESIGN_RATIONALE.md#enhancements)
 
 # Data
 
