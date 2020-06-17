@@ -40,7 +40,7 @@ Additional information about the progress can be found in the [wiki](https://git
 
 # Problem Definition
 
-The HvA Portal is a hub for all resources and information related to it's studies. These resources and information are scattered across multiple platforms and websites. This causes problems because it isn't always clear to students what information can be found on which resource. Essentially; the HvA portal mostly functions as a hub for all HvA related information. It however fails in introducing students to all the services and resources available to them, this is mainly due to information being hidden behind other pages or not even being shown in the menu & not clarifying what information can be found behind what link.
+The HvA Portal is a hub for all resources and information related to it's studies. These resources and information are scattered across multiple platforms and websites. This causes problems because it isn't always clear to students what information can be found in what resource. Essentially; the HvA portal mostly functions as a hub for all HvA related information. It however fails in introducing students to all the services and resources available to them, this is mainly due to information being hidden behind other pages or not even being shown in the menu & not clarifying what information can be found behind what link.
 
 # Debriefing
 
@@ -64,7 +64,7 @@ These are the questions we ask ourselves and keep in mind whilst designing the n
 
 We used a few principles to maintain an overview when dealing with the large amounts of data in our app;
 
-To make sure users aren't overwhelmed with your content you have to spread it out over multiple pages, for every resource/user-goal we made a page. We chose to make a lot of pages and offer users clear navigation to find the pages, this combination is important because dividing your content can cause users to miss or even be aware of it's existence within the app (this is actually the main problem in the current portal).
+To make sure users aren't overwhelmed with your content you have to spread it out over multiple pages, for every resource/user-goal we made a page. We chose to make a lot of pages and offer users clear navigation to find the pages, this combination is important because dividing your content can cause users to miss or not even be aware of it's existence within the app (this is actually the main problem in the current portal).
 
 So we divide the content into smaller components/pages and we make sure users can find the pages, besides that we prioritize our data. The menu is divided into primary and secondary links. The primary links always have a subtext and show an icon, secondary links are smaller, don't show subtext and don't have icons. This is once again part of making sure users know of the content you're offering but also makes finding the most important content easier. 
 
@@ -80,11 +80,11 @@ As said in the previous question we allow users to customize the app. The custom
 * Collapsing and expanding (widgets)
 * Filtering (announcements)
 
-By offering these features we give users control over the interface, but more importantly they help users in creating overview, ordering content however it works best for them & hiding content they don't want to see.
+By offering these features we give users control over the interface, but more importantly they help users in creating an clear overview, allowing users in organising content however it works best for them & hiding content they don't want to see.
 
-All these personalisations are based on feedback we received in test sessions.
+All these personalisations are based on feedback we received in [user test sessions](https://github.com/WesselSmit/education-portal/wiki).
 
-Other personalisations we could've offered but didn't are:
+Other personalisations we could've offered but didn't:
 * sorting
 * customize what notifications you want to see
 * change (push notification/app) permissions
@@ -95,7 +95,7 @@ Other personalisations we could've offered but didn't are:
 
 Creating a effective and intuitive navigation is hard, we believe the biggest problem we had to tackle was show users what content the portal and it's associated resources offer. To make sure users know of the resources we included all of them in our menu. This can bloat a menu and in total we have 18 menu items. That's a lot for a menu but according to our users we still manage to keep a clear overview.
 
-How did we achieve overview with 18 menu items? We prioritized, since most resources are only used sporadically and won't even be touched by a large portion of the userbase, we decided we'd make things a lot easier by seperating the most important menu items from the less important.
+How did we achieve a clear overview with 18 menu items? We prioritized, since most resources are only used sporadically and won't even be touched by a large portion of the userbase, we decided we'd make things a lot easier by seperating the most important menu items from the less important.
 
 Once again we also allow users to hide/reorder the secondary (less important) menu items, this can also create additional space and overview for users.
 
@@ -123,10 +123,10 @@ A list of the resources we plan to use:
 # Solution
 
 ## Data
-Because we would use personal data for our project, the client made small samples for us and supplied them in JSON. We had the idea to use MongoDB because we both have never worked with it before and we thought it would be interesting to do it once. During the development of our version of the HvA portal, we discovered that data was sometimes missing. We have written this data ourselves in JSON files and loaded it locally in our app.
+Because we would use personal data for our project, the client made small samples for us and provided JSONs. We had the idea to use MongoDB because we both have never worked with it before and we thought it would be interesting to do it once. During the development of our version of the HvA portal, we discovered that data was sometimes missing. We have written this [data ourselves in JSON files](https://github.com/WesselSmit/education-portal/wiki/The-data-we-missed-and-wrote-ourselves) and imported it locally in our app.
 
 ### MongoDB 
-We used MongoDB for the data we received from the client. We have moved the data from the JSONs to MongoDB and set up code on the server that makes it possible to retrieve different `collections`. Since we both had no experience with this, it was quite a bit of work to figure this out in the beginning. In the end we wrote a dynamic fetcher where we can indicate as a parameter which collection we want. We then manipulate the data in separate functions in order to use the desired data in our app.
+We used MongoDB for the data we received from the client. We have moved the data from the JSONs to MongoDB and set up code on the server that makes it possible to retrieve different `collections`. Since we both had no experience with this, it was quite a bit of work to figure this out. In the end we wrote a dynamic fetcher where we can pass the desired collection as a parameter. We then manipulate the data in separate functions in order to use the desired data in our app.
 
 <details><summary>Example: MongoDB Fetcher</summary>
 
@@ -155,12 +155,12 @@ module.exports = (collectionName) => {
 <hr>
 
 ### Local JSONs 
-Because we discovered during the build of the app that data was missing that was necessary to build the desired features, we wrote this ourselves based on information on several websites of the AUAS such as Brightspace and MijnHvA. Because we wrote this data ourselves, we did not have to manipulate this.
+When we were building the app we discovered some data was missing that was necessary to build the desired features, we wrote this ourselves based on information on several websites of the HvA such as Brightspace and MijnHvA. Because we wrote this data ourselves, we did not have to manipulate it.
 
 The JSONs we wrote ourselves contain data from:
 * Course overview
 * Study results and progress
-* Urgent notices
+* Urgent announcements/notifications
 * Information about all external websites of the HvA
 
 <details><summary>Example: JSON Reader</summary>
@@ -184,7 +184,7 @@ Creating a web component consists of a number of steps.
 
 <!-- 1 -->
 1. Creating a template  
-The template contains all static HTML and CSS of this element. You will only add the dynamic content later by means of functions in your custom element.
+The template contains all static HTML and CSS of the element. You will only add the dynamic content later with functions in your custom element.
 
 <details><summary>Example: Template</summary>
 
@@ -205,7 +205,7 @@ template.innerHTML = `
 
 <!-- 2 -->
 2. Defining the template as a Custom Element  
-To make it possible to use the web component in the HTML you need to define this as a Custom Element first. To do this you create a class, which you define as window's customElements property. If you don't do this the browser won't recognize your custom element and it'll inherit the properties (behaviour + styling) of a `span`.
+To make it possible to use the web component in the HTML you need to define it as a Custom Element first. To do this you create a class, which you define in the window `customElements` property. If you don't do this the browser won't recognize your custom element and it'll inherit the properties (behaviour + styling) of a `span`.
 
 <details><summary>Example: Defining a Custom Element</summary>
 
@@ -224,7 +224,7 @@ customElements.define('DOM-name', Name)
 <!-- 3 -->
 3. Initializing the Web component  
 Inside of the constructor() you will have to do a few things. First of all you want to call super() to inherit all properties the class your extending.
-The second thing you want to do is to attach the shadow DOM to your web component and finally you want to clone your template into the shadowRoot.
+The second thing you want to do is to attach the shadow DOM to your web component and finally you clone your template into the shadowRoot.
 
 <details><summary>Example: Initializing the Web Component</summary>
 
@@ -315,7 +315,7 @@ p {
 
 2. Defining the Custom Element
 A custom element is a JS class that extends the HTMLElement property, you must extend a HTMLElement class to inherit the methods which allow you to manipulate it in JS (such as: innerHTML, classList etc.).
-To be able to use the web component in our HTML/DOM we need to register it in the `customElements` list. When you define your custom element you have to choose a name for it. All custom element names must contain a `-`, this indicates to the browser the element is a custom element.
+To be able to use the web component in our HTML/DOM we need to register it in the `customElements` property of the window object. When you define your custom element you have to choose a name for it. All custom element names must contain a `-`, this indicates to the HTML parser that element is a custom element.
 
 <details><summary>Example: Defining Custom Element</summary>
 
@@ -439,15 +439,15 @@ When the component is initialized the localStorage readHistory is evaluated and 
 
 ### Our research into Web components
 
-**The online opinions about Web components**  
-In this section I will show several statements that I have seen on different websites, with a number of arguments for and against.
+**The industry opinions about Web components**  
+In this section I will show several statements that I have seen on different websites, with a number of arguments in favor and against.
 
 1. "Websites should work without JavaScript wherever possible"  
 Some developers think you shouldn't use components for an important element in the application like a navigation bar because it should always work, even without Javascript. But in our opinion it is quite possible to make a fallback on the server. So if Javascript is disabled or cannot be used, the server will still be able to render that element and the user will not even realize that it is or is not a web component.
 
 2. "If you want to use Shadow DOM, you have to include your CSS in a `<style>` element inside of your JavaScript module"  
 There are several options for styling web components without using a Shadow DOM. You can use the `standard context` or the` closed context`. By using the standard context it is possible to apply external CSS to your web component. <br>
-We ourselves did not use the standard context but the closed context, Shadow DOM. We didn't like this because we first wrote the SCSS for the EJS template and then had to write it to CSS for the web component.
+We ourselves did not use the standard context but the closed context, Shadow DOM. We didn't like this because we first wrote the SCSS for the EJS template and then had to write it again in CSS for the web component. This meant we were basically writing the same logic twice (fallback and web component)
 
 3. "Custom Elements aren't accessible"  
 Currently, Custom Elements V1 are supported on any modern browser. So almost no polyfills are needed to support this. And if there is a browser that does not support the Custom Elements, we return to point 1 where you can always fall back on the server that renders the component.
@@ -459,26 +459,26 @@ https://dev.to/richharris/why-i-don-t-use-web-components-2cia
 -->
 
 **Our experience with Web components**  
-The above points stood out for us because we also had to deal with this ourselves and we had to think about how we would solve this. Our experience with:
+The above points stood out for us because we also had to deal with this ourselves and we had to think about how we would solve those problems: 
 1. Accessibility  
-For our app we used the server that the components render, however this is the fallback. When the user allows and can use JavaScript, our app uses Web components. This way we have ensured that our app works well without JavaScript. However, the Web components do have the advantage that the user can interact with them, which makes sense since it requires JavaScript.
+Using EJS we render the fallbacks for the web components on the server, when the user can use JavaScript, our app replaces the fallbacks with Web components. This way we have ensured that our app works well without JavaScript. However, the Web components do have the advantage that the user can interact with them, which makes sense since it requires JavaScript.
 
 2. Styling the Web components  
-To style the Web components we have chosen to use the closed context, this means that we add specific styling to the component using the Shadow DOM and don't use the stylesheet. However, we aren't big a fan of this because we have to convert the SCSS to CSS and then put this in the Javascript module, which is actually not the intention.
+To style the Web components we chose to use the closed context, this means that we add specific styling to the component using the Shadow DOM and don't use the stylesheet. However, we aren't big a fan of this because we have to convert the SCSS to CSS and then put this in the Javascript module, which is ugly and can be a pain in the arse whenever tryigin to change the srtyling a bit.
 
 <hr>
 
 ## Service Worker
 
-We know from experience that the portal is often used on the go, students need to travel to school and often use public transport. When travelling the connection can fail for a second. It's important our portal is still usable even when offline. To achieve offline support and faster load times we Service Workers. We also want to be able to notify a student for urgent announcements, this is also done with a Service Worker.
+We know from experience that the portal is often used on the go, students need to travel to school and often use public transport. When travelling the connection can fail for a second. It's important our portal is still usable even when offline. To achieve offline support and faster load times we use Service Workers. We also want to be able to notify (push notification) a student for urgent announcements, this is also done with a Service Worker.
 
 ### Offline page and Caching
 
-When using a service worker to cache pages you need to choose a caching strategy; we want to show the most recent pages which is only possible when fetching pages over a connection. We try to fetch the page over the network first, this ensures we always try to get the up to date page. If that fails (slow internet of no connection) we show a cached version of the page, if we don't have that we show an offline page.
+When using a service worker to cache pages you need to choose a caching strategy; we want to show the most recent pages which is only possible when fetching pages over a connection. We try to fetch the page over the network first, this ensures we always try to get the up to date page. If that fails (slow internet or no connection) we show a cached version of the page if available, if we don't have the page cached we show an offline page.
 
 This makes sure we always have a page to show users even if they don't have a connection.
 
->Out caching strategy is: try requesting over the network, if that fails we serve a cached page, if we don't have the page cached we serve an offline page.
+>Our caching strategy is: requesting over the network, if that fails we serve a cached page, if we don't have the page cached we serve an offline page.
 
 **Installing SW**
 
@@ -509,7 +509,7 @@ self.addEventListener('install', e => {
 
 **Activating SW**
 
-When activating out SW we check if there are multiple caches, we always only want to keep our up to date cache, to achieve this we loop through all caches. Every cache that isn't the most recent cache we delete.
+When activating out SW we check if there are multiple caches, we always only want to keep our cache up to date, to achieve this we loop through all caches. Every cache that isn't up to date is deleted.
 
 <details><summary>Example: Activating SW</summary>
 
@@ -536,9 +536,9 @@ self.addEventListener('activate', e => {
 
 **Fetching and serving with SW**
 
-Whenever the browser fetches something the SW intervenes, it first tries to GET the request over the network. If the request is succesfull we serve the requested resource and we put the resource in our cache. This way we build up a cache of all resources used by the app. If the user later comes back to the page witha  bad connection the resources can be served from the cache.
+Whenever the browser fetches something the SW intervenes, it first tries to GET the request over the network. If the request is succesfull we serve the requested resource and we put the resource in our cache. This way we build up a cache of all resources used by the app. If the user later comes back to the page with a bad connection the resources can be served from the cache.
 
-If the network request fails we check our cache. Do we have a cached version of the requested resource, ff so serve the cached version. If we don't have the resource cached we serve the offline page.
+If the network request fails we check our cache. Do we have a cached version of the requested resource, if so we serve the cached version. If we don't have the resource cached we serve the offline page.
 
 <details><summary>Example: Fetching & Serving Cached</summary>
 
@@ -578,13 +578,13 @@ Using a SW we can make sure the user has the best experience possible with a bad
 
 ### Push notifications
 
-When an urgent announcement is delivered from the server we want to show users this in app and outside of the app. Using SW we can send push notifications to the user even when the browser is closed.
+When an urgent announcement is delivered from the server we want to show users both in/outside the app. Using SW we can send push notifications to the user even when the browser is closed.
 
-Notifying users in app is done through interface pop-ups. The server sends a custom event using socket.io to the client, the client listens for the event and handles it by updating the interface. In the same event handler we can call out `displayNotification` function.
+Notifying users in the app is done through interface pop-ups. The server sends a custom event using socket.io to the client, the client listens for the event and handles it by updating the interface. In the same event handler we can call the `displayNotification` function.
 
-This function first checks if the user has given permission for push notifications. This is important to check because users can change their settings whenever your website is not open (meaning your application doesn't immediately register the change). If the user has blocked you app you can't send notifications, if the user has never anwsered the permission prompt it will automatically pop-up.
+This function checks if the user has given permission for push notifications. This is important to check because users can change their settings whenever your website is not opened/active (meaning your application doesn't immediately register the change). If the user has blocked your app you can't send notifications, if the user has never anwsered the permission prompt it will automatically show.
 
-If allowed we create a notification; doing this you can customize a few options;
+With permission we create a notification; doing this you can customize a few options;
 * the server sends a title and payload, we use these as the title and message for the notification
 * we can give a custom vibrate pattern
 * we can set custom icons to show in the notification
@@ -628,17 +628,18 @@ function displayNotification(title, body) {
 <hr>
 
 ## Personal preferences
-After several user tests, we decided to give the student the option to personalize the app. We have made room for this on the account page so that all personal adjustments can be found in one place. The student can personalize:
+After several user tests, we decided to give the student the option to personalize the app. We made room for this on the account page so that all personal adjustments can be found in one place. The student can personalize:
 * The widgets on the dashboard
 * The secondary menu items, the external resources
 
-To make this clear to the user it was important to come up with a good UI / UX. Here we discussed with Koop how we could approach this the best. Most importantly was the recognizability and the way how to interact.
+To make this clear to the user it was important to come up with a good UI / UX. Here we discussed with Koop what hte best approach would be. Most importantly was the recognizability and the way to interact with the Drag and Drop.
 
 ### Drag and Drop
-To create the drag and drop we used `Sortable.js` to achieve a responsive and easily customizable drag and drop. This way we were able to use a dynamic grid and still build a well-functioning drag and drop. After doing some research on Sortable.js we chose to use this because it also handled the events for mobile and reponsive worked well.
+To create the drag and drop we used `Sortable.js` to achieve a responsive and easily customizable drag and drop. This way we were able to use a dynamic grid and still build a well-functioning drag and drop. After doing some research on Sortable.js we chose to use this because it also handled the events for mobile and reponsiveness works well.
 
 **Sortable.js**  
-Sortable is a Javascript library for reordering drag and drop lists. This way it is way easier to drag and drop in multiple layouts and it is also compatible with the mobile Javascript events. With Sortable you get a lot of options to manipulate and change the interaction with your drag and drop list. 
+Sortable is a Javascript library for reordering drag and drop lists. This way it's easier to drag and drop in multiple layouts and it's also compatible with the mobile Javascript events. With Sortable you get a lot of options to manipulate and change the interaction with your drag and drop list. 
+
 Curious about the full documentation or about my implementation of Sortable.js?  
 
 <details><summary>Sortable.js - Code</summary>
@@ -679,9 +680,9 @@ Secondary menu items
 <img width="800" src="https://user-images.githubusercontent.com/45365598/84769579-5f013c00-afd6-11ea-804d-58f41ed7354c.gif">
 
 ### LocalStorage
-In order to allow the student to save the settings, we've used LocalStorage. When the user goes to the account page, the LocalStorage gets checked whether previous settings have already been indicated. If not, this object is created and placed in the LocalStorage. If this is the case, these settings are retrieved and displayed in the interface. Whenever the user modifies something, the LocalStorage is saved again so that the user doesn't lose his settings.
+In order to save user settings, we've used LocalStorage. When the user goes to the account page, the LocalStorage is checked for any previously saved settings. If not, this object is created and saved in the LocalStorage. If this is the case, these settings are retrieved and displayed in the interface. Whenever the user modifies something, the LocalStorage is updated.
 
-<details><summary>Example: Secondairy menu items preferences - Code</summary>
+<details><summary>Example: Secondary menu items preferences - Code</summary>
 
 ```js
 export default function setMenuPreferences() {
@@ -716,9 +717,9 @@ function setPreferences() {
 <hr>
 
 ## Enhancements
-We have implemented enhancements to make our application as accessible as possible for all users and to make users who use a more modern browser happier. So we did this by using: web components and rendered pages from the server.
+We have implemented enhancements to make our application as accessible as possible for all users and to make users who use a more modern browser happier. So we did this with: web components and rendered pages from the server as fallbacks.
 
-If for some reason the user can't use Javascript on our website, the web components which contain the most important information of the website can't be rendered and the user can't use the website properly. This covers the server that still loads static components. However, the user cannot interact with these static components, such as: filtering messages or viewing the schedule for the coming week.
+If for some reason the user can't use Javascript in the portal, the web components can't be rendered and the user is shown the fallback widgets. However, the user cannot interact with these fallbacks, actions such as: filtering messages or viewing the schedule for the coming week are only available in web components.
 
 Below is a list of our enhancements and how they have been applied in our website.
 
@@ -727,31 +728,31 @@ Below is a list of our enhancements and how they have been applied in our websit
 
 Students indicated the biggest problem with the announcements in the current portal is lack of overview, to create a better overview with more distinction between different types of announcements, we decided to create categories. The categories are: HvA, Medezeggenschap, Faculteit & Opleiding. Categories are indicated with colors, each color has it's own designated color.
 
-Categories with associated colors are displayed in a legend which also fiuntions as filter. If users click on a legend item the announcement-list is filtered. All active filters are saved in localStorage meaning the user actions persist across page refreshes etc.
+Categories with associated colors are displayed in a legend which also funtions as filter. If users click on a legend item the announcement-list is filtered. All active filters are saved in localStorage meaning the user actions persist across page refreshes etc.
 
 <img width="800" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45405413/84768719-fc5b7080-afd4-11ea-9d70-e4d3d5130e7e.gif">
 
 **Read History and Unread Messages Indicator**  
-During the user test it became clear that students wanted clarity about which announcements have or haven't been read. To make this clear, the students themselves indicated that they liked the pattern of email, in which the unread messages are bolder than the unread messages. We have also applied this in our website.
+During the user test it became clear that students wanted clarity about which announcements have or haven't been read. To show this, the students themselves indicated that they liked the pattern of email, in which the unread messages are bolder than the unread messages. We have also applied this in our website.
 
-In the LocalStorage, an object is kept of read messages. When the user has read an announcement, it is added to the object. The menu shows an indicator of the amount of unread messages. In this way, the user can keep track of whether he has read all messages and whether new messages have been added. This indicator is also determined by the object in the LocalStorage.
+In the LocalStorage, an object is stored of read messages. When the user has read an announcement, it's added to the object. The menu shows an indicator of the number of unread messages. This way, the user can keep track of whether he has read all messages and whether new messages have been added. 
 
 <img width="800" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84777532-fe77fc00-afe1-11ea-9d11-53719cf801aa.gif">
 
 ### Timetable
-Because students should be able to view not only today's schedule, but also the schedule for the rest of the week, we have enhanced this component. In this way the student can navigate between the days with the arrows. When the student doesn't have Javascript available the server will render the schedule of today.
+Because students shouldn't only be able to view today's schedule, but also the schedule for the rest of the week, we have enhanced this component. In this way the student can navigate between the days with the arrows. When Javascript isn't available the server will render the schedule of today.
 
 <img width="500" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84381343-30a3eb00-abe9-11ea-8c03-1dcaeeda5618.gif">
 
 ### Course overview
-To make it possible for the student to see which courses he/she has had this block or past blocks, it is also necessary to enhance this component. To keep the interactions recognizable, we have also added the arrows here to navigate to a previous or next block. When the student doesn't have Javascript available the server will render the courses of your current block.
+To make it possible for the student to see which courses he/she has had in the past this quarter or past quarters, it is also necessary to enhance this component. To keep the interactions recognizable, we have also added the arrows here to navigate to a previous or next quarter. When Javascript isn't available the server will render the courses of your current quarter.
 
 <img width="500" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84381339-2c77cd80-abe9-11ea-858e-aac51e1b5460.gif">
 
 ### Searchbar
-When users press the `/` key on their keyboard (and the focussed element isn't a input) the focus will automatically be given to the searchbar. This shortcut is for users who use shortcuts to navigate websites. It's a small enhancement but can cause be a source of frustration for users who are used to it and more and more websites are starting to implement it.
+When users press the `/` key on their keyboard (and the focussed element isn't an input) the focus will automatically be given to the searchbar. This shortcut is for users who use shortcuts to navigate websites. It's a small enhancement but can be a source of frustration for users who are used to it and more and more websites are starting to implement it.
 
-The search icon is also enhanced, whenever it's clicked the clientSide JS evaluates wehat should happen:
+The search icon is also enhanced, whenever it's clicked the clientSide JS evaluates what should happen:
 * if the search-input is empty the searchbar gets focus
 * if the search-input is not empty the search-query is send to the server
 
@@ -763,20 +764,20 @@ Our widgets can take up a lot of space on smaller screens. Although we allow use
 <img width="800" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45405413/84770106-46ddec80-afd7-11ea-9cad-757fd6532eb3.gif">
 
 ### Menu for mobile and tablet
-Since we use a hamburger menu on the mobile and tablet versions of our app and this requires JavaScript to access the menu, we have had to write a fallback for this to always give the user access to the menu.
+Since we use a hamburger menu on the mobile and tablet versions of our app which requires JavaScript to access the menu, we have had to write a fallback for when Javascript isn't available.
 
 * The student has **no** access to Javascript  
 The user clicks on the hamburger menu which contains a `<a>` to link to the menu at the bottom of the DOM. In this way the student can simply navigate through the app without Javascript.
 
 * The student **does** have access to Javascript  
-The `<a>` gets a preventDefault in Javascript so that it no longer goes anywhere in the HTML but simply opens the menu using Javascript.
+The `<a>`'s element normal behaviour is prevented in Javascript so that it no longer goes anywhere in the HTML but simply opens the menu using Javascript.
 
 <img width="250" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84778147-d937bd80-afe2-11ea-9ff6-77edd46fa29e.gif">
 
 <hr>
 
 ## Responsiveness
-We expect that this app will also be used on the phone, for example when students come from public transport and quickly want to find the ckassroom where they have their first lesson of the day. We use a two-column layout on desktop that changes to a single-column layout when the screen narrows.
+We expect that this app will also be used on the phone, for example when students come from public transport and quickly want to find the classroom where they have their first lesson of the day. We use a two-column layout on desktop that changes to a single-column layout when the screen is smaller.
 
 <img width="800" alt="Schermafbeelding 2020-05-11 om 20 16 00" src="https://user-images.githubusercontent.com/45365598/84777522-fb7d0b80-afe1-11ea-8062-67925c0b0fd5.gif">
 
@@ -794,7 +795,7 @@ We expect that this app will also be used on the phone, for example when student
 <hr>
 
 # Feedback we didn't implement
-During the user tests, code- and designreviews we received a lot of feedback. In the end, we didn't include all feedback in our application, namely:
+During the user tests, code- and designreviews we received a lot of feedback. In the end, not all feedback was implemented in our application:
 * Using Nuxt to handle the routing  
 Ultimately, we didn't do this because after doing some research, we chose to continue doing our routing with Express, but to invest more time in clear modules. We also thought Nuxt and Vue would be a bit much considering the size of our app and how static most pages are. We simply felt we wouldn't need most features of Vue.
 * Using Vue to render components on the dashboard  
