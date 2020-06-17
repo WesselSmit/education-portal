@@ -1,3 +1,5 @@
+Additional information about the progress can be found in the [wiki](https://github.com/WesselSmit/education-portal/wiki), the application can be found [here](https://hva-education-portal.herokuapp.com/)
+
 # Table of Contents
 * [Problem Definition](#Problem-Definition)
 * [Debriefing](#Debriefing)
