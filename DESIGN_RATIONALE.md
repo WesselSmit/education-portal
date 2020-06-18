@@ -1,12 +1,12 @@
 # Table of Contents
 * [Problem Definition](#Problem-Definition)
 * [Debriefing](#Debriefing)
-    * [Assignment (from the GGO)](#Assignment-(from-the-GGO))
+    * [Assignment (from the GGO)](#Assignment-from-the-GGO)
     * [Main Question](#Main-Question)
     * [Side Questions](#Side-Questions)
-         * [How do you maintain an overview with large amounts of data?](#How-do-you-maintain-an-overview-with-large-amounts-of-data?)
-         * [What options can you give users to personalize the app?](#What-options-can-you-give-users-to-personalize-the-app?)
-         * [What is the best way to navigate through large amounts of data?](#What-is-the-best-way-to-navigate-through-large-amounts-of-data?)
+         * [How do you maintain an overview with large amounts of data?](#How-do-you-maintain-an-overview-with-large-amounts-of-data)
+         * [What options can you give users to personalize the app?](#What-options-can-you-give-users-to-personalize-the-app)
+         * [What is the best way to navigate through large amounts of data?](#What-is-the-best-way-to-navigate-through-large-amounts-of-data)
      * [HvA Style](#HvA-Style)
      * [Resources](#Resources)
      * [Deliverables](#Deliverables)
@@ -33,7 +33,7 @@
         * [Menu for mobile and tablet](#Menu-for-mobile-and-tablet)
      * [Responsiveness](#Responsiveness)
 * [What we would like to add](#What-we-would-like-to-add)
-* [Feedback we didn't implement](#Feedback-we-didn't-implement)
+* [Feedback we didn't implement](#Feedback-we-didnt-implement)
 * [Feedback we implemented](#Feedback-we-implemented)
 
 # Problem Definition
