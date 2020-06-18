@@ -7,7 +7,6 @@ router.use(bodyParser.json())
 
 // Get data
 const { readJSON, limit, getCategories } = require('#data/mongodb/transform/utlis')
-
 const schedules = require('#data/mongodb/transform/schedules')
 const { recentResults, studyProgress } = require('#data/mongodb/transform/studyprogress')
 const courseOverview = readJSON('./data/local/course-overview.json')
@@ -23,19 +22,13 @@ module.exports = router
         announcements: limit(await announcements(), 5),
         categories: getCategories(limit(await announcements(), 5))
     }))
-
-
     .get('/account', (req, res) => res.render('account', { pageName: 'account' }))
-    .get('/timetable', (req, res) => res.send('timetable'))
-    .get('/course_overview', (req, res) => res.send('course_overview'))
-    .get('/study_progress', (req, res) => res.send('study_progress'))
     .use('/announcements', announcementRouter)
     .get('/information', (req, res) => res.render('partials/resource-overview', {
         pageName: 'information',
         information: readJSON('./data/local/resource-page-content.json')
     }))
     .get('/offline', (req, res) => res.render('offline', { pageName: 'offline' }))
-
 
     // Fetch from client to server to achieve enhancement
     .get('/schedule', async (req, res) => res.json(await schedules()))
